@@ -158,7 +158,7 @@ public class LotteryController extends BaseController {
 				file.transferTo(fileNew);
 
 				PageData pdf = new PageData();
-				pdf.put("REFERENCE_ID", pd.getString("STAND_ID"));
+				pdf.put("REFERENCE_ID", pd.getString("LOTTERY_ID"));
 				pdf.put("FILENAME", fileOriginaName);
 
 				String FILESIZE = new DecimalFormat("#.000").format(file
