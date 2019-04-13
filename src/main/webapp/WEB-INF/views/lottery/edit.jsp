@@ -82,6 +82,14 @@
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
+                  	开奖时间
+              </label>
+              <div class="layui-input-inline">
+                  <input class="layui-input" placeholder="开奖日" name="SHOWTIME" id="show"  autocomplete="off" value="${pd.SHOWTIME}">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>抽奖介绍
               </label>
               <div class="layui-input-inline">
@@ -138,11 +146,13 @@
             //执行一个laydate实例
             laydate.render({
               elem: '#start' //指定元素
+            	  ,type: 'datetime'
             });
 
             //执行一个laydate实例
             laydate.render({
               elem: '#end' //指定元素
+            	  ,type: 'datetime'
             });
           });
         
