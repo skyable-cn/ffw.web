@@ -124,6 +124,24 @@
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>普通用户返利价格
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_username112" name="MEMBERBACKMONEY" required="" lay-verify="nikename"
+                  autocomplete="off" class="layui-input" value="${pd.MEMBERBACKMONEY}">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>会员用户返利价格
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_username113" name="VIPBACKMONEY" required="" lay-verify="nikename"
+                  autocomplete="off" class="layui-input" value="${pd.VIPBACKMONEY}">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>本级分销返利价格
               </label>
               <div class="layui-input-inline">
