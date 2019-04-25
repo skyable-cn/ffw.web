@@ -23,8 +23,8 @@
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">系统管理</a>
-        <a href="">会员管理</a>
+        <a href="">订单管理</a>
+        <a href="">对账管理</a>
         <a>
           <cite>列表查询</cite></a>
       </span>
@@ -32,17 +32,10 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/member/listPage">
+    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/bill/listPage">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
-          <div class="layui-input-inline">
-                  <select id="shipping" name="MEMBERTYPE_ID" class="valid">
-                  	<option value="">全部会员类型</option>
-                    <c:forEach var="var" items="${typeData}">
-                    	<option value="${var.MEMBERTYPE_ID}"  <c:if test="${var.MEMBERTYPE_ID eq page.pd.MEMBERTYPE_ID}">selected="selected"</c:if>>${var.MEMBERTYPENAME}</option>
-                    </c:forEach>
-                  </select>
-              </div>
+          
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
@@ -50,31 +43,27 @@
       <table class="layui-table x-admin">
         <thead>
           <tr>
-            <th>头像</th>
-            <th>昵称</th>
-            <th>姓名</th>
-            <th>电话</th>
-            <th>性别</th>
+            <th>交易日期</th>
+            <th>微信SN</th>
+            <th>商户SN</th>
+            <th>订单金额</th>
+            <th>应结订单金额</th>
+            <th>退款金额</th>
+            <th>申请退款金额</th>
             <th>WXOPEN_ID</th>
-            <th>类型</th>
             </tr>
         </thead>
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-           	<td><img alt="" src="${var.PHOTO}" width="50"></td>
-            <td>${var.NICKNAME}</td>
-            <td>${var.FULLNAME}</td>
-            <td>${var.PHONE}</td>
-            <td>
-            	<c:choose>
-            		<c:when test="${var.SEX eq 1}">男</c:when>
-            		<c:when test="${var.SEX eq 2}">女</c:when>
-            		<c:otherwise>未知</c:otherwise>
-            	</c:choose>
-            </td>
-            <td>${var.WXOPEN_ID}</td>
-            <td>${var.MEMBERTYPENAME}</td>
+           	<td>${var.K1}</td>
+            <td>${var.K6}</td>
+            <td>${var.K7}</td>
+            <td>${var.K25}</td>
+            <td>${var.K13}</td>
+            <td>${var.K17}</td>
+            <td>${var.K26}</td>
+            <td>${var.K8}</td>
           </tr>
           </c:forEach>
           
