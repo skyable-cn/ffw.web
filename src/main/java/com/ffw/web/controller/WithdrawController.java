@@ -139,7 +139,7 @@ public class WithdrawController extends BaseController {
 				"msg",
 				getMessageUrl("MSG_CODE_APPROVE_SUCCESS",
 						new Object[] { "审核分销提现" }, ""));
-		mv.setViewName("redirect:/shop/listPage");
+		mv.setViewName("redirect:/withdraw/listPage");
 		logger.info("审核分销提现成功");
 		return mv;
 	}
