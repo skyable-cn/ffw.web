@@ -38,8 +38,8 @@
           <div class="layui-input-inline">
                   <select id="shipping" name="STATE" class="valid">
                   	<option value="">全部状态</option>
-                    <option value="1" <c:if test="${page.pd.STATE eq 1}">selected="selected"</c:if>>启用</option>
-                    <option value="0" <c:if test="${page.pd.STATE eq 0}">selected="selected"</c:if>>暂停</option>
+                    <option value="1" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '1'}">selected="selected"</c:if>>启用</option>
+                    <option value="0" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '0'}">selected="selected"</c:if>>暂停</option>
                   </select>
           </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
