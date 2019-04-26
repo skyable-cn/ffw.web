@@ -1,7 +1,11 @@
 package com.ffw.web.controller;
 
+import java.io.File;
+import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +15,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ffw.api.model.Page;
 import com.ffw.api.model.PageData;
 import com.ffw.api.util.DateUtil;
+import com.ffw.web.config.FileConfig;
 import com.ffw.web.constant.IConstant;
 import com.ffw.web.util.Pinyin;
 import com.ffw.web.util.RestTemplateUtil;
@@ -28,6 +36,9 @@ public class ShopController extends BaseController {
 
 	@Autowired
 	RestTemplateUtil rest;
+
+	@Autowired
+	FileConfig fileConfig;
 
 	/**
 	 * 保存
@@ -90,6 +101,49 @@ public class ShopController extends BaseController {
 		pd = this.getPageData();
 
 		rest.post(IConstant.FFW_SERVICE_KEY, "shop/edit", pd, PageData.class);
+
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver(
+				getSession().getServletContext());
+		if (resolver.isMultipart(getRequest())) {
+			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) getRequest();
+			Iterator<String> it = multipartHttpServletRequest.getFileNames();
+			while (it.hasNext()) {
+				String fileID = it.next();
+				MultipartFile file = multipartHttpServletRequest
+						.getFile(fileID);
+				if (StringUtils.isEmpty(file.getOriginalFilename())) {
+					continue;
+				}
+				String fileOriginaName = file.getOriginalFilename();
+				String tempName = get32UUID()
+						+ fileOriginaName.substring(fileOriginaName
+								.lastIndexOf("."));
+				File fileNew = new File(fileConfig.getDirImage()
+						+ File.separator + tempName);
+				file.transferTo(fileNew);
+
+				PageData pdf = new PageData();
+				pdf.put("REFERENCE_ID", pd.getString("SHOP_ID"));
+				pdf.put("FILENAME", fileOriginaName);
+
+				String FILESIZE = new DecimalFormat("#.000").format(file
+						.getSize() * 1.000 / 1024 / 1024);
+				if (FILESIZE.startsWith(".")) {
+					FILESIZE = IConstant.STRING_0 + FILESIZE;
+				}
+				pdf.put("FILESIZE", FILESIZE);
+				pdf.put("FILEPATH", tempName);
+				pdf.put("FILETYPE", IConstant.STRING_7);
+
+				PageData pdft = rest.post(IConstant.FFW_SERVICE_KEY,
+						"file/findBy", pdf, PageData.class);
+				rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdft,
+						PageData.class);
+
+				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf,
+						PageData.class);
+			}
+		}
 
 		mv.addObject(
 				"msg",

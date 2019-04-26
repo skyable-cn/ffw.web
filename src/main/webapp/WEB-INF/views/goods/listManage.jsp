@@ -59,6 +59,7 @@
       <table class="layui-table x-admin">
         <thead>
           <tr>
+          	<th>产品图片</th>
             <th>产品名称</th>
             <th>商户名称</th>
             <th>状态</th>
@@ -68,6 +69,7 @@
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
+          	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
            	<td>${var.GOODSNAME}</td>
             <td>${var.SHOPNAME}</td>
             <td>

@@ -50,7 +50,7 @@
       <table class="layui-table x-admin">
         <thead>
           <tr>
-            <th>账号</th>
+            <th>头像</th>
             <th>昵称</th>
             <th>姓名</th>
             <th>电话</th>
@@ -62,7 +62,7 @@
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-           	<td>${var.USERNAME}</td>
+           	<td><img alt="" src="${var.PHOTO}" width="50"></td>
             <td>${var.NICKNAME}</td>
             <td>${var.FULLNAME}</td>
             <td>${var.PHONE}</td>

@@ -23,8 +23,8 @@
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">产品管理</a>
-        <a href="">产品查询</a>
+        <a href="">订单管理</a>
+        <a href="">会员充值管理</a>
         <a>
           <cite>列表查询</cite></a>
       </span>
@@ -32,47 +32,47 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/goods/search">
+    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/recharge/listPage">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
-          <div class="layui-input-inline">
+          
+           <div class="layui-input-inline">
                   <select id="shipping" name="STATE" class="valid">
-                  	<option value="">全部状态</option>
-                    <option value="1" <c:if test="${page.pd.STATE eq 1}">selected="selected"</c:if>>启用</option>
-                    <option value="0" <c:if test="${page.pd.STATE eq 0}">selected="selected"</c:if>>暂停</option>
+                  	<option value="">全部类别</option>
+                    <option value="0" <c:if test="${0 eq page.pd.STATE}">selected="selected"</c:if>>待支付</option>
+                    <option value="1" <c:if test="${1 eq page.pd.STATE}">selected="selected"</c:if>>已支付</option>
                   </select>
-          </div>
+              </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
-      
       <table class="layui-table x-admin">
         <thead>
           <tr>
-          	<th>产品图片</th>
-            <th>产品名称</th>
-            <th>更新时间</th>
+            <th>系统交易</th>
+            <th>微信交易</th>
+            <th>产品</th>
             <th>状态</th>
-            <th>操作</th>
+            <th>金额</th>
+            <th>微信号</th>
+            <th>时间</th>
             </tr>
         </thead>
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-          	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
-           	<td>${var.GOODSNAME}</td>
-           	<td>${var.UPDATETIME}</td>
+           	<td>${var.RECHARGESN}</td>
+            <td>${var.WEIXINSN}</td>
+            <td>${var.PRODUCTDESC}</td>
             <td>
-            <c:choose>
-            	<c:when test="${var.STATE eq 1}">启用</c:when>
-            	<c:otherwise>暂停</c:otherwise>
-            </c:choose>
+            	<c:choose>
+            		<c:when test="${var.STATE eq 0}">待支付</c:when>
+            		<c:when test="${var.STATE eq 1}">已支付</c:when>
+            	</c:choose>
             </td>
-            <td class="td-manage">
-              <a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/goods/goInfo?GOODS_ID=${var.GOODS_ID}');" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
-              </a>
-            </td>
+             <td>${var.MONEY}</td>
+             <td>${var.NICKNAME}</td>
+             <td>${var.CDT}</td>
           </tr>
           </c:forEach>
           

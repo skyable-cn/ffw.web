@@ -57,6 +57,7 @@
             <th>产品</th>
             <th>类别</th>
             <th>创建时间</th>
+            <th>审核状态</th>
             <th>操作</th>
             </tr>
         </thead>
@@ -67,6 +68,14 @@
             <td>${var.GOODSNAME}</td>
             <td>${var.STANDTYPENAME}</td>
             <td>${var.CREATETIME}</td>
+            <td>
+            <c:choose>
+            	<c:when test="${var.STATE eq 0}">待审核</c:when>
+            	<c:when test="${var.STATE eq 1}">已通过</c:when>
+            	<c:when test="${var.STATE eq 2}">已打回</c:when>
+            	<c:otherwise>未知</c:otherwise>
+            </c:choose>
+            </td>
             <td class="td-manage">
               <a title="编辑"  onclick="commonEdit('<%=request.getContextPath()%>/stand/goEdit?STAND_ID=${var.STAND_ID}')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
@@ -74,6 +83,11 @@
           	   <a title="删除" onclick="commonDelete('<%=request.getContextPath()%>/stand/delete?STAND_ID=${var.STAND_ID}');" href="javascript:;">
                  <i class="layui-icon">&#xe640;</i>
                </a>
+               <c:if test="${var.STATE eq 0}">
+              <a title="审核" onclick="commonHref('<%=request.getContextPath()%>/stand/goAuditing?STAND_ID=${var.STAND_ID}');" href="javascript:;">
+                <i class="layui-icon">&#xe6b2;</i>
+              </a>
+              </c:if>
             </td>
           </tr>
           </c:forEach>

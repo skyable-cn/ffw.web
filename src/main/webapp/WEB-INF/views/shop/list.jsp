@@ -50,6 +50,7 @@
       <table class="layui-table x-admin">
         <thead>
           <tr>
+          	<th>商户图片</th>
             <th>商户名称</th>
             <th>联系人</th>
             <th>联系方式</th>
@@ -61,12 +62,16 @@
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
+          	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
            	<td>${var.SHOPNAME}</td>
             <td>${var.CONTRACTPERSON}</td>
             <td>${var.CONTRACTPHONE}</td>
             <td>${var.ACCOUNTER}</td>
             <td>${var.SHOPSTATENAME}</td>
             <td class="td-manage">
+              <a title="编辑"  onclick="commonEdit('<%=request.getContextPath()%>/shop/goEdit?SHOP_ID=${var.SHOP_ID}')" href="javascript:;">
+                <i class="layui-icon">&#xe642;</i>
+              </a>
               <a title="删除" onclick="commonDelete('<%=request.getContextPath()%>/shop/delete?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>

@@ -26,6 +26,8 @@ public interface IConstant {
 
 	String STRING_6 = "6";
 
+	String STRING_7 = "7";
+
 	String MENU_FIRST_DEFAULT = "MENU_FIRST_DEFAULT";
 
 	String MENU_LIST = "MENU_LIST";

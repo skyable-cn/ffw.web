@@ -19,17 +19,6 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-     <style>
-     #fileTable{
-     	min-width:550px;
-     }
-     #fileTable tr td{
-     	  padding:10px;
-     }
-     #fileTable tr{
-     	  border:1px #dddddd solid;
-     }
-     </style>
   </head>
   
   <body>
@@ -38,61 +27,38 @@
         <a href="">活动管理</a>
         <a href="">展位管理</a>
         <a>
-          <cite>编辑展位</cite></a>
+          <cite>审核展位</cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-        <form enctype="multipart/form-data" class="layui-form" method="post" action="<%=request.getContextPath()%>/stand/edit">
-          <input type="hidden" name="STAND_ID" value="${pd.STAND_ID}"/>
+        <form class="layui-form" method="post" action="<%=request.getContextPath()%>/stand/auditing">
+        <input type="hidden" name="STAND_ID" value="${pd.STAND_ID}"/>
           <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>审核结果
+              </label>
+              <div class="layui-input-inline">
+                  <select id="shipping" name="STATE" class="valid">
+                    <option value="1">通过</option>
+                    <option value="2">打回</option>
+                  </select>
+              </div>
+          </div>
+           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>展位图片
+                  <span class="x-red">*</span>审核备注
               </label>
               <div class="layui-input-inline">
-                  <table id="fileTable">
-                  		<tr><td><input id="file" type="file" name="file" onchange="showImg(this)" accept="image/*" lay-verify="nikename1"/></td><td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${pd.FILEPATH}" alt="展位图片"  width="150px" id="image" style="cursor:pointer;"/></td><td></td></tr>
-                  	</table>
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>产品(商家)
-              </label>
-              <div class="layui-input-inline">
-                  <select id="rolemodule" name="GOODS_ID" class="valid">
-                    <c:forEach var="goods" items="${goodsData}">
-                    	<option value="${goods.GOODS_ID}" <c:if test="${goods.GOODS_ID eq pd.GOODS_ID}">selected="selected"</c:if>>${goods.GOODSNAME} (${goods.SHOPNAME})</option>
-                    </c:forEach>
-                  </select>
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>类别
-              </label>
-              <div class="layui-input-inline">
-                  <select id="rolemodule2" name="STANDTYPE_ID" class="valid">
-                    <c:forEach var="type" items="${typeData}">
-                    	<option value="${type.STANDTYPE_ID}"  <c:if test="${type.STANDTYPE_ID eq pd.STANDTYPE_ID}">selected="selected"</c:if>>${type.STANDTYPENAME}</option>
-                    </c:forEach>
-                  </select>
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>描述
-              </label>
-              <div class="layui-input-inline">
-                   <textarea placeholder="请输入内容" id="desc3" name="STANDDESC" class="layui-textarea">${pd.STANDDESC}</textarea>
+                  <textarea placeholder="请输入内容" id="desc" name="REMARK" class="layui-textarea" lay-verify="mark"></textarea>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="add" lay-submit="" type="submit">
-                  编辑
+                  确定
               </button>
           </div>
       </form>
@@ -105,21 +71,14 @@
         
           //自定义验证规则
           form.verify({
-            nikename: function(value){
-              if(value.length < 1){
-                return '展位图片不许为空';
+            mark: function(value){
+              if(value.length < 2){
+                return '备注至少得2个字符啊';
               }
             }
           });
           
         });
-        
-        function showImg(obj){
-        	var imageSrc = window.URL?window.URL.createObjectURL(obj.files[0]):obj.value;
-        	$("#image")[0].src=imageSrc;
-        	$("#image").css("display","");
-        }
-        
     </script>
   </body>
 

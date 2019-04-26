@@ -80,6 +80,14 @@
               </div>
           </div>
           <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>描述
+              </label>
+              <div class="layui-input-inline">
+                   <textarea placeholder="请输入内容" id="desc3" name="STANDDESC" class="layui-textarea"></textarea>
+              </div>
+          </div>
+          <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="add" lay-submit="" type="submit">

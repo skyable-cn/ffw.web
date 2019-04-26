@@ -52,6 +52,8 @@ public class StandController extends BaseController {
 
 		pd.put("CREATETIME", DateUtil.getTime());
 
+		pd.put("STATE", IConstant.STRING_0);
+
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "stand/save", pd,
 				PageData.class);
 
@@ -192,6 +194,23 @@ public class StandController extends BaseController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/auditing")
+	public ModelAndView auditing() throws Exception {
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+
+		rest.post(IConstant.FFW_SERVICE_KEY, "stand/edit", pd, PageData.class);
+
+		mv.addObject(
+				"msg",
+				getMessageUrl("MSG_CODE_APPROVE_SUCCESS",
+						new Object[] { "审核展位" }, ""));
+		mv.setViewName("redirect:/stand/listPage");
+		logger.info("审核展位成功");
+		return mv;
+	}
+
 	@RequestMapping("listPage")
 	public ModelAndView listPage() throws Exception {
 		ModelAndView mv = this.getModelAndView();
@@ -284,6 +303,35 @@ public class StandController extends BaseController {
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("stand/edit");
+		return mv;
+	}
+
+	@RequestMapping(value = "/goAuditing")
+	public ModelAndView goAuditing() throws Exception {
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+
+		PageData pdm = new PageData();
+		List<PageData> typeData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"stand/listAllType", pdm,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("typeData", typeData);
+
+		PageData pdm2 = new PageData();
+		pdm2.put("STATE", IConstant.STRING_1);
+		List<PageData> goodsData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"goods/listAll", pdm2,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("goodsData", goodsData);
+
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "stand/find", pd,
+				PageData.class);
+		mv.addObject("pd", pd); // 放入视图容器
+
+		mv.setViewName("stand/auditing");
 		return mv;
 	}
 

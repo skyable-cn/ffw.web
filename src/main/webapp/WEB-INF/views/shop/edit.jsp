@@ -33,14 +33,25 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-        <form class="layui-form" method="post" action="<%=request.getContextPath()%>/shop/edit">
+        <form enctype="multipart/form-data" class="layui-form" method="post" action="<%=request.getContextPath()%>/shop/edit">
         <input type="hidden" name="SHOP_ID" value="${pd.SHOP_ID}"/>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>商户图片
+              </label>
+              <div class="layui-input-inline">
+                  <table id="fileTable">
+                  		<tr><td><input id="file" type="file" name="file" onchange="showImg(this)" accept="image/*" lay-verify="nikename1"/></td><td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${pd.FILEPATH}" alt="展位图片"  width="150px" id="image" style="cursor:pointer;"/></td><td></td></tr>
+                  	</table>
+              </div>
+          </div>
+          
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>商户名称
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username" name="ROLENAME" required="" lay-verify="nikename"
+                  <input type="text" id="L_username" name="SHOPNAME" required="" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.SHOPNAME}" >
               </div>
           </div>
@@ -66,7 +77,7 @@
                   <span class="x-red">*</span>联系人
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username5" name="CONTRACTPERSON" required="" lay-verify="nikename"
+                  <input type="text" id="L_username5" name="CONTRACTPERSON" required="" lay-verify="nikename1"
                   autocomplete="off" class="layui-input" value="${pd.CONTRACTPERSON}" >
               </div>
           </div>
@@ -75,30 +86,11 @@
                   <span class="x-red">*</span>联系电话
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username6" name="CONTRACTPHONE" required="" lay-verify="nikename"
+                  <input type="text" id="L_username6" name="CONTRACTPHONE" required="" lay-verify="nikename2"
                   autocomplete="off" class="layui-input" value="${pd.CONTRACTPHONE}" >
               </div>
           </div>
-          <div class="layui-form-item">
-              <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>Web账号
-              </label>
-               <label for="L_username" class="layui-form-label">
-                  <span>${pd.ACCOUNTER}</span>
-              </label>
-          </div>
-           <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>审核状态
-              </label>
-              <div class="layui-input-inline">
-                  <select id="rolemodule" name="SHOPSTATE_ID" class="valid">
-                    <c:forEach var="var" items="${stateData}">
-                    	<option value="${var.SHOPSTATE_ID}"  <c:if test="${var.SHOPSTATE_ID eq pd.SHOPSTATE_ID}">selected="selected"</c:if>>${var.SHOPSTATENAME}</option>
-                    </c:forEach>
-                  </select>
-              </div>
-          </div>
+
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
@@ -124,6 +116,12 @@
           });
           
         });
+        
+        function showImg(obj){
+        	var imageSrc = window.URL?window.URL.createObjectURL(obj.files[0]):obj.value;
+        	$("#image")[0].src=imageSrc;
+        	$("#image").css("display","");
+        }
     </script>
   </body>
 
