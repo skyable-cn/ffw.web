@@ -4,6 +4,8 @@ public interface IConstant {
 
 	String FFW_SERVICE_KEY = "FFW.SERVICE";
 
+	String FFW_APP_KEY = "FFW.APP";
+
 	String USER_SESSION = "USER_SESSION";
 
 	String NO_INTERCEPTOR_PATH = ".*/((static/)|(goLogin)|(login)|(logout)|(code)|(file)|(api)|(api-docs)|(swagger)|(icon.ico)).*";

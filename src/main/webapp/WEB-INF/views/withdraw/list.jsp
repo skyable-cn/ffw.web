@@ -57,6 +57,7 @@
             <th>审核时间</th>
             <th>WXOPEN_ID</th>
             <th>状态</th>
+            <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -75,6 +76,16 @@
             		<c:when test="${var.STATE eq 2}">已打回</c:when>
             		<c:otherwise>未知</c:otherwise>
             	</c:choose>
+            </td>
+            <td>
+            	<a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/withdraw/goInfo?WITHDRAW_ID=${var.WITHDRAW_ID}');" href="javascript:;">
+                <i class="layui-icon">&#xe63c;</i>
+              </a>
+              <c:if test="${var.STATE eq 0}">
+              <a title="审核" onclick="commonHref('<%=request.getContextPath()%>/withdraw/goAuditing?WITHDRAW_ID=${var.WITHDRAW_ID}');" href="javascript:;">
+                <i class="layui-icon">&#xe6b2;</i>
+              </a>
+              </c:if>
             </td>
           </tr>
           </c:forEach>
