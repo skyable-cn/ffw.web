@@ -25,6 +25,7 @@
       <span class="layui-breadcrumb">
         <a href="">结算管理</a>
         <a href="">分销人员结算</a>
+        <a href="">人员结算详情查看</a>
         <a>
           <cite>列表查询</cite></a>
       </span>
@@ -32,17 +33,10 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/seller/listPage">
+    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/seller/member/listPage?MEMBER_ID=${page.pd.MEMBER_ID}">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
-          <div class="layui-input-inline">
-                  <select id="shipping" name="MEMBERTYPE_ID" class="valid">
-                  	<option value="">全部会员类型</option>
-                    <c:forEach var="var" items="${typeData}">
-                    	<option value="${var.MEMBERTYPE_ID}"  <c:if test="${var.MEMBERTYPE_ID eq page.pd.MEMBERTYPE_ID}">selected="selected"</c:if>>${var.MEMBERTYPENAME}</option>
-                    </c:forEach>
-                  </select>
-              </div>
+         
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
@@ -50,33 +44,27 @@
       <table class="layui-table x-admin">
         <thead>
           <tr>
-            <th>头像</th>
-            <th>昵称</th>
-            <th>可提金额</th>
-            <th>已提金额</th>
-            <th>直属收益</th>
-            <th>团队收益</th>
-            <th>WXOPEN_ID</th>
-            <th>类型</th>
-            <th>操作</th>
+            <th>交易时间</th>
+            <th>订单号</th>
+            <th>订单金额</th>
+            <th>用户返利</th>
+            <th>会员返利</th>
+            <th>本级返利</th>
+            <th>一级返利</th>
+            <th>二级返利</th>
             </tr>
         </thead>
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-           	<td><img alt="" src="${var.PHOTO}" width="50"></td>
-            <td>${var.NICKNAME}</td>
-            <td>${var.WAITACCOUNT}</td>
-            <td>${var.ALREADYACCOUNT}</td>
-            <td>${var.MEACCOUNT}</td>
-            <td>${var.TEAMACCOUNT}</td>
-            <td>${var.WXOPEN_ID}</td>
-            <td>${var.MEMBERTYPENAME}</td>
-            <td class="td-manage">
-              <a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/seller/member/listPage?MEMBER_ID=${var.MEMBER_ID}');" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
-              </a>
-            </td>
+           	<td>${var.CDT}</td>
+            <td>${var.ORDERSN}</td>
+            <td>${var.MONEY}</td>
+            <td>${var.ACCOUNT0}</td>
+            <td>${var.ACCOUNT1}</td>
+            <td>${var.ACCOUNT2}</td>
+            <td>${var.ACCOUNT3}</td>
+            <td>${var.ACCOUNT4}</td>
           </tr>
           </c:forEach>
           
