@@ -39,11 +39,11 @@
            <div class="layui-input-inline">
                   <select id="shipping" name="STATE" class="valid">
                   	<option value="">全部类别</option>
-                    <option value="0" <c:if test="${0 eq page.pd.STATE}">selected="selected"</c:if>>待支付</option>
-                    <option value="1" <c:if test="${1 eq page.pd.STATE}">selected="selected"</c:if>>已支付</option>
-                    <option value="2" <c:if test="${2 eq page.pd.STATE}">selected="selected"</c:if>>待使用</option>
-                    <option value="3" <c:if test="${3 eq page.pd.STATE}">selected="selected"</c:if>>已核销</option>
-                    <option value="5" <c:if test="${5 eq page.pd.STATE}">selected="selected"</c:if>>已退款</option>
+                    <option value="0" <c:if test="${'0' eq page.pd.STATE}">selected="selected"</c:if>>待支付</option>
+                    <option value="1" <c:if test="${'1' eq page.pd.STATE}">selected="selected"</c:if>>已支付</option>
+                    <option value="2" <c:if test="${'2' eq page.pd.STATE}">selected="selected"</c:if>>待使用</option>
+                    <option value="3" <c:if test="${'3' eq page.pd.STATE}">selected="selected"</c:if>>已核销</option>
+                    <option value="5" <c:if test="${'5' eq page.pd.STATE}">selected="selected"</c:if>>已退款</option>
                   </select>
               </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>

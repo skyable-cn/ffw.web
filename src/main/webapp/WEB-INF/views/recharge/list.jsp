@@ -39,8 +39,8 @@
            <div class="layui-input-inline">
                   <select id="shipping" name="STATE" class="valid">
                   	<option value="">全部类别</option>
-                    <option value="0" <c:if test="${0 eq page.pd.STATE}">selected="selected"</c:if>>待支付</option>
-                    <option value="1" <c:if test="${1 eq page.pd.STATE}">selected="selected"</c:if>>已支付</option>
+                    <option value="0" <c:if test="${'0' eq page.pd.STATE}">selected="selected"</c:if>>待支付</option>
+                    <option value="1" <c:if test="${'1' eq page.pd.STATE}">selected="selected"</c:if>>已支付</option>
                   </select>
               </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
