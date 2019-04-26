@@ -1,5 +1,7 @@
 package com.ffw.web.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,8 +88,9 @@ public class WithdrawController extends BaseController {
 
 		if (pd.getString("STATE").equals(IConstant.STRING_1)) {
 
-			rest.post(IConstant.FFW_APP_KEY, "app/wxTransfers", pdw,
-					PageData.class);
+			Map<String, String> returnData = rest.post(IConstant.FFW_APP_KEY,
+					"app/wxTransfers", pdw, Map.class);
+			System.err.println(returnData);
 		}
 
 		mv.addObject(
