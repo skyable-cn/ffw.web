@@ -1,7 +1,11 @@
 package com.ffw.web.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +16,25 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ffw.api.model.Page;
 import com.ffw.api.model.PageData;
 import com.ffw.api.util.DateUtil;
+import com.ffw.web.config.WXPayConfigImpl;
+import com.ffw.web.config.WechatMiniConfig;
 import com.ffw.web.constant.IConstant;
 import com.ffw.web.util.RestTemplateUtil;
+import com.github.wxpay.sdk.WXPay;
+import com.github.wxpay.sdk.WXPayConstants.SignType;
+import com.github.wxpay.sdk.WXPayUtil;
 
 @Controller
 @RequestMapping("withdraw")
 public class WithdrawController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(WithdrawController.class);
+
+	@Autowired
+	WechatMiniConfig wechatMiniConfig;
+
+	@Autowired
+	WXPayConfigImpl config;
 
 	@Autowired
 	RestTemplateUtil rest;
@@ -88,9 +103,36 @@ public class WithdrawController extends BaseController {
 
 		if (pd.getString("STATE").equals(IConstant.STRING_1)) {
 
-			Map<String, String> returnData = rest.post(IConstant.FFW_APP_KEY,
-					"app/wxTransfers", pdw, Map.class);
-			System.err.println(returnData);
+			PageData pdm = new PageData();
+			pdm.put("MEMBER_ID", pdw.getString("MEMBER_ID"));
+			pdm = rest.post(IConstant.FFW_SERVICE_KEY, "member/find", pdm,
+					PageData.class);
+
+			logger.info("进入企业付款到个人");
+			WXPay wxpay = new WXPay(config, SignType.MD5);
+			Map<String, String> parameters = new HashMap<String, String>();
+			parameters.put("mch_appid", wechatMiniConfig.getAppid());
+			parameters.put("mchid", wechatMiniConfig.getMchid());
+			parameters.put("nonce_str", WXPayUtil.generateNonceStr());
+			parameters.put("partner_trade_no", pdw.getString("WITHDRAW_ID"));
+			parameters.put("openid", pdm.getString("WXOPEN_ID"));
+			parameters.put("check_name", "NO_CHECK");
+			String fee = String
+					.valueOf(Float.parseFloat(pdw.getString("MONEY")) * 100);
+			parameters.put("amount", fee.substring(0, fee.indexOf(".")) + "");
+			parameters.put("spbill_create_ip", getIpAddr(getRequest()));
+			parameters.put("desc", "饭饭网用户提现");
+			// 签名
+			String sign = WXPayUtil.generateSignature(parameters,
+					wechatMiniConfig.getMchkey());
+			parameters.put("sign", sign);
+
+			String notityXml = wxpay
+					.requestWithCert(
+							"https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",
+							parameters, config.getHttpConnectTimeoutMs(),
+							config.getHttpReadTimeoutMs());
+			System.err.println(notityXml);
 		}
 
 		mv.addObject(
@@ -100,5 +142,22 @@ public class WithdrawController extends BaseController {
 		mv.setViewName("redirect:/shop/listPage");
 		logger.info("审核分销提现成功");
 		return mv;
+	}
+
+	private String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("X-Forwarded-For");
+		if (StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
+			int index = ip.indexOf(",");
+			if (index != -1) {
+				return ip.substring(0, index);
+			} else {
+				return ip;
+			}
+		}
+		ip = request.getHeader("X-Real-IP");
+		if (StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
+			return ip;
+		}
+		return request.getRemoteAddr();
 	}
 }

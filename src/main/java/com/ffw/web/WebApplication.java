@@ -12,11 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import com.ffw.web.config.FileConfig;
+import com.ffw.web.config.WechatMiniConfig;
 
 @SpringBootApplication
 @EnableEurekaClient
 @EnableDiscoveryClient
-@EnableConfigurationProperties({ FileConfig.class })
+@EnableConfigurationProperties({ FileConfig.class, WechatMiniConfig.class })
 public class WebApplication extends SpringBootServletInitializer {
 
 	@Override
