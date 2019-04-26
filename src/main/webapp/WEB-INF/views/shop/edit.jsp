@@ -90,6 +90,16 @@
                   autocomplete="off" class="layui-input" value="${pd.CONTRACTPHONE}" >
               </div>
           </div>
+          
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>人均消费
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_username7" name="AVGMONEY" required="" lay-verify="nikename22"
+                  autocomplete="off" class="layui-input" value="${pd.AVGMONEY}" >
+              </div>
+          </div>
 
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
