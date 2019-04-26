@@ -86,7 +86,8 @@ public class WithdrawController extends BaseController {
 
 		if (pd.getString("STATE").equals(IConstant.STRING_1)) {
 
-			rest.post(IConstant.FFW_APP_KEY, "wxTransfers", pdw, PageData.class);
+			rest.post(IConstant.FFW_APP_KEY, "app/wxTransfers", pdw,
+					PageData.class);
 		}
 
 		mv.addObject(
