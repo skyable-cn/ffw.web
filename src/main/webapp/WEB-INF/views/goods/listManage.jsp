@@ -67,7 +67,7 @@
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-          	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
+          	<td><img width="100" src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}';"/></td>
            	<td>${var.GOODSNAME}</td>
             <td>${var.SHOPNAME}</td>
             <td>

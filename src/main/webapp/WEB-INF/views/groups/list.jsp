@@ -54,8 +54,8 @@
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-           	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH1}" alt="介绍图片" width="150px" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH1}';"/></td>
-            <td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH2}" alt="二维码图片" width="150px" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH2}';"/></td>
+           	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH1}" alt="介绍图片" width="100" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH1}';"/></td>
+            <td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH2}" alt="二维码图片" width="100" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH2}';"/></td>
             <td>${var.GROUPSDESC}</td>
             <td>${var.CREATETIME}</td>
             <td class="td-manage">

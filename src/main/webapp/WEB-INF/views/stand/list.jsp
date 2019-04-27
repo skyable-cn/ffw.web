@@ -62,7 +62,7 @@
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-           	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}" alt="展位图片" width="150px" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}';"/></td>
+           	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}" alt="展位图片" width="100" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}';"/></td>
             <td>${var.GOODSNAME}</td>
             <td>${var.STANDTYPENAME}</td>
             <td>${var.CREATETIME}</td>
