@@ -62,8 +62,12 @@
             <td>${var.NICKNAME}</td>
             <td>${var.WXOPEN_ID}</td>
             <td>
-            	<a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/shopdraw/shop/listPage?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
+              <a title="明细查看" onclick="commonInfo('<%=request.getContextPath()%>/shopdraw/shop/listPage?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
+                <i class="iconfont">&#xe6b5;</i>
+              </a>
+              <span style="width:30px;">&nbsp;</span>
+              <a title="结算查看" onclick="commonInfo('<%=request.getContextPath()%>/shopdraw/record/listPage?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
+                <i class="iconfont">&#xe6a2;</i>
               </a>
             </td>
           </tr>

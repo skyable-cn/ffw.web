@@ -63,6 +63,12 @@ public class SellerController extends BaseController {
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "orders/listPageBill",
 				pd, Page.class);
 
+		PageData member = new PageData();
+		member.put("MEMBER_ID", pd.getString("MEMBER_ID"));
+		member = rest.post(IConstant.FFW_SERVICE_KEY, "member/find", member,
+				PageData.class);
+		mv.addObject("member", member);
+
 		mv.setViewName("/seller/listMember");
 		mv.addObject("page", page);
 		mv.addObject("pd", pd);

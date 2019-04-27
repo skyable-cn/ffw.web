@@ -31,6 +31,7 @@
       </span>
     </div>
     <div class="x-body">
+    <blockquote class="layui-elem-quote"><span><img width="50" src="${member.PHOTO}"/></span><span>${member.NICKNAME }</span><span>${member.WXOPEN_ID}</span></blockquote>
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/seller/member/listPage?MEMBER_ID=${page.pd.MEMBER_ID}">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
