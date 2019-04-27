@@ -51,7 +51,7 @@
                   <span class="x-red">*</span>结算金额
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username14" name="MONEY" required="" lay-verify="nikename"
+                  <input type="text" id="MONEY" name="MONEY" required="" lay-verify="nikename"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -74,11 +74,14 @@
           form.verify({
             nikename: function(value){
               if(value.length < 1){
-                return '金额不许为空';
+                return '结算金额不许为空';
               }
+              if(parseFloat(value) < 0.5){
+                  return '结算金额不能小于0.5元';
+                }
               
               if(parseFloat(value) > parseFloat("${shop.WAITACCOUNT}")){
-                  return '金额不能大于待结算';
+                  return '结算金额不能大于待结算金额';
                 }
             }
           });
