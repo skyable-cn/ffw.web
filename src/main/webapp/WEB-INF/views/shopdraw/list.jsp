@@ -23,7 +23,8 @@
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">商户管理</a>
+        <a href="">结算管理</a>
+        <a href="">商户结算</a>
         <a>
           <cite>列表查询</cite></a>
       </span>
@@ -31,18 +32,10 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/shop/listPage">
+    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/shopdraw/listPage">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           
-           <div class="layui-input-inline">
-                  <select id="shipping" name="SHOPSTATE_ID" class="valid">
-                  	<option value="">全部状态</option>
-                    <c:forEach var="var" items="${stateData}">
-                    	<option value="${var.SHOPSTATE_ID}"  <c:if test="${var.SHOPSTATE_ID eq page.pd.SHOPSTATE_ID}">selected="selected"</c:if>>${var.SHOPSTATENAME}</option>
-                    </c:forEach>
-                  </select>
-              </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
@@ -50,39 +43,30 @@
       <table class="layui-table x-admin">
         <thead>
           <tr>
-          	<th>商户图片</th>
+            <th>商户图片</th>
             <th>商户名称</th>
-            <th>联系人</th>
-            <th>联系方式</th>
-            <th>Web账号</th>
-            <th>审核状态</th>
+            <th>待结算</th>
+            <th>已结算</th>
+            <th>管理员头像</th>
+            <th>管理员昵称</th>
+            <th>结算OPEN_ID</th>
             <th>操作</th>
             </tr>
         </thead>
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-          	<td><img width="50" src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
-           	<td>${var.SHOPNAME}</td>
-            <td>${var.CONTRACTPERSON}</td>
-            <td>${var.CONTRACTPHONE}</td>
-            <td>${var.ACCOUNTER}</td>
-            <td>${var.SHOPSTATENAME}</td>
-            <td class="td-manage">
-              <a title="编辑"  onclick="commonEdit('<%=request.getContextPath()%>/shop/goEdit?SHOP_ID=${var.SHOP_ID}')" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-              <a title="删除" onclick="commonDelete('<%=request.getContextPath()%>/shop/delete?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-              <a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/shop/goInfo?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
+           	<td><img width="50" src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
+            <td>${var.SHOPNAME}</td>
+            <td>${var.WAITACCOUNT}</td>
+            <td>${var.ALREADYACCOUNT}</td>
+            <td><img width="50" src="${var.PHOTO}"/></td>
+            <td>${var.NICKNAME}</td>
+            <td>${var.WXOPEN_ID}</td>
+            <td>
+            	<a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/shopdraw/goInfo?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>
-              <c:if test="${var.SHOPSTATE_ID eq 1}">
-              <a title="审核" onclick="commonHref('<%=request.getContextPath()%>/shop/goAuditing?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
-                <i class="layui-icon">&#xe6b2;</i>
-              </a>
-              </c:if>
             </td>
           </tr>
           </c:forEach>
