@@ -25,15 +25,16 @@
       <span class="layui-breadcrumb">
         <a href="">结算管理</a>
         <a href="">商户结算</a>
+        <a href="">商户结算详情查看</a>
         <a>
           <cite>列表查询</cite></a>
       </span>
     </div>
     <div class="x-body">
-    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/shopdraw/listPage">
+    <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/seller/member/listPage?MEMBER_ID=${page.pd.MEMBER_ID}">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
-          
+         
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
@@ -41,31 +42,29 @@
       <table class="layui-table x-admin">
         <thead>
           <tr>
-            <th>商户图片</th>
-            <th>商户名称</th>
-            <th>待结算</th>
-            <th>已结算</th>
-            <th>管理员头像</th>
-            <th>管理员昵称</th>
-            <th>结算OPEN_ID</th>
-            <th>操作</th>
+            <th>交易时间</th>
+            <th>订单号</th>
+            <th>订单金额</th>
+            <th>产品名称</th>
+            <th>产品原价</th>
+            <th>产品卖价</th>
+            <th>产品结算价</th>
+            <th>数量</th>
+            <th>总共结算价</th>
             </tr>
         </thead>
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-           	<td><img width="50" src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
-            <td>${var.SHOPNAME}</td>
-            <td>${var.WAITACCOUNT}</td>
-            <td>${var.ALREADYACCOUNT}</td>
-            <td><img width="50" src="${var.PHOTO}"/></td>
-            <td>${var.NICKNAME}</td>
-            <td>${var.WXOPEN_ID}</td>
-            <td>
-            	<a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/shopdraw/shop/listPage?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
-              </a>
-            </td>
+           	<td>${var.CDT}</td>
+            <td>${var.ORDERSN}</td>
+            <td>${var.MONEY}</td>
+            <td>${var.GOODSNAME}</td>
+            <td>${var.ORIGINALMONEY}</td>
+            <td>${var.SELLMONEY}</td>
+            <td>${var.BALANCEMONEY}</td>
+            <td>${var.NUMBER}</td>
+            <td>${var.SETTLEMONEY}</td>
           </tr>
           </c:forEach>
           

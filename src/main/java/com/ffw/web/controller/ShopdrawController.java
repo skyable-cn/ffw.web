@@ -41,4 +41,24 @@ public class ShopdrawController extends BaseController {
 		logger.info("分页查询商户结算信息");
 		return mv;
 	}
+
+	@RequestMapping("shop/listPage")
+	public ModelAndView memberListPage() throws Exception {
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords"); // 检索条件
+		if (null != keywords && !"".equals(keywords)) {
+			pd.put("keywords", keywords.trim());
+		}
+
+		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "orders/listPageShop",
+				pd, Page.class);
+
+		mv.setViewName("/shopdraw/listShop");
+		mv.addObject("page", page);
+		mv.addObject("pd", pd);
+		logger.info("分页查询商户结算信息");
+		return mv;
+	}
 }
