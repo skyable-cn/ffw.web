@@ -52,6 +52,7 @@
           <tr>
           	<th>商户图片</th>
             <th>商户名称</th>
+            <th>管理员头像</th>
             <th>联系人</th>
             <th>联系方式</th>
             <th>Web账号</th>
@@ -64,6 +65,7 @@
           	<tr>
           	<td><img width="50" src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
            	<td>${var.SHOPNAME}</td>
+           	<td><img width="50" src="${var.PHOTO}"/></td>
             <td>${var.CONTRACTPERSON}</td>
             <td>${var.CONTRACTPHONE}</td>
             <td>${var.ACCOUNTER}</td>
