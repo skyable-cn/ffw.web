@@ -64,7 +64,7 @@
           </div>
 		<div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  	开始时间
+                  	<span class="x-red">*</span>开始时间
               </label>
               <div class="layui-input-inline">
                   <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" autocomplete="off" value="${pd.STARTTIME}">
@@ -72,7 +72,7 @@
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  	结束时间
+                  	<span class="x-red">*</span>结束时间
               </label>
               <div class="layui-input-inline">
                   <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end"  autocomplete="off" value="${pd.ENDTIME}">
@@ -80,7 +80,7 @@
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  	开奖时间
+                  	<span class="x-red">*</span>开奖时间
               </label>
               <div class="layui-input-inline">
                   <input class="layui-input" placeholder="开奖日" name="SHOWTIME" id="show"  autocomplete="off" value="${pd.SHOWTIME}">
@@ -92,6 +92,15 @@
               </label>
               <div class="layui-input-inline">
                   <textarea placeholder="请输入内容" id="desc3" name="LOTTERYDESC" class="layui-textarea"> ${pd.LOTTERYDESC}</textarea>
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>中奖人数设置
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_username71" name="LIMITPEOPLE" required="" lay-verify="nikenameA"
+                  autocomplete="off" class="layui-input" value="${pd.LIMITPEOPLE}">
               </div>
           </div>
            <div class="layui-form-item">
