@@ -141,15 +141,13 @@ public class LotteryController extends BaseController {
 
 		PageData pdr = new PageData();
 		pdr.put("LOTTERY_ID", LOTTERY_ID);
-		pdr.put("LIMITPEOPLE", pd.getString("LIMITPEOPLE"));
+		pdr.put("LIMITPEOPLE", Integer.parseInt(pd.getString("LIMITPEOPLE")));
 		pdr.put("STATE", IConstant.STRING_1);
 		rest.post(IConstant.FFW_SERVICE_KEY, "lotteryrecord/editOpen", pdr,
 				PageData.class);
 
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_SUCCESS",
-						new Object[] { "开奖抽奖" }, ""));
+		mv.addObject("msg",
+				getMessageUrl("MSG_CODE_SUCCESS", new Object[] { "开奖抽奖" }, ""));
 		mv.setViewName("redirect:/lottery/listPage");
 		logger.info("开奖抽奖成功");
 
