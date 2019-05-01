@@ -161,6 +161,11 @@
               elem: '#end' //指定元素
             	  ,type: 'datetime'
             });
+            
+            laydate.render({
+                elem: '#show' //指定元素
+              	  ,type: 'datetime'
+              });
           });
         
         function showImg(obj){

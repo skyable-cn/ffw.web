@@ -49,7 +49,7 @@
               </label>
               <div class="layui-input-inline">
                   <table id="fileTable">
-                  		<tr><td><input id="file" type="file" name="file" onchange="showImg(this)" accept="image/*" lay-verify="nikename"/></td><td><img alt="展位图片"  width="150px" id="image" style="display:none;cursor:pointer;"/></td><td></td></tr>
+                  		<tr><td><input id="file" type="file" name="file" onchange="showImg(this)" accept="image/*" lay-verify="nikename2"/></td><td><img alt="展位图片"  width="150px" id="image" style="display:none;cursor:pointer;"/></td><td></td></tr>
                   	</table>
               </div>
           </div>
@@ -107,7 +107,7 @@
                   <span class="x-red">*</span>赞助商名称
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username7" name="SPONSORNAME" required="" lay-verify="nikename"
+                  <input type="text" id="L_username7" name="SPONSORNAME" required="" lay-verify="nikename3"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -116,7 +116,7 @@
                   	赞助商链接
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username8" name="SPONSORURL" required="" lay-verify="nikename"
+                  <input type="text" id="L_username8" name="SPONSORURL" required="" lay-verify="nikename4"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -137,7 +137,7 @@
         
           //自定义验证规则
           form.verify({
-            nikename: function(value){
+            nikename0: function(value){
               if(value.length < 1){
                 return '抽奖图片不许为空';
               }
@@ -160,6 +160,11 @@
               elem: '#end' //指定元素
             	  ,type: 'datetime'
             });
+            
+            laydate.render({
+                elem: '#show' //指定元素
+              	  ,type: 'datetime'
+              });
           });
         
         function showImg(obj){
