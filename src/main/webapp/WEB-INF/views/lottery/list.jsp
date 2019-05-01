@@ -48,6 +48,7 @@
             <th>抽奖介绍</th>
             <th>抽奖时间</th>
             <th>赞助商</th>
+            <th>状态</th>
             <th>操作</th>
             </tr>
         </thead>
@@ -56,8 +57,13 @@
           	<tr>
            	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}" alt="展位图片" width="100" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}';"/></td>
             <td>${var.LOTTERYDESC}</td>
-            <td>${var.STARTTIME} / ${var.ENDTIME}</td>
+            <td>开始:${var.STARTTIME} <br/> 结束:${var.ENDTIME} <br/> 开奖:${var.SHOWTIME}</td>
             <td>${var.SPONSORNAME}</td>
+            <td>
+            	<c:if test="${var.STATE eq 0 and var.KJFLAG eq 0 }"><a class="layui-btn layui-btn-disabled" href="javascript:layer.alert('该抽奖活动待开奖');">待开奖</a></c:if>
+            	<c:if test="${var.STATE eq 0 and var.KJFLAG eq 1 }"><a class="layui-btn layui-btn-normal" onclick="commonDelete('<%=request.getContextPath()%>/lottery/open?LOTTERY_ID=${var.LOTTERY_ID}','确认开奖该抽奖活动?')" href="javascript:;">请开奖</a></c:if>
+            	<c:if test="${var.STATE eq 1}"><a class="layui-btn layui-btn-disabled" href="javascript:layer.alert('该抽奖活动已开奖');">已开奖</a></c:if>
+            </td>
             <td class="td-manage">
               <a title="编辑"  onclick="commonEdit('<%=request.getContextPath()%>/lottery/goEdit?LOTTERY_ID=${var.LOTTERY_ID}')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>

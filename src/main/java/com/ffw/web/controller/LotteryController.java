@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ffw.api.model.Page;
 import com.ffw.api.model.PageData;
+import com.ffw.api.util.DateUtil;
 import com.ffw.web.config.FileConfig;
 import com.ffw.web.constant.IConstant;
 import com.ffw.web.util.RestTemplateUtil;
@@ -46,6 +47,9 @@ public class LotteryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+
+		pd.put("CDT", DateUtil.getTime());
+		pd.put("STATE", IConstant.STRING_0);
 
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "lottery/save", pd,
 				PageData.class);
@@ -119,6 +123,35 @@ public class LotteryController extends BaseController {
 						""));
 		mv.setViewName("redirect:/lottery/listPage");
 		logger.info("删除抽奖成功");
+
+		return mv;
+	}
+
+	@RequestMapping(value = "/open")
+	@ResponseBody
+	public ModelAndView open(@RequestParam String LOTTERY_ID) throws Exception {
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd.put("LOTTERY_ID", LOTTERY_ID);
+		pd.put("STATE", IConstant.STRING_1);
+		rest.post(IConstant.FFW_SERVICE_KEY, "lottery/edit", pd, PageData.class);
+
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "lottery/find", pd,
+				PageData.class);
+
+		PageData pdr = new PageData();
+		pdr.put("LOTTERY_ID", LOTTERY_ID);
+		pdr.put("LIMITPEOPLE", pd.getString("LIMITPEOPLE"));
+		pdr.put("STATE", IConstant.STRING_1);
+		rest.post(IConstant.FFW_SERVICE_KEY, "lotteryrecord/editOpen", pdr,
+				PageData.class);
+
+		mv.addObject(
+				"msg",
+				getMessageUrl("MSG_CODE_SUCCESS",
+						new Object[] { "开奖抽奖" }, ""));
+		mv.setViewName("redirect:/lottery/listPage");
+		logger.info("开奖抽奖成功");
 
 		return mv;
 	}
