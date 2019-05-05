@@ -30,6 +30,8 @@ public interface IConstant {
 
 	String STRING_7 = "7";
 
+	String STRING_8 = "8";
+
 	String MENU_FIRST_DEFAULT = "MENU_FIRST_DEFAULT";
 
 	String MENU_LIST = "MENU_LIST";
