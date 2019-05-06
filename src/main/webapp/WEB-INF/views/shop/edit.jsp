@@ -19,12 +19,22 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+     #fileTable{
+     	min-width:550px;
+     }
+     #fileTable tr td{
+     	  padding:10px;
+     }
+     #fileTable tr{
+     	  border:1px #dddddd solid;
+     }
+     </style>
   </head>
   
   <body>
   	    <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">系统管理</a>
         <a href="">商户管理</a>
         <a>
           <cite>编辑商户</cite></a>
@@ -33,6 +43,18 @@
     <div class="x-body">
         <form enctype="multipart/form-data" class="layui-form" method="post" action="<%=request.getContextPath()%>/shop/edit">
         <input type="hidden" name="SHOP_ID" value="${pd.SHOP_ID}"/>
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户所属分类
+              </label>
+              <div class="layui-input-inline">
+                  <select id="shoptype" name="SHOPTYPE_ID" class="valid">
+                    <c:forEach var="t" items="${typeData}">
+                    	<option value="${t.SHOPTYPE_ID}" <c:if test="${t.SHOPTYPE_ID eq pd.SHOPTYPE_ID}">selected="selected"</c:if>>${t.SHOPTYPENAME}</option>
+                    </c:forEach>
+                  </select>
+              </div>
+          </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>商户图片

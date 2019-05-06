@@ -44,7 +44,9 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
-      
+      <xblock>
+        <a class="layui-btn" onclick="commonSave('<%=request.getContextPath()%>/shop/goAdd')" href="javascript:;"><i class="layui-icon"></i>添加</a>
+      </xblock>
       <table class="layui-table x-admin">
         <thead>
           <tr>

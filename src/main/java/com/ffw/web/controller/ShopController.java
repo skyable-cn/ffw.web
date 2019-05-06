@@ -52,7 +52,52 @@ public class ShopController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		rest.post(IConstant.FFW_SERVICE_KEY, "shop/save", pd, PageData.class);
+		pd.put("CDT", DateUtil.getTime());
+		pd.put("SHOPSTATE_ID", IConstant.STRING_1);
+
+		pd.put("WAITACCOUNT", IConstant.STRING_0);
+		pd.put("ALREADYACCOUNT", IConstant.STRING_0);
+
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "shop/save", pd,
+				PageData.class);
+
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver(
+				getSession().getServletContext());
+		if (resolver.isMultipart(getRequest())) {
+			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) getRequest();
+			Iterator<String> it = multipartHttpServletRequest.getFileNames();
+			while (it.hasNext()) {
+				String fileID = it.next();
+				MultipartFile file = multipartHttpServletRequest
+						.getFile(fileID);
+				if (StringUtils.isEmpty(file.getOriginalFilename())) {
+					continue;
+				}
+				String fileOriginaName = file.getOriginalFilename();
+				String tempName = get32UUID()
+						+ fileOriginaName.substring(fileOriginaName
+								.lastIndexOf("."));
+				File fileNew = new File(fileConfig.getDirImage()
+						+ File.separator + tempName);
+				file.transferTo(fileNew);
+
+				PageData pdf = new PageData();
+				pdf.put("REFERENCE_ID", pd.getString("SHOP_ID"));
+				pdf.put("FILENAME", fileOriginaName);
+
+				String FILESIZE = new DecimalFormat("#.000").format(file
+						.getSize() * 1.000 / 1024 / 1024);
+				if (FILESIZE.startsWith(".")) {
+					FILESIZE = IConstant.STRING_0 + FILESIZE;
+				}
+				pdf.put("FILESIZE", FILESIZE);
+				pdf.put("FILEPATH", tempName);
+				pdf.put("FILETYPE", IConstant.STRING_7);
+
+				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf,
+						PageData.class);
+			}
+		}
 
 		mv.addObject(
 				"msg",
@@ -192,6 +237,21 @@ public class ShopController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+
+		PageData pd1 = new PageData();
+		List<PageData> typeData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"shop/listAllType", pd1,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("typeData", typeData);
+
+		PageData pd2 = new PageData();
+		List<PageData> memberData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"member/listAll", pd2,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("memberData", memberData);
+
 		mv.addObject("pd", pd);
 		mv.setViewName("shop/add");
 		return mv;
@@ -216,6 +276,13 @@ public class ShopController extends BaseController {
 				});
 		mv.addObject("stateData", stateData);
 
+		PageData pd1 = new PageData();
+		List<PageData> typeData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"shop/listAllType", pd1,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("typeData", typeData);
+
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "shop/find", pd,
 				PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
@@ -236,6 +303,13 @@ public class ShopController extends BaseController {
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("stateData", stateData);
+
+		PageData pd1 = new PageData();
+		List<PageData> typeData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"shop/listAllType", pd1,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("typeData", typeData);
 
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOP_ID", pd.getString("SHOP_ID"));
