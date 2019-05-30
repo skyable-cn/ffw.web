@@ -33,6 +33,7 @@
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/user/listPage">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
+          <c:if test="${USER_SESSION.ROLE_ID eq 1}">
           <div class="layui-input-inline">
                   <select id="shipping" name="ROLE_ID" class="valid">
                   	<option value="">全部角色</option>
@@ -41,6 +42,14 @@
                     </c:forEach>
                   </select>
               </div>
+              </c:if>
+              <div class="layui-input-inline">
+                  <select id="shipping2" name="STATE" class="valids">
+                  	<option value="">全部状态</option>
+                    <option value="1" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '1'}">selected="selected"</c:if>>启用</option>
+                    <option value="0" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '0'}">selected="selected"</c:if>>暂停</option>
+                  </select>
+          </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
@@ -55,6 +64,7 @@
             <th>角色</th>
             <th>电话</th>
             <th>状态</th>
+            <th>机构</th>
             <th>操作</th>
             </tr>
         </thead>
@@ -71,6 +81,7 @@
             	<c:otherwise>暂停</c:otherwise>
             </c:choose>
             </td>
+            <td>${var.DMNAME}</td>
             <td class="td-manage">
               <a title="编辑"  onclick="commonEdit('<%=request.getContextPath()%>/user/goEdit?USER_ID=${var.USER_ID}')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>

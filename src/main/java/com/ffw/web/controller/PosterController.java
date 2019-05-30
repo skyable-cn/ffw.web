@@ -47,6 +47,12 @@ public class PosterController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
 		pd.put("CDT", DateUtil.getTime());
 		pd.put("STATE", IConstant.STRING_0);
@@ -204,6 +210,12 @@ public class PosterController extends BaseController {
 		String keywords = pd.getString("keywords"); // 检索条件
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
+		}
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
 		}
 
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "poster/listPage", pd,

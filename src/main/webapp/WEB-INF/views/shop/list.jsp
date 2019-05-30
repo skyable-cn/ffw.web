@@ -23,6 +23,7 @@
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
+     	<a href="">商户模块</a>
         <a href="">商户管理</a>
         <a>
           <cite>列表查询</cite></a>
@@ -44,19 +45,21 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
+      <c:if test="${USER_SESSION.ROLE_ID eq 3}">
       <xblock>
         <a class="layui-btn" onclick="commonSave('<%=request.getContextPath()%>/shop/goAdd')" href="javascript:;"><i class="layui-icon"></i>添加</a>
       </xblock>
+      </c:if>
       <table class="layui-table x-admin">
         <thead>
           <tr>
           	<th>商户图片</th>
             <th>商户名称</th>
-            <th>管理员头像</th>
             <th>联系人</th>
             <th>联系方式</th>
             <th>Web账号</th>
             <th>审核状态</th>
+            <th>商城</th>
             <th>操作</th>
             </tr>
         </thead>
@@ -65,26 +68,28 @@
           	<tr>
           	<td><img width="50" src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}"/></td>
            	<td>${var.SHOPNAME}</td>
-           	<td><img width="50" src="${var.PHOTO}"/></td>
             <td>${var.CONTRACTPERSON}</td>
             <td>${var.CONTRACTPHONE}</td>
             <td>${var.ACCOUNTER}</td>
             <td>${var.SHOPSTATENAME}</td>
+            <td>${var.MARKETNAME}</td>
             <td class="td-manage">
+            	<c:if test="${USER_SESSION.ROLE_ID eq 3}">
               <a title="编辑"  onclick="commonEdit('<%=request.getContextPath()%>/shop/goEdit?SHOP_ID=${var.SHOP_ID}')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="commonDelete('<%=request.getContextPath()%>/shop/delete?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
-              <a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/shop/goInfo?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
-              </a>
               <c:if test="${var.SHOPSTATE_ID eq 1}">
               <a title="审核" onclick="commonHref('<%=request.getContextPath()%>/shop/goAuditing?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
                 <i class="layui-icon">&#xe6b2;</i>
               </a>
               </c:if>
+              </c:if>
+              <a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/shop/goInfo?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
+                <i class="layui-icon">&#xe63c;</i>
+              </a>
             </td>
           </tr>
           </c:forEach>

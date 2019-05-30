@@ -41,9 +41,12 @@ public class UserController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("CDT", DateUtil.getTime());
-		if (pd.getString("ROLE_ID").equals(IConstant.STRING_1)
-				|| pd.getString("ROLE_ID").equals(IConstant.STRING_2)) {
+		if (pd.getString("ROLE_ID").equals(IConstant.STRING_1)) {
 			pd.put("DM_ID", IConstant.STRING_0);
+		}else{
+			PageData user = (PageData) getSession().getAttribute(
+					IConstant.USER_SESSION);
+			pd.put("DM_ID", user.getString("DM_ID"));
 		}
 
 		String pinYinName = Pinyin.getPinYinHeadChar(pd.getString("NICKNAME"));
@@ -132,6 +135,14 @@ public class UserController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(!user.getString("DM_ID").equals(IConstant.STRING_0)){
+			pd.put("DM_ID", user.getString("DM_ID"));
+			pd.put("ROLE_ID", user.getString("ROLE_ID"));
+		}
+		
 
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "user/listPage", pd,
 				Page.class);

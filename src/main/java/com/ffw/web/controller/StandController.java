@@ -49,6 +49,11 @@ public class StandController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		pd.put("MARKET_ID", user.getString("DM_ID"));
+
 
 		pd.put("CREATETIME", DateUtil.getTime());
 
@@ -221,6 +226,10 @@ public class StandController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		pd.put("MARKET_ID", user.getString("DM_ID"));
 
 		PageData pdm = new PageData();
 		List<PageData> typeData = rest.postForList(IConstant.FFW_SERVICE_KEY,
@@ -258,7 +267,11 @@ public class StandController extends BaseController {
 				});
 		mv.addObject("typeData", typeData);
 
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		
 		PageData pdm2 = new PageData();
+		pdm2.put("MARKET_ID", user.getString("DM_ID"));
 		pdm2.put("STATE", IConstant.STRING_1);
 		List<PageData> goodsData = rest.postForList(IConstant.FFW_SERVICE_KEY,
 				"goods/listAll", pdm2,

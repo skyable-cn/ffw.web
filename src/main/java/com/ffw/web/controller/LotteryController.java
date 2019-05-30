@@ -47,6 +47,10 @@ public class LotteryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		pd.put("MARKET_ID", user.getString("DM_ID"));
 
 		pd.put("CDT", DateUtil.getTime());
 		pd.put("STATE", IConstant.STRING_0);
@@ -229,6 +233,10 @@ public class LotteryController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		pd.put("MARKET_ID", user.getString("DM_ID"));
 
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "lottery/listPage",
 				pd, Page.class);

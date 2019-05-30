@@ -146,9 +146,14 @@ public class ServiceController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
-		pd.put("SERVICE_ID", IConstant.STRING_0);
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "service/find", pd,
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "service/findBy", pd,
 				PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 

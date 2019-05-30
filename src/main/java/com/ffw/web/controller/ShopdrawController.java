@@ -36,6 +36,12 @@ public class ShopdrawController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
 		pd.put("SHOPSTATE_ID", IConstant.STRING_2);
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "shop/listPage", pd,

@@ -54,12 +54,21 @@
     <div class="x-body">
         <form class="layui-form" method="post" action="<%=request.getContextPath()%>/goods/edit">
           <input type="hidden" name="GOODS_ID" value="${pd.GOODS_ID}"/>
+          
+          <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>关联小程序</label>
+              <div class="layui-input-inline" style="height:50px;">
+                <input value="1" type="checkbox" name="WXFLAG" lay-skin="primary" title="微信" lay-filter="filter"  <c:if test="${pd.WXFLAG eq 1}">checked="checked"</c:if> disabled="disabled"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>微信</span><i class="layui-icon layui-icon-ok"></i></div>
+                <input value="1" type="checkbox" name="DYFLAG" lay-skin="primary" title="抖音" lay-filter="filter"  <c:if test="${pd.DYFLAG eq 1}">checked="checked"</c:if> disabled="disabled"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>抖音</span><i class="layui-icon layui-icon-ok"></i></div>
+              </div>
+          </div>
+          
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>产品名称
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username8" name="GOODSNAME" required="" lay-verify="nikename"
+                  <input type="text" id="L_username8" name="GOODSNAME" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.GOODSNAME}" disabled="disabled">
               </div>
           </div>
@@ -96,7 +105,7 @@
                   <span class="x-red">*</span>产品售卖价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username9" name="SELLMONEY" required="" lay-verify="nikename"
+                  <input type="text" id="L_username9" name="SELLMONEY" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.SELLMONEY}" disabled="disabled">
               </div>
           </div>
@@ -105,7 +114,7 @@
                   <span class="x-red">*</span>产品原始价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username10" name="ORIGINALMONEY" required="" lay-verify="nikename"
+                  <input type="text" id="L_username10" name="ORIGINALMONEY" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.ORIGINALMONEY}" disabled="disabled">
               </div>
           </div>
@@ -114,7 +123,7 @@
                   <span class="x-red">*</span>产品结算价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username11" name="BALANCEMONEY" required="" lay-verify="nikename"
+                  <input type="text" id="L_username11" name="BALANCEMONEY" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.BALANCEMONEY}" disabled="disabled">
               </div>
           </div>
@@ -123,7 +132,7 @@
                   <span class="x-red">*</span>普通用户返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username112" name="MEMBERBACKMONEY" required="" lay-verify="nikename"
+                  <input type="text" id="L_username112" name="MEMBERBACKMONEY" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.MEMBERBACKMONEY}" disabled="disabled">
               </div>
           </div>
@@ -132,7 +141,7 @@
                   <span class="x-red">*</span>会员用户返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username113" name="VIPBACKMONEY" required="" lay-verify="nikename"
+                  <input type="text" id="L_username113" name="VIPBACKMONEY" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.VIPBACKMONEY}" disabled="disabled">
               </div>
           </div>
@@ -141,7 +150,7 @@
                   <span class="x-red">*</span>本级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username12" name="BACKMONEY0" required="" lay-verify="nikename"
+                  <input type="text" id="L_username12" name="BACKMONEY0" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.BACKMONEY0}" disabled="disabled">
               </div>
           </div>
@@ -150,7 +159,7 @@
                   <span class="x-red">*</span>一级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username13" name="BACKMONEY1" required="" lay-verify="nikename"
+                  <input type="text" id="L_username13" name="BACKMONEY1" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.BACKMONEY1}" disabled="disabled">
               </div>
           </div>
@@ -159,13 +168,13 @@
                   <span class="x-red">*</span>二级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username14" name="BACKMONEY2" required="" lay-verify="nikename"
+                  <input type="text" id="L_username14" name="BACKMONEY2" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.BACKMONEY2}" disabled="disabled">
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  	开始时间
+                  	售卖开始时间
               </label>
               <div class="layui-input-inline">
                   <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1" value="${pd.STARTTIME}" disabled="disabled">
@@ -173,7 +182,7 @@
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  	结束时间
+                  	售卖结束时间
               </label>
               <div class="layui-input-inline">
                   <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2" value="${pd.ENDTIME}" disabled="disabled">
@@ -181,10 +190,26 @@
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
+                  	核销开始时间
+              </label>
+              <div class="layui-input-inline">
+                  <input class="layui-input" placeholder="开始日" name="USESTARTTIME" id="ustart" lay-key="3" value="${pd.USESTARTTIME}" disabled="disabled">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  	核销结束时间
+              </label>
+              <div class="layui-input-inline">
+                  <input class="layui-input" placeholder="结束日" name="USEENDTIME" id="uend" lay-key="4" value="${pd.USEENDTIME}" disabled="disabled">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>库存
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username15" name="STORE" required="" lay-verify="nikename"
+                  <input type="text" id="L_username15" name="STORE" lay-verify="nikename"
                   autocomplete="off" class="layui-input" value="${pd.STORE}" disabled="disabled">
               </div>
           </div>
@@ -270,6 +295,17 @@
               elem: '#end' //指定元素
             	  ,type: 'datetime'
             });
+            
+            laydate.render({
+                elem: '#ustart' //指定元素
+              	  ,type: 'datetime'
+              });
+
+              //执行一个laydate实例
+              laydate.render({
+                elem: '#uend' //指定元素
+              	  ,type: 'datetime'
+              });
           });
     </script>
   </body>

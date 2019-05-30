@@ -34,6 +34,12 @@ public class CouponController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
 		rest.post(IConstant.FFW_SERVICE_KEY, "coupon/save", pd, PageData.class);
 
@@ -105,6 +111,12 @@ public class CouponController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "coupon/listPage", pd,
 				Page.class);
@@ -150,6 +162,20 @@ public class CouponController extends BaseController {
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("coupon/edit");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/goInfo")
+	public ModelAndView goInfo() throws Exception {
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "coupon/find", pd,
+				PageData.class);
+		mv.addObject("pd", pd); // 放入视图容器
+
+		mv.setViewName("coupon/info");
 		return mv;
 	}
 }

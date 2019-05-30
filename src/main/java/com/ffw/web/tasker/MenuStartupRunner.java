@@ -23,7 +23,7 @@ public class MenuStartupRunner implements CommandLineRunner {
 
 	private Logger logger = LoggerFactory.getLogger(MenuStartupRunner.class);
 
-	public static Map<Integer, List<Menu>> systemMenus = new HashMap<Integer, List<Menu>>();
+	public static Map<String, List<Menu>> systemMenus = new HashMap<String, List<Menu>>();
 
 	@Autowired
 	RestTemplateUtil rest;
@@ -31,12 +31,15 @@ public class MenuStartupRunner implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 		try {
-			Integer[] roles = new Integer[] { 1, 2, 3 };
-			for (Integer role : roles) {
+			PageData pdm = new PageData();
+			pdm.put("ROLEMODULE_ID", IConstant.MODULE_WEB_ID);
+			List<PageData> roleData = rest.postForList(IConstant.FFW_SERVICE_KEY, "role/listAll", pdm,
+					new ParameterizedTypeReference<List<PageData>>() {
+					});
+			for (PageData role : roleData) {
 				PageData pd = new PageData();
-				pd.put("ROLE_ID", role);
-				List<Menu> menus = rest.postForList(IConstant.FFW_SERVICE_KEY,
-						"menu/listRoleMenu", pd,
+				pd.put("ROLE_ID", role.getString("ROLE_ID"));
+				List<Menu> menus = rest.postForList(IConstant.FFW_SERVICE_KEY, "menu/listRoleMenu", pd,
 						new ParameterizedTypeReference<List<Menu>>() {
 						});
 				List<Menu> menuTemp = new ArrayList<Menu>();
@@ -64,14 +67,13 @@ public class MenuStartupRunner implements CommandLineRunner {
 					if (!menu.getUrl().equals("#")) {
 						menuLast.add(menu);
 					} else {
-						if (CollectionUtils
-								.isNotEmpty(subMenu.get(menu.getId()))) {
+						if (CollectionUtils.isNotEmpty(subMenu.get(menu.getId()))) {
 							menu.setSubMenu(subMenu.get(menu.getId()));
 							menuLast.add(menu);
 						}
 					}
 				}
-				systemMenus.put(role, menuLast);
+				systemMenus.put(role.getString("ROLE_ID"), menuLast);
 			}
 			logger.info("系统初始化菜单成功");
 		} catch (Exception e) {

@@ -24,6 +24,7 @@
   <body>
   	    <div class="x-nav">
       <span class="layui-breadcrumb">
+           	<a href="">商户模块</a>
         <a href="">商户管理</a>
         <a>
           <cite>查看商户</cite></a>
@@ -83,10 +84,64 @@
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="L_username7" name="AVGMONEY" required="" lay-verify="nikename22"
-                  autocomplete="off" class="layui-input" value="${pd.AVGMONEY}" >
+                  autocomplete="off" class="layui-input" value="${pd.AVGMONEY}" disabled="disabled">
               </div>
           </div>
           
+          <div class="layui-form-item">
+          <hr/>
+          </div>
+          
+           <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>关联小程序</label>
+              <div class="layui-input-inline" style="height:50px;">
+                <input value="1" type="checkbox" name="WXFLAG" lay-skin="primary" title="微信" lay-filter="filter" <c:if test="${pd.WXFLAG eq 1}">checked="checked"</c:if> disabled="disabled"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>微信</span><i class="layui-icon layui-icon-ok"></i></div>
+              </div>
+          </div>
+          
+          <div class="layui-form-item wx-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户微信管理员
+              </label>
+              <div class="layui-input-inline">
+                  <select id="member" name="MEMBER_ID" class="valid" disabled="disabled">
+                    <c:forEach var="m" items="${memberData}">
+                    	<c:if test="${m.CLASS eq 'wx'}">
+                    	<option value="${m.MEMBER_ID}" <c:if test="${pd.MEMBER_ID eq m.MEMBER_ID}">selected="selected"</c:if>>${m.NICKNAME}</option>
+                    	</c:if>
+                    </c:forEach>
+                  </select>
+              </div>
+          </div>
+          
+          <div class="layui-form-item">
+          <hr/>
+          </div>
+          
+          <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>关联小程序</label>
+              <div class="layui-input-inline" style="height:50px;">
+                <input value="1" type="checkbox" name="DYFLAG" lay-skin="primary" title="抖音" lay-filter="filter" <c:if test="${pd.DYFLAG eq 1}">checked="checked"</c:if> disabled="disabled"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>抖音</span><i class="layui-icon layui-icon-ok"></i></div>
+              </div>
+          </div>
+          
+          <div class="layui-form-item dy-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户抖音管理员
+              </label>
+              <div class="layui-input-inline">
+                  <select id="member_dy" name="MEMBER_ID_DY" class="valid" disabled="disabled">
+                    <c:forEach var="m" items="${memberData}">
+                    	<c:if test="${m.CLASS eq 'dy'}">
+                    	<option value="${m.MEMBER_ID}" <c:if test="${pd.MEMBER_ID_DY eq m.MEMBER_ID}">selected="selected"</c:if>>${m.NICKNAME}</option>
+                    	</c:if>
+                    </c:forEach>
+                  </select>
+              </div>
+          </div>
+          <div class="layui-form-item">
+          <hr/>
+          </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>Web账号

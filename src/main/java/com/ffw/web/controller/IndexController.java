@@ -52,33 +52,33 @@ public class IndexController extends BaseController {
 		pd = this.getPageData();
 		String errInfo = "";
 		try {
-			String sessionCode = (String) getSession().getAttribute(
-					IConstant.LOGIN_CODE); // 获取session中的验证码
+			String sessionCode = (String) getSession().getAttribute(IConstant.LOGIN_CODE); // 获取session中的验证码
 			String USERNAME = pd.getString("USERNAME");
 			String PASSWORD = pd.getString("PASSWORD");
 			String CODE = pd.getString("CODE");
-			if (StringUtils.isNotEmpty(USERNAME)
-					&& StringUtils.isNotEmpty(PASSWORD)
-					&& StringUtils.isNotEmpty(CODE)) {
+			if (StringUtils.isNotEmpty(USERNAME) && StringUtils.isNotEmpty(PASSWORD) && StringUtils.isNotEmpty(CODE)) {
 				if (sessionCode.equalsIgnoreCase(CODE)) {
-					PageData userTemp = rest.post(IConstant.FFW_SERVICE_KEY,
-							"user/findByUserName", pd, PageData.class);
+					PageData userTemp = rest.post(IConstant.FFW_SERVICE_KEY, "user/findByUserName", pd, PageData.class);
 					if (null == userTemp) {
 						errInfo = "对不起,未发现此账户相关信息!";
 					} else {
-						if (userTemp.getString("PASSWORD").equals(
-								new SimpleHash("SHA-1", userTemp
-										.getString("USERNAME"), PASSWORD)
-										.toString())) {
-							if (IConstant.STRING_0.equals(userTemp
-									.getString("STATE"))) {
+						if (userTemp.getString("PASSWORD")
+								.equals(new SimpleHash("SHA-1", userTemp.getString("USERNAME"), PASSWORD).toString())) {
+							if (IConstant.STRING_0.equals(userTemp.getString("STATE"))) {
 								errInfo = "对不起,当前账户状态被停用";
 							} else {
 
-								getSession().setAttribute(
-										IConstant.USER_SESSION, userTemp);
-								getSession().removeAttribute(
-										IConstant.LOGIN_CODE);
+								getSession().setAttribute(IConstant.USER_SESSION, userTemp);
+
+								if (userTemp.getString("ROLE_ID").equals(IConstant.STRING_3)) {
+									PageData market = new PageData();
+									market.put("MARKET_ID", userTemp.getString("DM_ID"));
+									market = rest.post(IConstant.FFW_SERVICE_KEY, "market/find", market,
+											PageData.class);
+									getSession().setAttribute(IConstant.MARKET_SESSION, market);
+								}
+
+								getSession().removeAttribute(IConstant.LOGIN_CODE);
 							}
 						} else {
 							errInfo = "对不起,账户/密码错误";
@@ -113,15 +113,13 @@ public class IndexController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 
-		List<Menu> menuLast = MenuStartupRunner.systemMenus.get(Integer
-				.parseInt(user.getString("ROLE_ID")));
+		List<Menu> menuLast = MenuStartupRunner.systemMenus.get(user.getString("ROLE_ID"));
 
 		if (CollectionUtils.isEmpty(menuLast)) {
 			getSession().removeAttribute(IConstant.USER_SESSION);
-			mv.addObject("errInfo", "未发现可用菜单选项");
+			mv.addObject("errInfo", getMessage("DOES_NOT_HAVE_MENUS", new Object[] {}, ""));
 			mv.addObject(IConstant.SYSTEM_NAME, SYSTEM_NAME);
 			mv.setViewName("login");
 		} else {
@@ -157,6 +155,7 @@ public class IndexController extends BaseController {
 	@RequestMapping("/logout")
 	public ModelAndView logout() throws Exception {
 		getSession().removeAttribute(IConstant.USER_SESSION);
+		getSession().removeAttribute(IConstant.MARKET_SESSION);
 		ModelAndView mv = this.getModelAndView();
 
 		PageData pd = new PageData();

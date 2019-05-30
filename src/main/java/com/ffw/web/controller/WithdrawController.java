@@ -1,5 +1,6 @@
 package com.ffw.web.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ffw.api.model.Page;
 import com.ffw.api.model.PageData;
 import com.ffw.api.util.DateUtil;
+import com.ffw.web.config.FileConfig;
 import com.ffw.web.config.WXPayConfigImpl;
-import com.ffw.web.config.WechatMiniConfig;
 import com.ffw.web.constant.IConstant;
 import com.ffw.web.util.RestTemplateUtil;
 import com.github.wxpay.sdk.WXPay;
@@ -31,10 +32,7 @@ public class WithdrawController extends BaseController {
 	private Logger logger = LoggerFactory.getLogger(WithdrawController.class);
 
 	@Autowired
-	WechatMiniConfig wechatMiniConfig;
-
-	@Autowired
-	WXPayConfigImpl config;
+	FileConfig fileConfig;
 
 	@Autowired
 	RestTemplateUtil rest;
@@ -49,8 +47,12 @@ public class WithdrawController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 
-		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/listPage",
-				pd, Page.class);
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
+		if (user.getString("ROLE_ID").equals(IConstant.STRING_3)) {
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
+
+		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/listPage", pd, Page.class);
 
 		mv.setViewName("/withdraw/list");
 		mv.addObject("page", page);
@@ -65,8 +67,7 @@ public class WithdrawController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/find", pd,
-				PageData.class);
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("withdraw/info");
@@ -79,8 +80,7 @@ public class WithdrawController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/find", pd,
-				PageData.class);
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("withdraw/auditing");
@@ -93,52 +93,48 @@ public class WithdrawController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		PageData pdw = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/find",
-				pd, PageData.class);
+		PageData pdw = rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/find", pd, PageData.class);
 		pdw.put("STATE", pd.getString("STATE"));
 		pdw.put("REMARK", pd.getString("REMARK"));
 		pdw.put("ADT", DateUtil.getTime());
-		rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/edit", pdw,
-				PageData.class);
+		rest.post(IConstant.FFW_SERVICE_KEY, "withdraw/edit", pdw, PageData.class);
 
 		if (pd.getString("STATE").equals(IConstant.STRING_1)) {
 
 			PageData pdm = new PageData();
 			pdm.put("MEMBER_ID", pdw.getString("MEMBER_ID"));
-			pdm = rest.post(IConstant.FFW_SERVICE_KEY, "member/find", pdm,
-					PageData.class);
+			pdm = rest.post(IConstant.FFW_SERVICE_KEY, "member/find", pdm, PageData.class);
+
+			PageData market = (PageData) getSession().getAttribute(IConstant.MARKET_SESSION);
+
+			WXPayConfigImpl config = new WXPayConfigImpl(market.getString("WXAPPID"), market.getString("WXAPPSECRET"),
+					market.getString("WXMCHID"), market.getString("WXMCHKEY"),
+					fileConfig.getDirCert() + File.separator + market.getString("FILEPATH2"));
 
 			logger.info("进入企业付款到个人");
 			WXPay wxpay = new WXPay(config, SignType.MD5);
 			Map<String, String> parameters = new HashMap<String, String>();
-			parameters.put("mch_appid", wechatMiniConfig.getAppid());
-			parameters.put("mchid", wechatMiniConfig.getMchid());
+			parameters.put("mch_appid", config.getAppID());
+			parameters.put("mchid", config.getMchID());
 			parameters.put("nonce_str", WXPayUtil.generateNonceStr());
 			parameters.put("partner_trade_no", pdw.getString("WITHDRAW_ID"));
 			parameters.put("openid", pdm.getString("WXOPEN_ID"));
 			parameters.put("check_name", "NO_CHECK");
-			String fee = String
-					.valueOf(Float.parseFloat(pdw.getString("MONEY")) * 100);
+			String fee = String.valueOf(Float.parseFloat(pdw.getString("MONEY")) * 100);
 			parameters.put("amount", fee.substring(0, fee.indexOf(".")) + "");
 			parameters.put("spbill_create_ip", getIpAddr(getRequest()));
 			parameters.put("desc", "饭饭网用户提现");
 			// 签名
-			String sign = WXPayUtil.generateSignature(parameters,
-					wechatMiniConfig.getMchkey());
+			String sign = WXPayUtil.generateSignature(parameters, config.getKey());
 			parameters.put("sign", sign);
 
-			String notityXml = wxpay
-					.requestWithCert(
-							"https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",
-							parameters, config.getHttpConnectTimeoutMs(),
-							config.getHttpReadTimeoutMs());
+			String notityXml = wxpay.requestWithCert(
+					"https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers", parameters,
+					config.getHttpConnectTimeoutMs(), config.getHttpReadTimeoutMs());
 			System.err.println(notityXml);
 		}
 
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_APPROVE_SUCCESS",
-						new Object[] { "审核分销提现" }, ""));
+		mv.addObject("msg", getMessageUrl("MSG_CODE_APPROVE_SUCCESS", new Object[] { "审核分销提现" }, ""));
 		mv.setViewName("redirect:/withdraw/listPage");
 		logger.info("审核分销提现成功");
 		return mv;

@@ -51,15 +51,18 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
+      <c:if test="${USER_SESSION.ROLE_ID eq 3}">
       <xblock>
         <a class="layui-btn" onclick="commonSave('<%=request.getContextPath()%>/goods/goAdd')" href="javascript:;"><i class="layui-icon"></i>添加</a>
       </xblock>
+      </c:if>
       <table class="layui-table x-admin">
         <thead>
           <tr>
           	<th>产品图片</th>
             <th>产品名称</th>
             <th>商户名称</th>
+            <th>商城名称</th>
             <th>状态</th>
             <th>操作</th>
             </tr>
@@ -70,6 +73,7 @@
           	<td><img width="100" src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}';"/></td>
            	<td>${var.GOODSNAME}</td>
             <td>${var.SHOPNAME}</td>
+            <td>${var.MARKETNAME}</td>
             <td>
             <c:choose>
             	<c:when test="${var.STATE eq 1}">启用</c:when>
@@ -78,12 +82,14 @@
             </c:choose>
             </td>
             <td class="td-manage">
+            <c:if test="${USER_SESSION.ROLE_ID eq 3}">
               <a title="编辑"  onclick="commonEdit('<%=request.getContextPath()%>/goods/goEdit?GOODS_ID=${var.GOODS_ID}')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="commonDelete('<%=request.getContextPath()%>/goods/delete?GOODS_ID=${var.GOODS_ID}');" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
+              </c:if>
               <a title="查看" onclick="commonInfo('<%=request.getContextPath()%>/goods/goInfo?GOODS_ID=${var.GOODS_ID}');" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>

@@ -44,6 +44,13 @@
                     <option value="5" <c:if test="${'5' eq page.pd.STATE}">selected="selected"</c:if>>已退款</option>
                   </select>
               </div>
+              <div class="layui-input-inline">
+                  <select id="shipping" name="CLASS" class="valid">
+                  	<option value="">全部来源</option>
+                    <option value="wx"  <c:if test="${'wx' eq page.pd.CLASS}">selected="selected"</c:if>>微信</option>
+                    <option value="dy"  <c:if test="${'dy' eq page.pd.CLASS}">selected="selected"</c:if>>抖音</option>
+                  </select>
+              </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
@@ -52,12 +59,14 @@
           <tr>
             <th>系统交易</th>
             <th>微信交易</th>
+            <th>商城</th>
             <th>商户</th>
             <th>产品</th>
             <th>状态</th>
             <th>金额</th>
             <th>微信号</th>
             <th>时间</th>
+            <th>来源</th>
             </tr>
         </thead>
         <tbody>
@@ -65,6 +74,7 @@
           	<tr>
            	<td>${var.ORDERSN}</td>
             <td>${var.WEIXINSN}</td>
+            <td>${var.MARKETNAME}</td>
             <td>${var.SHOPNAME}</td>
             <td>${var.GOODSNAME}</td>
             <td>
@@ -79,6 +89,13 @@
              <td>${var.MONEY}</td>
              <td>${var.NICKNAME}</td>
              <td>${var.CDT}</td>
+             <td>
+            	<c:choose>
+            		<c:when test="${var.CLASS eq 'wx'}">微信</c:when>
+            		<c:when test="${var.CLASS eq 'dy'}">抖音</c:when>
+            		<c:otherwise>未知</c:otherwise>
+            	</c:choose>
+            </td>
           </tr>
           </c:forEach>
           

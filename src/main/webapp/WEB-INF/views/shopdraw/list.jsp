@@ -45,9 +45,6 @@
             <th>商户名称</th>
             <th>待结算</th>
             <th>已结算</th>
-            <th>管理员头像</th>
-            <th>管理员昵称</th>
-            <th>结算OPEN_ID</th>
             <th>操作</th>
             </tr>
         </thead>
@@ -58,9 +55,6 @@
             <td>${var.SHOPNAME}</td>
             <td>${var.WAITACCOUNT}</td>
             <td>${var.ALREADYACCOUNT}</td>
-            <td><img width="50" src="${var.PHOTO}"/></td>
-            <td>${var.NICKNAME}</td>
-            <td>${var.WXOPEN_ID}</td>
             <td>
               <a title="明细查看" onclick="commonInfo('<%=request.getContextPath()%>/shopdraw/shop/listPage?SHOP_ID=${var.SHOP_ID}');" href="javascript:;">
                 <i class="iconfont">&#xe6b5;</i>

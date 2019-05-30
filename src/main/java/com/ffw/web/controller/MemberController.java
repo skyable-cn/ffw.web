@@ -33,6 +33,14 @@ public class MemberController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_2)){
+			pd.put("DOMAIN_ID", user.getString("DM_ID"));
+		}else if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "member/listPage", pd,
 				Page.class);

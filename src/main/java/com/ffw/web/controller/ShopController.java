@@ -57,6 +57,10 @@ public class ShopController extends BaseController {
 
 		pd.put("WAITACCOUNT", IConstant.STRING_0);
 		pd.put("ALREADYACCOUNT", IConstant.STRING_0);
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		pd.put("MARKET_ID", user.getString("DM_ID"));
 
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "shop/save", pd,
 				PageData.class);
@@ -215,6 +219,12 @@ public class ShopController extends BaseController {
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("stateData", stateData);
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "shop/listPage", pd,
 				Page.class);
@@ -246,6 +256,9 @@ public class ShopController extends BaseController {
 		mv.addObject("typeData", typeData);
 
 		PageData pd2 = new PageData();
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		pd2.put("MARKET_ID", user.getString("DM_ID"));
 		List<PageData> memberData = rest.postForList(IConstant.FFW_SERVICE_KEY,
 				"member/listAll", pd2,
 				new ParameterizedTypeReference<List<PageData>>() {
@@ -282,6 +295,16 @@ public class ShopController extends BaseController {
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("typeData", typeData);
+		
+		PageData pd2 = new PageData();
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		pd2.put("MARKET_ID", user.getString("DM_ID"));
+		List<PageData> memberData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"member/listAll", pd2,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("memberData", memberData);
 
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "shop/find", pd,
 				PageData.class);
@@ -303,6 +326,13 @@ public class ShopController extends BaseController {
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("stateData", stateData);
+		
+		PageData pd2 = new PageData();
+		List<PageData> memberData = rest.postForList(IConstant.FFW_SERVICE_KEY,
+				"member/listAll", pd2,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		mv.addObject("memberData", memberData);
 
 		PageData pd1 = new PageData();
 		List<PageData> typeData = rest.postForList(IConstant.FFW_SERVICE_KEY,
@@ -386,7 +416,7 @@ public class ShopController extends BaseController {
 					new SimpleHash("SHA-1", pdu.getString("USERNAME"),
 							IConstant.DEFAULT_PASSWORD).toString()); // 密码加密
 			pdu.put("DM_ID", pdi.getString("SHOP_ID"));
-			pdu.put("ROLE_ID", IConstant.STRING_3);
+			pdu.put("ROLE_ID", IConstant.STRING_4);
 			pdu.put("CDT", DateUtil.getTime());
 			pdu.put("STATE", IConstant.STRING_1);
 			rest.post(IConstant.FFW_SERVICE_KEY, "user/save", pdu,

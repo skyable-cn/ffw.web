@@ -36,48 +36,54 @@
   	    <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">系统设置</a>
-        <a href="">群组管理</a>
+        <a href="">现金券设置</a>
         <a>
-          <cite>查看群组</cite></a>
+          <cite>查看现金券</cite></a>
       </span>
     </div>
     <div class="x-body">
-        <form enctype="multipart/form-data" class="layui-form" method="post" action="<%=request.getContextPath()%>/groups/edit">
-          <input type="hidden" name="GROUPS_ID" value="${pd.GROUPS_ID}"/>
-          <input type="hidden" name="FILE_ID-0" value="${pd.FILE_ID1}"/>
-          <input type="hidden" name="FILE_ID-1" value="${pd.FILE_ID2}"/>
+        <form class="layui-form" method="post" action="<%=request.getContextPath()%>/coupon/edit">
+          <input type="hidden" name="COUPON_ID" value="${pd.COUPON_ID}"/>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>群组图片
+                  <span class="x-red">*</span>金额
               </label>
               <div class="layui-input-inline">
-                  <table id="fileTable">
-                  		<tr><td>文件名称:${pd.FILENAME1}</br>文件大小:${pd.FILESIZE1} / M</td><td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${pd.FILEPATH1}"  alt="展位图片"  width="150px" id="image-0" style="cursor:pointer;"/></td><td></td></tr>
-                  	</table>
+                  <input type="text" id="L_username14" name="MONEY" required="" lay-verify="nikename"
+                  autocomplete="off" class="layui-input" value="${pd.MONEY}" disabled="disabled">
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>群组介绍
+                  	<span class="x-red">*</span>开始时间
               </label>
               <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容" id="desc2" name="GROUPSDESC" class="layui-textarea" disabled="disabled">${pd.GROUPSDESC}</textarea>
+                  <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1" autocomplete="off" value="${pd.STARTTIME}" lay-verify="nikename1" disabled="disabled">
               </div>
           </div>
-		<div class="layui-form-item">
+          <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>群二维码
+                  	<span class="x-red">*</span>结束时间
               </label>
               <div class="layui-input-inline">
-                  <table id="fileTable">
-                  		<tr><td>文件名称:${pd.FILENAME2}</br>文件大小:${pd.FILESIZE2} / M</td><td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${pd.FILEPATH2}"  alt="展位图片"  width="150px" id="image-1" style="cursor:pointer;"/></td><td></td></tr>
-                  	</table>
+                  <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2" autocomplete="off" value="${pd.ENDTIME}" lay-verify="nikename2" disabled="disabled">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>状态
+              </label>
+              <div class="layui-input-inline">
+                  <select id="shipping" name="STATE" class="valid" disabled="disabled">
+                    <option value="1" <c:if test="${pd.STATE eq 1}">selected="selected"</c:if>>启用</option>
+                    <option value="0" <c:if test="${pd.STATE eq 0}">selected="selected"</c:if>>暂停</option>
+                  </select>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
-               <button  class="layui-btn layui-btn-normal" onclick="history.back()" type="button">
+              <button  class="layui-btn layui-btn-normal" onclick="history.back()" type="button">
                   返回
               </button>
           </div>
@@ -93,7 +99,7 @@
           form.verify({
             nikename: function(value){
               if(value.length < 1){
-                return '群组图片不许为空';
+                return '金额不许为空';
               }
             }
           });
@@ -101,7 +107,15 @@
           form.verify({
               nikename1: function(value){
                 if(value.length < 1){
-                  return '二维码图片不许为空';
+                  return '请选择开始时间';
+                }
+              }
+            });
+          
+          form.verify({
+              nikename2: function(value){
+                if(value.length < 1){
+                  return '请选择结束时间';
                 }
               }
             });

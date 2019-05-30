@@ -32,6 +32,10 @@ public interface IConstant {
 
 	String STRING_8 = "8";
 
+	String STRING_9 = "9";
+
+	String STRING_10 = "10";
+
 	String MENU_FIRST_DEFAULT = "MENU_FIRST_DEFAULT";
 
 	String MENU_LIST = "MENU_LIST";
@@ -41,4 +45,6 @@ public interface IConstant {
 	String MODULE_WEB_ID = "1";
 
 	String MODULE_APP_ID = "2";
+
+	String MARKET_SESSION = "MARKET_SESSION";
 }

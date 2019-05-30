@@ -229,9 +229,14 @@ public class GoodsController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pdm2.put("MARKET_ID", user.getString("DM_ID"));
+		}
 		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
 				"shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {
@@ -241,6 +246,10 @@ public class GoodsController extends BaseController {
 		String keywords = pd.getString("keywords"); // 检索条件
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
+		}
+		
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
 		}
 
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "goods/listPage", pd,
@@ -298,8 +307,11 @@ public class GoodsController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
+		pdm2.put("MARKET_ID", user.getString("DM_ID"));
 		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
 				"shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {
@@ -323,8 +335,11 @@ public class GoodsController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
+		pdm2.put("MARKET_ID", user.getString("DM_ID"));
 		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
 				"shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {

@@ -53,6 +53,7 @@
           <tr>
             <th>图片</th>
             <th>产品</th>
+            <th>商户</th>
             <th>类别</th>
             <th>创建时间</th>
             <th>审核状态</th>
@@ -64,6 +65,7 @@
           	<tr>
            	<td><img src="<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}" alt="展位图片" width="100" onerror="javascript:this.src='<%=request.getContextPath()%>/file/image?FILENAME=${var.FILEPATH}';"/></td>
             <td>${var.GOODSNAME}</td>
+            <td>${var.SHOPNAME}</td>
             <td>${var.STANDTYPENAME}</td>
             <td>${var.CREATETIME}</td>
             <td>

@@ -35,6 +35,7 @@
   <body>
   	    <div class="x-nav">
       <span class="layui-breadcrumb">
+           	<a href="">商户模块</a>
         <a href="">商户管理</a>
         <a>
           <cite>新增商户</cite></a>
@@ -44,18 +45,7 @@
         <form enctype="multipart/form-data" class="layui-form" method="post" action="<%=request.getContextPath()%>/shop/save">
           <input id="LATITUDE" name="LATITUDE" type="hidden"/>
 		  <input id="LONGITUDE" name="LONGITUDE" type="hidden"/>
-          <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>商户管理员
-              </label>
-              <div class="layui-input-inline">
-                  <select id="member" name="MEMBER_ID" class="valid">
-                    <c:forEach var="m" items="${memberData}">
-                    	<option value="${m.MEMBER_ID}">${m.NICKNAME}</option>
-                    </c:forEach>
-                  </select>
-              </div>
-          </div>
+          
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>商户所属分类
@@ -133,6 +123,57 @@
                   autocomplete="off" class="layui-input">
               </div>
           </div>
+          <div class="layui-form-item">
+          <hr/>
+          </div>
+          
+           <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>关联小程序</label>
+              <div class="layui-input-inline" style="height:50px;">
+                <input value="1" type="checkbox" name="WXFLAG" lay-skin="primary" title="微信" lay-filter="filter" checked="checked"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>微信</span><i class="layui-icon layui-icon-ok"></i></div>
+              </div>
+          </div>
+          
+          <div class="layui-form-item wx-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户微信管理员
+              </label>
+              <div class="layui-input-inline">
+                  <select id="member" name="MEMBER_ID" class="valid">
+                    <c:forEach var="m" items="${memberData}">
+                    	<c:if test="${m.CLASS eq 'wx'}">
+                    	<option value="${m.MEMBER_ID}">${m.NICKNAME}</option>
+                    	</c:if>
+                    </c:forEach>
+                  </select>
+              </div>
+          </div>
+          
+          <div class="layui-form-item">
+          <hr/>
+          </div>
+          
+          <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>关联小程序</label>
+              <div class="layui-input-inline" style="height:50px;">
+                <input value="1" type="checkbox" name="DYFLAG" lay-skin="primary" title="抖音" lay-filter="filter" checked="checked"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>抖音</span><i class="layui-icon layui-icon-ok"></i></div>
+              </div>
+          </div>
+          
+          <div class="layui-form-item dy-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户抖音管理员
+              </label>
+              <div class="layui-input-inline">
+                  <select id="member_dy" name="MEMBER_ID_DY" class="valid">
+                    <c:forEach var="m" items="${memberData}">
+                    	<c:if test="${m.CLASS eq 'dy'}">
+                    	<option value="${m.MEMBER_ID}">${m.NICKNAME}</option>
+                    	</c:if>
+                    </c:forEach>
+                  </select>
+              </div>
+          </div>
 
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
@@ -148,12 +189,35 @@
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
+          
+          form.on('checkbox(filter)', function(data){
+        	  if(data.elem.checked){
+        		  if($(data.elem).attr("name")=="WXFLAG"){
+        			  $(".wx-div").css("display","");
+        		  }
+        		  
+        		  if($(data.elem).attr("name")=="DYFLAG"){
+        			  $(".dy-div").css("display","");
+        		  }
+        		  
+        	  }else{
+        		  if($(data.elem).attr("name")=="WXFLAG"){
+        			  $(".wx-div").css("display","none");
+        		  }
+        		  
+        		  if($(data.elem).attr("name")=="DYFLAG"){
+        			  $(".dy-div").css("display","none");
+        		  }
+        	  }
+        	  
+        	  
+        	}); 
         
           //自定义验证规则
           form.verify({
             nikename: function(value){
-              if(value.length < 5){
-                return '昵称至少得5个字符啊';
+              if(value.length < 2){
+                return '昵称至少得2个字符啊';
               }
             }
           });

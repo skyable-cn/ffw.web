@@ -31,7 +31,7 @@
       </span>
     </div>
     <div class="x-body">
-    <blockquote class="layui-elem-quote"><span><img width="50" src="<%=request.getContextPath()%>/file/image?FILENAME=${shop.FILEPATH}"/></span><span>${shop.SHOPNAME }</span><span><img width="50" src="${shop.PHOTO}"/></span><span>${shop.NICKNAME }</span><span>${shop.WXOPEN_ID}</span></blockquote>
+    <blockquote class="layui-elem-quote"><span><img width="50" src="<%=request.getContextPath()%>/file/image?FILENAME=${shop.FILEPATH}"/></span><span>${shop.SHOPNAME }</span></blockquote>
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/shopdraw/shop/listPage?SHOP_ID=${page.pd.SHOP_ID}">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">

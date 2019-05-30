@@ -55,9 +55,10 @@
                   <span class="x-red">*</span>角色
               </label>
               <div class="layui-input-inline">
-                  <select id="role" name="ROLE_ID" class="valid" lay-filter="role">
+              	  <input type="hidden" name="ROLE_ID" value="${USER_SESSION.ROLE_ID}"/>
+                  <select id="role" name="ROLE_IDt" class="valid" lay-filter="role" disabled="disabled">
                     <c:forEach var="role" items="${roleData}">
-                    	<option value="${role.ROLE_ID}">${role.ROLENAME}</option>
+                    	<option value="${role.ROLE_ID}" <c:if test="${role.ROLE_ID eq USER_SESSION.ROLE_ID}">selected="selected"</c:if> >${role.ROLENAME}</option>
                     </c:forEach>
                   </select>
               </div>

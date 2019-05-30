@@ -41,6 +41,13 @@
                     </c:forEach>
                   </select>
               </div>
+              <div class="layui-input-inline">
+                  <select id="shipping" name="CLASS" class="valid">
+                  	<option value="">全部来源</option>
+                    <option value="wx"  <c:if test="${'wx' eq page.pd.CLASS}">selected="selected"</c:if>>微信</option>
+                    <option value="dy"  <c:if test="${'dy' eq page.pd.CLASS}">selected="selected"</c:if>>抖音</option>
+                  </select>
+              </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
@@ -50,11 +57,12 @@
           <tr>
             <th>头像</th>
             <th>昵称</th>
-            <th>姓名</th>
-            <th>电话</th>
+            <th>区域</th>
+            <th>商城</th>
             <th>性别</th>
-            <th>WXOPEN_ID</th>
+            <th>OPEN_ID</th>
             <th>类型</th>
+            <th>来源</th>
             </tr>
         </thead>
         <tbody>
@@ -62,8 +70,8 @@
           	<tr>
            	<td><img alt="" src="${var.PHOTO}" width="50"></td>
             <td>${var.NICKNAME}</td>
-            <td>${var.FULLNAME}</td>
-            <td>${var.PHONE}</td>
+            <td>${var.DOMAINNAME}</td>
+            <td>${var.MARKETNAME}</td>
             <td>
             	<c:choose>
             		<c:when test="${var.SEX eq 1}">男</c:when>
@@ -73,6 +81,13 @@
             </td>
             <td>${var.WXOPEN_ID}</td>
             <td>${var.MEMBERTYPENAME}</td>
+            <td>
+            	<c:choose>
+            		<c:when test="${var.CLASS eq 'wx'}">微信</c:when>
+            		<c:when test="${var.CLASS eq 'dy'}">抖音</c:when>
+            		<c:otherwise>未知</c:otherwise>
+            	</c:choose>
+            </td>
           </tr>
           </c:forEach>
           

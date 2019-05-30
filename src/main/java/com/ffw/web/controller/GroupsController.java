@@ -47,6 +47,12 @@ public class GroupsController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
 
 		pd.put("CREATETIME", DateUtil.getTime());
 
@@ -225,6 +231,12 @@ public class GroupsController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 
+		PageData user = (PageData) getSession().getAttribute(
+				IConstant.USER_SESSION);
+		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+			pd.put("MARKET_ID", user.getString("DM_ID"));
+		}
+		
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "groups/listPage", pd,
 				Page.class);
 
