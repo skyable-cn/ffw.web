@@ -40,6 +40,11 @@
      	  border:1px #dddddd solid;
      }
     </style>
+    <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/lang/zh-cn/zh-cn.js"></script>
   </head>
   
   <body>
@@ -53,13 +58,14 @@
     </div>
     <div class="x-body">
     <div class="layui-row" style="margin-bottom:10px;">
-<div class="layui-col-md4"><button id="btn1" class="layui-btn layui-btn-fluid" style="width:calc(100% - 10px);">第一步：基础信息<font style="float:right;">></font></button></div>
-<div class="layui-col-md4"><button id="btn2" class="layui-btn layui-btn-fluid layui-btn-primary" style="width:calc(100% - 10px);">第二步：详情设置<font style="float:right;">></font></button></div>
-<div class="layui-col-md4"><button id="btn3" class="layui-btn layui-btn-fluid layui-btn-primary" style="width:calc(100% - 10px);">第三步：运营设置<font style="float:right;">></font></button></div>
+<div class="layui-col-md3"><button id="btn1" class="layui-btn layui-btn-fluid" style="width:calc(100% - 10px);">第一步：基础信息<font style="float:right;">></font></button></div>
+<div class="layui-col-md3"><button id="btn2" class="layui-btn layui-btn-fluid layui-btn-primary" style="width:calc(100% - 10px);">第二步：价格设置<font style="float:right;">></font></button></div>
+<div class="layui-col-md3"><button id="btn3" class="layui-btn layui-btn-fluid layui-btn-primary" style="width:calc(100% - 10px);">第三步：购买须知<font style="float:right;">></font></button></div>
+<div class="layui-col-md3"><button id="btn4" class="layui-btn layui-btn-fluid layui-btn-primary" style="width:calc(100% - 10px);">第四步：运营设置<font style="float:right;">></font></button></div>
 </div>
-        <form enctype="multipart/form-data"  class="layui-form" method="post" action="<%=request.getContextPath()%>/goods/save">
+        <form enctype="multipart/form-data"  class="layui-form" method="post" action="<%=request.getContextPath()%>/goods/save" onsubmit="return checkContent()">
           
-          <div class="layui-form-item step3" style="display:none;">
+          <div class="layui-form-item step4" style="display:none;">
               <label class="layui-form-label"><span class="x-red">*</span>关联小程序</label>
               <div class="layui-input-inline" style="height:50px;">
                 <input value="1" type="checkbox" name="WXFLAG" lay-skin="primary" title="微信" lay-filter="filter" checked="checked"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>微信</span><i class="layui-icon layui-icon-ok"></i></div>
@@ -94,13 +100,18 @@
                   <textarea placeholder="请输入内容" id="desc3" name="GOODSDESC" class="layui-textarea"></textarea>
               </div>
           </div>
-          <div class="layui-form-item step2" style="display:none;">
+          <!-- <div class="layui-form-item step3" style="display:none;">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>购买须知
               </label>
               <div class="layui-input-inline">
                   <textarea placeholder="请输入内容" id="desc4" name="BUYNOTICE" class="layui-textarea"></textarea>
               </div>
+          </div>
+           -->
+          <div class="layui-form-item step3" style="display:none;">
+          		  <input type="hidden" id="BUYNOTICE" name="BUYNOTICE"/>
+                  <script id="editor" type="text/plain" style="width:100%;min-height:300px;"></script>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
@@ -174,39 +185,39 @@
                   autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div class="layui-form-item step3" style="display:none;">
+          <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
                   	售卖开始时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1">
+                  <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1" autocomplete="off">
               </div>
           </div>
-          <div class="layui-form-item step3" style="display:none;">
+          <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
                   	售卖结束时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2">
+                  <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2" autocomplete="off">
               </div>
           </div>
-           <div class="layui-form-item step3" style="display:none;">
+           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
                   	核销开始时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="开始日" name="USESTARTTIME" id="ustart" lay-key="3">
+                  <input class="layui-input" placeholder="开始日" name="USESTARTTIME" id="ustart" lay-key="3" autocomplete="off">
               </div>
           </div>
-          <div class="layui-form-item step3" style="display:none;">
+          <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
                   	核销结束时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="结束日" name="USEENDTIME" id="uend" lay-key="4">
+                  <input class="layui-input" placeholder="结束日" name="USEENDTIME" id="uend" lay-key="4" autocomplete="off">
               </div>
           </div>
-          <div class="layui-form-item step3" style="display:none;">
+          <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>库存
               </label>
@@ -245,7 +256,7 @@
                   <textarea placeholder="请输入内容" id="desc5" name="SHAREDESC" class="layui-textarea"></textarea>
               </div>
           </div>
-          <div class="layui-form-item" style="display:none;">
+          <div class="layui-form-item step4" style="display:none;">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>状态
               </label>
@@ -263,9 +274,12 @@
               <button class="layui-btn" style="float:right;" onclick="showStep('3')" type="button">下一步</button><button class="layui-btn" style="float:right;margin-right:20px;" onclick="showStep('1')" type="button">上一步</button>
           </div>
           <div class="layui-form-item step3" style="display:none;">
-              <button class="layui-btn" style="float:right;" onclick="showStep('2')" type="button">上一步</button>
+              <button class="layui-btn" style="float:right;" onclick="showStep('4')" type="button">下一步</button><button class="layui-btn" style="float:right;margin-right:20px;" onclick="showStep('2')" type="button">上一步</button>
           </div>
-          <div class="layui-form-item step3" style="display:none;">
+          <div class="layui-form-item step4" style="display:none;">
+              <button class="layui-btn" style="float:right;margin-right:20px;" onclick="showStep('3')" type="button">上一步</button>
+          </div>
+          <div class="layui-form-item step4" style="display:none;">
               <label for="L_repass" class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="add" lay-submit="" type="submit">
@@ -275,6 +289,13 @@
       </form>
     </div>
     <%@ include file="../common/foot.jsp"%>
+    
+    <script type="text/javascript">
+    
+    	var ue = UE.getEditor('editor');
+    
+    </script>
+    
     <script>
         layui.use(['form','layer'], function(){
             $ = layui.jquery;
@@ -284,9 +305,9 @@
           //自定义验证规则
           form.verify({
             nikename: function(value){
-              if(value.length < 1){
-                return '昵称至少得1个字符啊';
-              }
+              //if(value.length < 1){
+              //  return '昵称至少得1个字符啊';
+              //}
             }
           });
           
@@ -353,6 +374,10 @@
         	$("#btn"+id).removeClass("layui-btn-primary");
         }
         
+        function checkContent(){
+        	$("#BUYNOTICE").val(UE.getEditor('editor').getContent());
+        	return true;
+        }
     </script>
   </body>
 
