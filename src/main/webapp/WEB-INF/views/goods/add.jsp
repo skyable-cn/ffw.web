@@ -226,6 +226,15 @@
                   autocomplete="off" class="layui-input">
               </div>
           </div>
+          <div class="layui-form-item step4" style="display:none;">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>提供人员
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_username151" name="PROVIDE" lay-verify="nikename11"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
           <div id="shopDiv" class="layui-form-item step1" style="display:none;">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>商户
