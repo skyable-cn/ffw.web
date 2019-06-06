@@ -183,7 +183,7 @@
           </div>
           <div class="layui-form-item dy-div">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>抖音商户ID
+                  <span class="x-red">*</span>商户ID
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="L_username17" name="DYMCHID" lay-verify="nikename"
@@ -192,19 +192,19 @@
           </div>
           <div class="layui-form-item dy-div">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>抖音商户公钥
+                  <span class="x-red">*</span>商户APPID
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username17" name="DYPUBLICKEY" lay-verify="nikename"
+                  <input type="text" id="L_username17" name="DYMAPPID" lay-verify="nikename"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item dy-div">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>抖音商户私钥
+                  <span class="x-red">*</span>商户APPSECRET
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username17" name="DYPRIVATEKEY" lay-verify="nikename"
+                  <input type="text" id="L_username17" name="DYMAPPSECRET" lay-verify="nikename"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
