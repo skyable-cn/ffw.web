@@ -34,6 +34,13 @@
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           <div class="layui-input-inline">
+                  <select id="shipping" name="CLASS" class="valid">
+                  	<option value="">全部来源</option>
+                    <option value="wx"  <c:if test="${'wx' eq page.pd.CLASS}">selected="selected"</c:if>>微信</option>
+                    <option value="dy"  <c:if test="${'dy' eq page.pd.CLASS}">selected="selected"</c:if>>抖音</option>
+                  </select>
+          </div>
+          <div class="layui-input-inline">
                   <select id="shipping" name="STATE" class="valid">
                   	<option value="">全部状态</option>
                     <option value="0"  <c:if test="${'0' eq page.pd.STATE}">selected="selected"</c:if>>待审核</option>
@@ -50,6 +57,7 @@
           <tr>
             <th>头像</th>
             <th>昵称</th>
+            <th>来源</th>
             <th>提现金额</th>
             <th>提现时间</th>
             <th>审核时间</th>
@@ -63,6 +71,13 @@
           	<tr>
            	<td><img alt="" src="${var.PHOTO}" width="50"></td>
             <td>${var.NICKNAME}</td>
+            <td>
+            	<c:choose>
+            		<c:when test="${var.CLASS eq 'wx'}">微信</c:when>
+            		<c:when test="${var.CLASS eq 'dy'}">抖音</c:when>
+            		<c:otherwise>未知</c:otherwise>
+            	</c:choose>
+            </td>
             <td>${var.MONEY}</td>
             <td>${var.CDT}</td>
             <td>${var.ADT}</td>

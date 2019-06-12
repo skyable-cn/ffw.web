@@ -33,6 +33,13 @@
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/notice/listPage">
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
+          <div class="layui-input-inline">
+               <select id="shipping2" name="STATE" class="valids">
+               	<option value="">全部状态</option>
+                 <option value="1" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '1'}">selected="selected"</c:if>>启用</option>
+                 <option value="0" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '0'}">selected="selected"</c:if>>暂停</option>
+               </select>
+          </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>

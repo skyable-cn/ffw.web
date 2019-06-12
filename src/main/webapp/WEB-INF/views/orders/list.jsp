@@ -58,13 +58,13 @@
         <thead>
           <tr>
             <th>系统交易</th>
-            <th>微信交易</th>
+            <th>支付交易</th>
             <th>商城</th>
             <th>商户</th>
             <th>产品</th>
             <th>状态</th>
             <th>金额</th>
-            <th>微信号</th>
+            <th>用户号</th>
             <th>时间</th>
             <th>来源</th>
             </tr>

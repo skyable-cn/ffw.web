@@ -34,6 +34,13 @@
       <div class="layui-row">
           <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           <div class="layui-input-inline">
+                  <select id="shipping" name="CLASS" class="valid">
+                  	<option value="">全部来源</option>
+                    <option value="wx"  <c:if test="${'wx' eq page.pd.CLASS}">selected="selected"</c:if>>微信</option>
+                    <option value="dy"  <c:if test="${'dy' eq page.pd.CLASS}">selected="selected"</c:if>>抖音</option>
+                  </select>
+          </div>
+          <div class="layui-input-inline">
                   <select id="shipping" name="MEMBERTYPE_ID" class="valid">
                   	<option value="">全部会员类型</option>
                     <c:forEach var="var" items="${typeData}">
@@ -50,6 +57,7 @@
           <tr>
             <th>头像</th>
             <th>昵称</th>
+            <th>来源</th>
             <th>可提金额</th>
             <th>已提金额</th>
             <th>直属收益</th>
@@ -64,6 +72,13 @@
           	<tr>
            	<td><img alt="" src="${var.PHOTO}" width="50"></td>
             <td>${var.NICKNAME}</td>
+            <td>
+            	<c:choose>
+            		<c:when test="${var.CLASS eq 'wx'}">微信</c:when>
+            		<c:when test="${var.CLASS eq 'dy'}">抖音</c:when>
+            		<c:otherwise>未知</c:otherwise>
+            	</c:choose>
+            </td>
             <td>${var.WAITACCOUNT}</td>
             <td>${var.ALREADYACCOUNT}</td>
             <td>${var.MEACCOUNT}</td>
