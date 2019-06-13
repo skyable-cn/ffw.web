@@ -34,7 +34,6 @@ public class MarketController extends BaseController {
 
 	@Autowired
 	RestTemplateUtil rest;
-	
 
 	@Autowired
 	FileConfig fileConfig;
@@ -50,65 +49,54 @@ public class MarketController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+
+		pd.put("CDT", DateUtil.getTime());
+
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 		pd.put("DOMAIN_ID", user.getString("DM_ID"));
-		
+
 		PageData pdu = new PageData();
-		String pinYinName = Pinyin.getPinYinHeadChar(pd
-				.getString("MARKETNAME"));
-		String pinYinNameTemp = Pinyin.getPinYinHeadChar(pd
-				.getString("MARKETNAME"));
+		String pinYinName = Pinyin.getPinYinHeadChar(pd.getString("MARKETNAME"));
+		String pinYinNameTemp = Pinyin.getPinYinHeadChar(pd.getString("MARKETNAME"));
 		int nameOrder = 1;
 		while (true) {
 			pdu.put("USERNAME", pinYinNameTemp);
-			PageData usert = rest.post(IConstant.FFW_SERVICE_KEY,
-					"user/findByName", pdu, PageData.class);
+			PageData usert = rest.post(IConstant.FFW_SERVICE_KEY, "user/findByName", pdu, PageData.class);
 			if (null == usert) {
 				break;
 			}
 			pinYinNameTemp = (pinYinName + nameOrder);
 			nameOrder++;
 		}
-		
+
 		pd.put("ACCOUNTER", pinYinNameTemp);
-		
+
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "market/save", pd, PageData.class);
-		
-		
+
 		PageData pds = new PageData();
 		pds.put("MARKET_ID", pd.getString("MARKET_ID"));
-		rest.post(IConstant.FFW_SERVICE_KEY, "service/save", pds,
-				PageData.class);
-		
-		pdu.put("PASSWORD",
-				new SimpleHash("SHA-1", pdu.getString("USERNAME"),
-						IConstant.DEFAULT_PASSWORD).toString()); // 密码加密
+		rest.post(IConstant.FFW_SERVICE_KEY, "service/save", pds, PageData.class);
+
+		pdu.put("PASSWORD", new SimpleHash("SHA-1", pdu.getString("USERNAME"), IConstant.DEFAULT_PASSWORD).toString()); // 密码加密
 		pdu.put("DM_ID", pd.getString("MARKET_ID"));
 		pdu.put("ROLE_ID", IConstant.STRING_3);
 		pdu.put("CDT", DateUtil.getTime());
 		pdu.put("STATE", IConstant.STRING_1);
-		rest.post(IConstant.FFW_SERVICE_KEY, "user/save", pdu,
-				PageData.class);
-		
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver(
-				getSession().getServletContext());
+		rest.post(IConstant.FFW_SERVICE_KEY, "user/save", pdu, PageData.class);
+
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver(getSession().getServletContext());
 		if (resolver.isMultipart(getRequest())) {
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) getRequest();
 			Iterator<String> it = multipartHttpServletRequest.getFileNames();
 			while (it.hasNext()) {
 				String fileID = it.next();
-				MultipartFile file = multipartHttpServletRequest
-						.getFile(fileID);
+				MultipartFile file = multipartHttpServletRequest.getFile(fileID);
 				if (StringUtils.isEmpty(file.getOriginalFilename())) {
 					continue;
 				}
 				String fileOriginaName = file.getOriginalFilename();
-				String tempName = get32UUID()
-						+ fileOriginaName.substring(fileOriginaName
-								.lastIndexOf("."));
-				
+				String tempName = get32UUID() + fileOriginaName.substring(fileOriginaName.lastIndexOf("."));
+
 				String tempPath = null;
 				if (fileID.equals("file-0")) {
 					tempPath = fileConfig.getDirImage();
@@ -117,22 +105,20 @@ public class MarketController extends BaseController {
 					tempPath = fileConfig.getDirCert();
 				}
 
-				File fileNew = new File(
-						tempPath+ File.separator + tempName);
+				File fileNew = new File(tempPath + File.separator + tempName);
 				file.transferTo(fileNew);
 
 				PageData pdf = new PageData();
 				pdf.put("REFERENCE_ID", pd.getString("MARKET_ID"));
 				pdf.put("FILENAME", fileOriginaName);
 
-				String FILESIZE = new DecimalFormat("#.000").format(file
-						.getSize() * 1.000 / 1024 / 1024);
+				String FILESIZE = new DecimalFormat("#.000").format(file.getSize() * 1.000 / 1024 / 1024);
 				if (FILESIZE.startsWith(".")) {
 					FILESIZE = IConstant.STRING_0 + FILESIZE;
 				}
 				pdf.put("FILESIZE", FILESIZE);
 				pdf.put("FILEPATH", tempName);
-				
+
 				String FILETYPE = null;
 
 				if (fileID.equals("file-0")) {
@@ -142,15 +128,11 @@ public class MarketController extends BaseController {
 					FILETYPE = IConstant.STRING_10;
 				}
 				pdf.put("FILETYPE", FILETYPE);
-				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf,
-						PageData.class);
+				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf, PageData.class);
 			}
 		}
-		
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_ADD_SUCCESS", new Object[] { "商城模块" },
-						""));
+
+		mv.addObject("msg", getMessageUrl("MSG_CODE_ADD_SUCCESS", new Object[] { "商城模块" }, ""));
 		mv.setViewName("redirect:/market/listPage");
 		logger.info("新增商城模块成功");
 		return mv;
@@ -170,13 +152,9 @@ public class MarketController extends BaseController {
 		PageData pd = new PageData();
 		pd.put("MARKET_ID", MARKET_ID);
 
-		rest.post(IConstant.FFW_SERVICE_KEY, "market/delete", pd,
-				PageData.class);
+		rest.post(IConstant.FFW_SERVICE_KEY, "market/delete", pd, PageData.class);
 
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_DELETE_SUCCESS",
-						new Object[] { "商城模块" }, ""));
+		mv.addObject("msg", getMessageUrl("MSG_CODE_DELETE_SUCCESS", new Object[] { "商城模块" }, ""));
 		mv.setViewName("redirect:/market/listPage");
 		logger.info("删除商城模块成功");
 
@@ -196,24 +174,20 @@ public class MarketController extends BaseController {
 		pd = this.getPageData();
 
 		rest.post(IConstant.FFW_SERVICE_KEY, "market/edit", pd, PageData.class);
-		
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver(
-				getSession().getServletContext());
+
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver(getSession().getServletContext());
 		if (resolver.isMultipart(getRequest())) {
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) getRequest();
 			Iterator<String> it = multipartHttpServletRequest.getFileNames();
 			while (it.hasNext()) {
 				String fileID = it.next();
-				MultipartFile file = multipartHttpServletRequest
-						.getFile(fileID);
+				MultipartFile file = multipartHttpServletRequest.getFile(fileID);
 				if (StringUtils.isEmpty(file.getOriginalFilename())) {
 					continue;
 				}
 				String fileOriginaName = file.getOriginalFilename();
-				String tempName = get32UUID()
-						+ fileOriginaName.substring(fileOriginaName
-								.lastIndexOf("."));
-				
+				String tempName = get32UUID() + fileOriginaName.substring(fileOriginaName.lastIndexOf("."));
+
 				String tempPath = null;
 				if (fileID.equals("file-0")) {
 					tempPath = fileConfig.getDirImage();
@@ -222,49 +196,41 @@ public class MarketController extends BaseController {
 					tempPath = fileConfig.getDirCert();
 				}
 
-				File fileNew = new File(
-						tempPath+ File.separator + tempName);
+				File fileNew = new File(tempPath + File.separator + tempName);
 				file.transferTo(fileNew);
 
 				PageData pdf = new PageData();
 				pdf.put("REFERENCE_ID", pd.getString("MARKET_ID"));
 				pdf.put("FILENAME", fileOriginaName);
 
-				String FILESIZE = new DecimalFormat("#.000").format(file
-						.getSize() * 1.000 / 1024 / 1024);
+				String FILESIZE = new DecimalFormat("#.000").format(file.getSize() * 1.000 / 1024 / 1024);
 				if (FILESIZE.startsWith(".")) {
 					FILESIZE = IConstant.STRING_0 + FILESIZE;
 				}
 				pdf.put("FILESIZE", FILESIZE);
 				pdf.put("FILEPATH", tempName);
-				
+
 				String FILETYPE = null;
 
 				if (fileID.equals("file-0")) {
 					FILETYPE = IConstant.STRING_9;
-					
+
 					PageData pdfd = new PageData();
 					pdfd.put("FILE_ID", pd.getString("LGFILE_ID"));
-					rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdfd,
-							PageData.class);
+					rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdfd, PageData.class);
 				}
 				if (fileID.equals("file-1")) {
 					FILETYPE = IConstant.STRING_10;
 					PageData pdfd = new PageData();
 					pdfd.put("FILE_ID", pd.getString("CTFILE_ID"));
-					rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdfd,
-							PageData.class);
+					rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdfd, PageData.class);
 				}
 				pdf.put("FILETYPE", FILETYPE);
-				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf,
-						PageData.class);
+				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf, PageData.class);
 			}
 		}
 
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_EDIT_SUCCESS",
-						new Object[] { "商城模块" }, ""));
+		mv.addObject("msg", getMessageUrl("MSG_CODE_EDIT_SUCCESS", new Object[] { "商城模块" }, ""));
 		mv.setViewName("redirect:/market/listPage");
 		logger.info("修改商城模块成功");
 		return mv;
@@ -279,15 +245,13 @@ public class MarketController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
-		
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
-		if(user.getString("ROLE_ID").equals(IConstant.STRING_2)){
+
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
+		if (user.getString("ROLE_ID").equals(IConstant.STRING_2)) {
 			pd.put("DOMAIN_ID", user.getString("DM_ID"));
 		}
 
-		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "market/listPage", pd,
-				Page.class);
+		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "market/listPage", pd, Page.class);
 
 		mv.setViewName("/market/list");
 		mv.addObject("page", page);
@@ -325,22 +289,20 @@ public class MarketController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "market/find", pd,
-				PageData.class);
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "market/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("market/edit");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/goInfo")
 	public ModelAndView goInfo() throws Exception {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "market/find", pd,
-				PageData.class);
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "market/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("market/info");

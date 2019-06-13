@@ -50,8 +50,7 @@ public class GoodsController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 
 		pd.put("CREATETIME", DateUtil.getTime());
 		String userName = user.getString("NICKNAME");
@@ -64,36 +63,29 @@ public class GoodsController extends BaseController {
 		pd.put("VIEWNUMBER1", IConstant.STRING_0);
 		pd.put("VIEWNUMBER2", IConstant.STRING_0);
 		pd.put("PRAISENUMBER", IConstant.STRING_0);
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "goods/save", pd,
-				PageData.class);
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "goods/save", pd, PageData.class);
 
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver(
-				getSession().getServletContext());
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver(getSession().getServletContext());
 		if (resolver.isMultipart(getRequest())) {
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) getRequest();
 			Iterator<String> it = multipartHttpServletRequest.getFileNames();
 			while (it.hasNext()) {
 				String fileID = it.next();
-				MultipartFile file = multipartHttpServletRequest
-						.getFile(fileID);
+				MultipartFile file = multipartHttpServletRequest.getFile(fileID);
 				if (StringUtils.isEmpty(file.getOriginalFilename())) {
 					continue;
 				}
 				String fileOriginaName = file.getOriginalFilename();
-				String tempName = get32UUID()
-						+ fileOriginaName.substring(fileOriginaName
-								.lastIndexOf("."));
+				String tempName = get32UUID() + fileOriginaName.substring(fileOriginaName.lastIndexOf("."));
 
-				File fileNew = new File(fileConfig.getDirImage()
-						+ File.separator + tempName);
+				File fileNew = new File(fileConfig.getDirImage() + File.separator + tempName);
 				file.transferTo(fileNew);
 
 				PageData pdf = new PageData();
 				pdf.put("REFERENCE_ID", pd.getString("GOODS_ID"));
 				pdf.put("FILENAME", fileOriginaName);
 
-				String FILESIZE = new DecimalFormat("#.000").format(file
-						.getSize() * 1.000 / 1024 / 1024);
+				String FILESIZE = new DecimalFormat("#.000").format(file.getSize() * 1.000 / 1024 / 1024);
 				if (FILESIZE.startsWith(".")) {
 					FILESIZE = IConstant.STRING_0 + FILESIZE;
 				}
@@ -105,14 +97,11 @@ public class GoodsController extends BaseController {
 					FILETYPE = IConstant.STRING_2;
 				}
 				pdf.put("FILETYPE", FILETYPE);
-				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf,
-						PageData.class);
+				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf, PageData.class);
 			}
 		}
 
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_ADD_SUCCESS", new Object[] { "商品" }, ""));
+		mv.addObject("msg", getMessageUrl("MSG_CODE_ADD_SUCCESS", new Object[] { "商品" }, ""));
 		mv.setViewName("redirect:/goods/manage");
 		logger.info("新增商品成功");
 		return mv;
@@ -134,10 +123,7 @@ public class GoodsController extends BaseController {
 
 		rest.post(IConstant.FFW_SERVICE_KEY, "goods/delete", pd, PageData.class);
 
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_DELETE_SUCCESS", new Object[] { "商品" },
-						""));
+		mv.addObject("msg", getMessageUrl("MSG_CODE_DELETE_SUCCESS", new Object[] { "商品" }, ""));
 		mv.setViewName("redirect:/goods/manage");
 		logger.info("删除商品成功");
 
@@ -156,8 +142,7 @@ public class GoodsController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 
 		pd.put("UPDATETIME", DateUtil.getTime());
 		String userName = user.getString("NICKNAME");
@@ -168,32 +153,26 @@ public class GoodsController extends BaseController {
 
 		rest.post(IConstant.FFW_SERVICE_KEY, "goods/edit", pd, PageData.class);
 
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver(
-				getSession().getServletContext());
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver(getSession().getServletContext());
 		if (resolver.isMultipart(getRequest())) {
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) getRequest();
 			Iterator<String> it = multipartHttpServletRequest.getFileNames();
 			while (it.hasNext()) {
 				String fileID = it.next();
-				MultipartFile file = multipartHttpServletRequest
-						.getFile(fileID);
+				MultipartFile file = multipartHttpServletRequest.getFile(fileID);
 				if (StringUtils.isEmpty(file.getOriginalFilename())) {
 					continue;
 				}
 				String fileOriginaName = file.getOriginalFilename();
-				String tempName = get32UUID()
-						+ fileOriginaName.substring(fileOriginaName
-								.lastIndexOf("."));
-				File fileNew = new File(fileConfig.getDirImage()
-						+ File.separator + tempName);
+				String tempName = get32UUID() + fileOriginaName.substring(fileOriginaName.lastIndexOf("."));
+				File fileNew = new File(fileConfig.getDirImage() + File.separator + tempName);
 				file.transferTo(fileNew);
 
 				PageData pdf = new PageData();
 				pdf.put("REFERENCE_ID", pd.getString("GOODS_ID"));
 				pdf.put("FILENAME", fileOriginaName);
 
-				String FILESIZE = new DecimalFormat("#.000").format(file
-						.getSize() * 1.000 / 1024 / 1024);
+				String FILESIZE = new DecimalFormat("#.000").format(file.getSize() * 1.000 / 1024 / 1024);
 				if (FILESIZE.startsWith(".")) {
 					FILESIZE = IConstant.STRING_0 + FILESIZE;
 				}
@@ -206,19 +185,14 @@ public class GoodsController extends BaseController {
 
 					PageData pdfd = new PageData();
 					pdfd.put("FILE_ID", pd.getString("HBFILE_ID"));
-					rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdfd,
-							PageData.class);
+					rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdfd, PageData.class);
 				}
 				pdf.put("FILETYPE", FILETYPE);
-				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf,
-						PageData.class);
+				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf, PageData.class);
 			}
 		}
 
-		mv.addObject(
-				"msg",
-				getMessageUrl("MSG_CODE_EDIT_SUCCESS", new Object[] { "商品" },
-						""));
+		mv.addObject("msg", getMessageUrl("MSG_CODE_EDIT_SUCCESS", new Object[] { "商品" }, ""));
 		mv.setViewName("redirect:/goods/manage");
 		logger.info("修改商品成功");
 		return mv;
@@ -229,16 +203,17 @@ public class GoodsController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
-		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+		if (user.getString("ROLE_ID").equals(IConstant.STRING_2)) {
+			pdm2.put("DOMAIN_ID", user.getString("DM_ID"));
+		}
+		if (user.getString("ROLE_ID").equals(IConstant.STRING_3)) {
 			pdm2.put("MARKET_ID", user.getString("DM_ID"));
 		}
-		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
-				"shop/listAll", pdm2,
+		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("shopData", shopData);
@@ -247,13 +222,15 @@ public class GoodsController extends BaseController {
 		if (null != keywords && !"".equals(keywords)) {
 			pd.put("keywords", keywords.trim());
 		}
-		
-		if(user.getString("ROLE_ID").equals(IConstant.STRING_3)){
+
+		if (user.getString("ROLE_ID").equals(IConstant.STRING_2)) {
+			pd.put("DOMAIN_ID", user.getString("DM_ID"));
+		}
+		if (user.getString("ROLE_ID").equals(IConstant.STRING_3)) {
 			pd.put("MARKET_ID", user.getString("DM_ID"));
 		}
 
-		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "goods/listPage", pd,
-				Page.class);
+		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "goods/listPage", pd, Page.class);
 
 		mv.setViewName("/goods/listManage");
 		mv.addObject("page", page);
@@ -270,8 +247,7 @@ public class GoodsController extends BaseController {
 
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
-		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
-				"shop/listAll", pdm2,
+		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("shopData", shopData);
@@ -281,12 +257,10 @@ public class GoodsController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 		pd.put("SHOP_ID", user.getString("DM_ID"));
 
-		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "goods/listPage", pd,
-				Page.class);
+		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "goods/listPage", pd, Page.class);
 
 		mv.setViewName("/goods/listSearch");
 		mv.addObject("page", page);
@@ -307,13 +281,11 @@ public class GoodsController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
 		pdm2.put("MARKET_ID", user.getString("DM_ID"));
-		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
-				"shop/listAll", pdm2,
+		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("shopData", shopData);
@@ -335,13 +307,11 @@ public class GoodsController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
-		PageData user = (PageData) getSession().getAttribute(
-				IConstant.USER_SESSION);
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
 		pdm2.put("MARKET_ID", user.getString("DM_ID"));
-		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
-				"shop/listAll", pdm2,
+		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("shopData", shopData);
@@ -349,8 +319,7 @@ public class GoodsController extends BaseController {
 		PageData pdm3 = new PageData();
 		pdm3.put("REFERENCE_ID", pd.getString("GOODS_ID"));
 		pdm3.put("FILETYPE", IConstant.STRING_1);
-		List<PageData> fileDataList = rest.postForList(
-				IConstant.FFW_SERVICE_KEY, "file/listAll", pdm3,
+		List<PageData> fileDataList = rest.postForList(IConstant.FFW_SERVICE_KEY, "file/listAll", pdm3,
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("fileDataList", fileDataList);
@@ -358,12 +327,10 @@ public class GoodsController extends BaseController {
 		PageData pdm4 = new PageData();
 		pdm4.put("REFERENCE_ID", pd.getString("GOODS_ID"));
 		pdm4.put("FILETYPE", IConstant.STRING_2);
-		PageData fileData = rest.post(IConstant.FFW_SERVICE_KEY, "file/findBy",
-				pdm4, PageData.class);
+		PageData fileData = rest.post(IConstant.FFW_SERVICE_KEY, "file/findBy", pdm4, PageData.class);
 		mv.addObject("fileData", fileData);
 
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "goods/find", pd,
-				PageData.class);
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "goods/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("goods/edit");
@@ -378,8 +345,7 @@ public class GoodsController extends BaseController {
 
 		PageData pdm2 = new PageData();
 		pdm2.put("SHOPSTATE_ID", IConstant.STRING_2);
-		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY,
-				"shop/listAll", pdm2,
+		List<PageData> shopData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shop/listAll", pdm2,
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("shopData", shopData);
@@ -387,8 +353,7 @@ public class GoodsController extends BaseController {
 		PageData pdm3 = new PageData();
 		pdm3.put("REFERENCE_ID", pd.getString("GOODS_ID"));
 		pdm3.put("FILETYPE", IConstant.STRING_1);
-		List<PageData> fileDataList = rest.postForList(
-				IConstant.FFW_SERVICE_KEY, "file/listAll", pdm3,
+		List<PageData> fileDataList = rest.postForList(IConstant.FFW_SERVICE_KEY, "file/listAll", pdm3,
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("fileDataList", fileDataList);
@@ -396,12 +361,10 @@ public class GoodsController extends BaseController {
 		PageData pdm4 = new PageData();
 		pdm4.put("REFERENCE_ID", pd.getString("GOODS_ID"));
 		pdm4.put("FILETYPE", IConstant.STRING_2);
-		PageData fileData = rest.post(IConstant.FFW_SERVICE_KEY, "file/findBy",
-				pdm4, PageData.class);
+		PageData fileData = rest.post(IConstant.FFW_SERVICE_KEY, "file/findBy", pdm4, PageData.class);
 		mv.addObject("fileData", fileData);
 
-		pd = rest.post(IConstant.FFW_SERVICE_KEY, "goods/find", pd,
-				PageData.class);
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "goods/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 
 		mv.setViewName("goods/info");
