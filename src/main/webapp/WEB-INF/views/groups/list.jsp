@@ -32,7 +32,7 @@
     <div class="x-body">
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/groups/listPage">
       <div class="layui-row">
-          <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
+          <input type="text" name="keywords"  placeholder="请输入群组描述" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" autocomplete="off" value="${page.pd.STARTTIME}">
           <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" autocomplete="off" value="${page.pd.ENDTIME}">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>

@@ -32,7 +32,7 @@
     <div class="x-body">
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/user/listPage">
       <div class="layui-row">
-          <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
+          <input type="text" name="keywords"  placeholder="请输入账号" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           <c:if test="${USER_SESSION.ROLE_ID eq 1}">
           <div class="layui-input-inline">
                   <select id="shipping" name="ROLE_ID" class="valid">

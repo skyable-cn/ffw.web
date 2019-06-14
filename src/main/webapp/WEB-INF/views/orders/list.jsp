@@ -32,7 +32,7 @@
     <div class="x-body">
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/orders/listPage">
       <div class="layui-row">
-          <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
+          <input type="text" name="keywords"  placeholder="请输入系统交易" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           
            <div class="layui-input-inline">
                   <select id="shipping" name="STATE" class="valid">

@@ -32,7 +32,7 @@
     <div class="x-body">
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/ladder/listPage">
       <div class="layui-row">
-          <input type="text" name="keywords"  placeholder="请输入关键字" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
+          <input type="text" name="keywords"  placeholder="请输入产品名称" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
