@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ffw.api.model.PageData;
+import com.ffw.api.util.DateUtil;
 import com.ffw.web.constant.IConstant;
 import com.ffw.web.util.RestTemplateUtil;
 
@@ -94,6 +95,17 @@ public class DesktopController extends BaseController {
 	@RequestMapping("/market")
 	public ModelAndView market() {
 		ModelAndView mv = this.getModelAndView();
+
+		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
+
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd.put("MARKET_ID", user.getString("DM_ID"));
+		pd.put("CDT", DateUtil.getTime());
+		pd.put("CDTD", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		pd.put("CDTM", new SimpleDateFormat("yyyy-MM").format(new Date()));
+		pd = rest.post(IConstant.FFW_SERVICE_KEY, "market/findDesk", pd, PageData.class);
+		mv.addObject("pd", pd); // 放入视图容器
 		mv.setViewName("/desktop/market");
 		return mv;
 	}

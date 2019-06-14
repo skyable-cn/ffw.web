@@ -28,46 +28,44 @@
       </span>
     </div>
     <div class="x-body">
-    <button type="button" class="layui-btn layui-btn-lg layui-btn-fluid" style="margin-bottom:5px;text-align:left;">销售数据</button>
     <div class="layui-row layui-col-space20">
 	  <div class="layui-col-md4">
 		<div style="background:#F0F0F0;color:#222222;border-radius:10px;">
-	    	<div style="padding:20px;font-size:20px;">今日销售额</div>
-	    	<div style="padding:20px;font-size:16px;text-align:right;">${shopDataSize} / 个</div>
+	    	<div style="padding:20px;font-size:20px;">今日销售额 ：${pd.DAYMONEYSUM}</div>
+	    	<div style="padding:20px;font-size:16px;text-align:right;">本月总共 ：${pd.MONTHMONEYSUM}</div>
 	    </div>
 	  </div>
 	  <div class="layui-col-md4">
 	    <div style="background:#F0F0F0;color:#222222;border-radius:10px;">
-	    	<div style="padding:20px;font-size:20px;">今日成交数</div>
-	    	<div style="padding:20px;font-size:16px;text-align:right;">${goodsDataSize} / 个</div>
+	    	<div style="padding:20px;font-size:20px;">今日成交数：${pd.DAYUSEDSUM}</div>
+	    	<div style="padding:20px;font-size:16px;text-align:right;">本月总共：${pd.MONTHUSEDSUM}</div>
 	    </div>
 	  </div>
 	  <div class="layui-col-md4">
 	    <div style="background:#F0F0F0;color:#222222;border-radius:10px;">
-	    	<div style="padding:20px;font-size:20px;">今日交易数</div>
-	    	<div style="padding:20px;font-size:16px;text-align:right;">${goodsDataSize} / 个</div>
+	    	<div style="padding:20px;font-size:20px;">今日交易数：${pd.DAYPAYEDSUM}</div>
+	    	<div style="padding:20px;font-size:16px;text-align:right;">本月总共 ：${pd.MONTHPAYEDSUM}</div>
 	    </div>
 	  </div>
 	</div>
 	
-	<button type="button" class="layui-btn layui-btn-lg layui-btn-fluid" style="margin-top:20px;margin-bottom:5px;text-align:left;">操作数据</button>
-    <div class="layui-row layui-col-space20">
+	<div class="layui-row layui-col-space20">
 	  <div class="layui-col-md4">
 		<div style="background:#F0F0F0;color:#222222;border-radius:10px;">
 	    	<div style="padding:20px;font-size:20px;">申请退款数</div>
-	    	<div style="padding:20px;font-size:16px;text-align:right;">${shopDataSize} / 个</div>
+	    	<div style="padding:20px;font-size:16px;text-align:right;">总共 ：${pd.REFUNDSUM}</div>
 	    </div>
 	  </div>
 	  <div class="layui-col-md4">
 	    <div style="background:#F0F0F0;color:#222222;border-radius:10px;">
 	    	<div style="padding:20px;font-size:20px;">过期产品数</div>
-	    	<div style="padding:20px;font-size:16px;text-align:right;">${goodsDataSize} / 个</div>
+	    	<div style="padding:20px;font-size:16px;text-align:right;">总共 ：${pd.DOWNSTANDSUM}</div>
 	    </div>
 	  </div>
 	  <div class="layui-col-md4">
 	    <div style="background:#F0F0F0;color:#222222;border-radius:10px;">
 	    	<div style="padding:20px;font-size:20px;">售空产品数</div>
-	    	<div style="padding:20px;font-size:16px;text-align:right;">${goodsDataSize} / 个</div>
+	    	<div style="padding:20px;font-size:16px;text-align:right;">总共 ：${pd.SELLENDSUM}</div>
 	    </div>
 	  </div>
 	</div>
