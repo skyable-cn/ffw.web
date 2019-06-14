@@ -41,6 +41,7 @@
                     <option value="1" <c:if test="${'1' eq page.pd.STATE}">selected="selected"</c:if>>已支付</option>
                     <option value="2" <c:if test="${'2' eq page.pd.STATE}">selected="selected"</c:if>>待使用</option>
                     <option value="3" <c:if test="${'3' eq page.pd.STATE}">selected="selected"</c:if>>已核销</option>
+                    <option value="4" <c:if test="${'4' eq page.pd.STATE}">selected="selected"</c:if>>已评价</option>
                     <option value="5" <c:if test="${'5' eq page.pd.STATE}">selected="selected"</c:if>>已退款</option>
                   </select>
               </div>
@@ -83,7 +84,9 @@
             		<c:when test="${var.STATE eq 1}">已支付</c:when>
             		<c:when test="${var.STATE eq 2}">待使用</c:when>
             		<c:when test="${var.STATE eq 3}">已核销</c:when>
+            		<c:when test="${var.STATE eq 4}">已评价</c:when>
             		<c:when test="${var.STATE eq 5}">已退款</c:when>
+            		<c:otherwise>未知</c:otherwise>
             	</c:choose>
             </td>
              <td>${var.MONEY}</td>
