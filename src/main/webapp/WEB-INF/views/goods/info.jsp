@@ -40,6 +40,11 @@
      	  border:1px #dddddd solid;
      }
     </style>
+    <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/lang/zh-cn/zh-cn.js"></script>
   </head>
   
   <body>
@@ -96,8 +101,8 @@
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>购买须知
               </label>
-              <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容" id="desc4" name="BUYNOTICE" class="layui-textarea" disabled="disabled">${pd.BUYNOTICE}</textarea>
+              <div class="layui-input-inline" style="width:calc(100% - 200px);max-width:800px;">
+                  <script id="editor" type="text/plain" style="width:100%;min-height:300px;">${pd.BUYNOTICE}</script>
               </div>
           </div>
           <div class="layui-form-item">
@@ -273,6 +278,11 @@
       </form>
     </div>
     <%@ include file="../common/foot.jsp"%>
+    <script type="text/javascript">
+    
+    	var ue = UE.getEditor('editor');
+    
+    </script>
     <script>
         layui.use(['form','layer'], function(){
             $ = layui.jquery;
