@@ -95,7 +95,7 @@
                 <i class="layui-icon">&#xe63c;</i>
               </a>
               <c:if test="${var.STATE eq 0}">
-              <a title="审核" onclick="commonHref('<%=request.getContextPath()%>/withdraw/goAuditing?WITHDRAW_ID=${var.WITHDRAW_ID}');" href="javascript:;">
+              <a title="审核" onclick="goConmmonHref('${var.WITHDRAW_ID}','${var.CLASS}');" href="javascript:;">
                 <i class="layui-icon">&#xe6b2;</i>
               </a>
               </c:if>
@@ -111,5 +111,20 @@
 	</form>
     </div>
     <%@ include file="../common/foot.jsp"%>
+    <script type="text/javascript">
+    	function goConmmonHref(id,type){
+    		if(type == 'wx'){
+    			layer.confirm('确认该提现人员已录入微信商户白名单?',function(index){
+    	            location.href = "<%=request.getContextPath()%>/withdraw/goAuditing?WITHDRAW_ID="+id;
+    	        });
+    			
+    		}else if(type == 'dy'){
+    			layer.alert("暂不支持抖音用户提现审核");
+    		}else{
+    			layer.alert("未知类型提现审核");
+    		}
+    		
+    	}
+    </script>
   </body>
 </html>
