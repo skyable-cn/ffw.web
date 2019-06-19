@@ -118,7 +118,7 @@
                   <span class="x-red">*</span>产品售卖价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username9" name="SELLMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username9" name="SELLMONEY" lay-verify="sellingprice"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -127,7 +127,7 @@
                   <span class="x-red">*</span>产品原始价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username10" name="ORIGINALMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username10" name="ORIGINALMONEY" lay-verify="originalproduct"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -136,102 +136,111 @@
                   <span class="x-red">*</span>产品结算价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username11" name="BALANCEMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username11" name="BALANCEMONEY" lay-verify="ettlementsprice"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>普通用户返利价格
+                  普通用户返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username112" name="MEMBERBACKMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username112" name="MEMBERBACKMONEY"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>会员用户返利价格
+                 会员用户返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username113" name="VIPBACKMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username113" name="VIPBACKMONEY" lay-verify="userReturnPrice"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>本级分销返利价格
+                  本级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username12" name="BACKMONEY0" lay-verify="nikename"
+                  <input type="text" id="L_username12" name="BACKMONEY0" lay-verify="distributionPrice"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>一级分销返利价格
+                  一级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username13" name="BACKMONEY1" lay-verify="nikename"
+                  <input type="text" id="L_username13" name="BACKMONEY1" lay-verify="oneDistribution"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>二级分销返利价格
+                  二级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username14" name="BACKMONEY2" lay-verify="nikename"
+                  <input type="text" id="L_username14" name="BACKMONEY2" lay-verify="twoDistribution"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  	售卖开始时间
+                  <span class="x-red">*</span>售卖开始时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1" autocomplete="off">
+                  <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1" autocomplete="off" lay-verify="beginningDate">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  	售卖结束时间
+                  <span class="x-red">*</span>售卖结束时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2" autocomplete="off">
+                  <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2" autocomplete="off" lay-verify="endDate">
               </div>
           </div>
            <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  	核销开始时间
+                  <span class="x-red">*</span>核销开始时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="开始日" name="USESTARTTIME" id="ustart" lay-key="3" autocomplete="off">
+                  <input class="layui-input" placeholder="开始日" name="USESTARTTIME" id="ustart" lay-key="3" autocomplete="off" lay-verify="xhstartDate">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  	核销结束时间
+                  <span class="x-red">*</span>核销结束时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="结束日" name="USEENDTIME" id="uend" lay-key="4" autocomplete="off">
+                  <input class="layui-input" placeholder="结束日" name="USEENDTIME" id="uend" lay-key="4" autocomplete="off" lay-verify="xhendDate">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>库存
+                  库存
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username15" name="STORE" lay-verify="nikename"
+                  <input type="text" id="L_username15" name="STORE" lay-verify="stock1"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
+            <div class="layui-form-item step4" style="display:none;">
+                <label for="L_username" class="layui-form-label">
+                    虚拟已售
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_username155" name="VIRTUALSELLED" value="0"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>提供人员
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username151" name="PROVIDE" lay-verify="nikename11"
+                  <input type="text" id="L_username151" name="PROVIDE" lay-verify="providers"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -240,12 +249,27 @@
                   <span class="x-red">*</span>商户
               </label>
               <div class="layui-input-inline">
-                  <select id="shipping" name="SHOP_ID" class="valid">
-                    <c:forEach var="shop" items="${shopData}">
-                    	<option value="${shop.SHOP_ID}">${shop.SHOPNAME}</option>
-                    </c:forEach>
-                  </select>
+                  <input type="button" class="layui-btn layui-btn-normal" onclick="business()" value="商户选择"></input>
+                  <%--<select id="shipping1" name="SHOP_ID" class="valid">
+                      <c:forEach var="shop" items="${shopData}">
+                          <option value="${shop.SHOP_ID}">${shop.SHOPNAME}</option>
+                      </c:forEach>
+                  </select>--%>
+
+                  <%--<div style="display:none">
+                      <select id="shipping1" name="SHOP_ID" class="valid">
+                          <c:forEach var="shop" items="${shopData}">
+                            <option value="${shop.SHOP_ID}">${shop.SHOPNAME}</option>
+                          </c:forEach>
+                      </select>
+                  </div>--%>
+                  <div style="display:none" id="carlist">
+                      <c:forEach var="shop" items="${shopData}">
+                          <input type="radio" name="SHOP_ID" value="${shop.SHOP_ID}" title="${shop.SHOPNAME}" lay-verify="myrepostr"></input>
+                      </c:forEach>
+                  </div>
               </div>
+
           </div>
           <div class="layui-form-item step1" style="display:none;">
               <label for="username" class="layui-form-label">
@@ -273,6 +297,7 @@
                   <select id="shipping" name="STATE" class="valid">
                     <option value="1">启用</option>
                     <option value="0">暂停</option>
+                    <option value="2">售空</option>
                   </select>
               </div>
           </div>
@@ -314,10 +339,60 @@
           //自定义验证规则
           form.verify({
             nikename: function(value){
-              //if(value.length < 1){
-              //  return '昵称至少得1个字符啊';
-              //}
-            }
+              if(value.length < 1){
+                return '产品名称至少得1个字符啊';
+              }
+            },sellingprice: function(value){
+                  if(value.length < 1){
+                      return '正确输入产品售卖价格';
+                  }
+                  var re = /^[0-9]+.?[0-9]*/;//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/
+                  if (!re.test(value)) {
+                      return '正确输入产品售卖价格';
+                  }
+              }
+              ,originalproduct: function(value){
+                  if(value.length < 1){
+                      return '正确输入产品原始价格';
+                  }
+                  var re = /^[0-9]+.?[0-9]*/;//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/
+                  if (!re.test(value)) {
+                      return '正确输入产品原始价格';
+                  }
+              }
+              ,ettlementsprice: function(value){
+                  if(value.length < 1){
+                      return '正确输入产品结算价格';
+                  }
+                  var re = /^[0-9]+.?[0-9]*/;//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/
+                  if (!re.test(value)) {
+                      return '正确输入产品结算价格';
+                  }
+              },providers: function(value){
+                  if(value.length < 1){
+                      return '正确输入提供人员啊';
+                  }
+              },beginningDate: function(value){
+                  if(value.length < 1){
+                      return '售卖开始时间忘记输入啦！';
+                  }
+              },endDate: function(value){
+                  if(value.length < 1){
+                      return '售卖结束时间忘记输入啦！';
+                  }
+              },xhstartDate: function(value){
+                  if(value.length < 1){
+                      return '核销开始时间忘记输入啦！';
+                  }
+              },xhendDate: function(value){
+                  if(value.length < 1){
+                      return '核销结束时间忘记输入啦！';
+                  }
+              },myrepostr: function(value){
+                  if(value.length < 1){
+                      return '商户选择忘记输入啦！';
+                  }
+              }
           });
           
         });
@@ -351,7 +426,7 @@
           });
         
         var counter = 1;
-        
+
         function showImg(obj){
         	var imageSrc = window.URL?window.URL.createObjectURL(obj.files[0]):obj.value;
         	$("#image"+$(obj).attr("lt"))[0].src=imageSrc;
@@ -387,6 +462,37 @@
         	$("#BUYNOTICE").val(UE.getEditor('editor').getContent());
         	return true;
         }
+
+        function business(){
+            $("#carlist").show();
+        }
+
+       /* function business(){
+            var obj = document.getElementById("shipping1").options;
+            var rs=[];
+            for ( var i = 0; i <obj.length; i++){
+                rs[i]=obj[i].text;
+            }
+            layer.confirm('纳尼？', {
+              //  btn: ['按钮一', '按钮二', '按钮三'] //可以无限个按钮
+                btn: rs //可以无限个按钮
+                ,btn3: function(index, layero){
+                    //按钮【按钮三】的回调
+                    alert(index);
+                    layer.close(index)
+                }
+            }, function(index, layero){
+                //按钮【按钮一】的回调
+                alert(index);
+                layer.close(index)
+            }, function(index){
+                //按钮【按钮二】的回调
+                alert(index);
+                layer.close(index)
+            });
+
+        }*/
+
     </script>
   </body>
 
