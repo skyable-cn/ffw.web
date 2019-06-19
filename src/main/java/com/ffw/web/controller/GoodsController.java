@@ -63,6 +63,9 @@ public class GoodsController extends BaseController {
 		pd.put("VIEWNUMBER1", IConstant.STRING_0);
 		pd.put("VIEWNUMBER2", IConstant.STRING_0);
 		pd.put("PRAISENUMBER", IConstant.STRING_0);
+		if (StringUtils.isEmpty(pd.getString("VIRTUALSELLED"))) {
+			pd.put("VIRTUALSELLED", IConstant.STRING_0);
+		}
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "goods/save", pd, PageData.class);
 
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver(getSession().getServletContext());

@@ -218,6 +218,15 @@
                   autocomplete="off" class="layui-input" value="${pd.STORE}" disabled="disabled">
               </div>
           </div>
+          <div class="layui-form-item step4" style="display:none;">
+                <label for="L_username" class="layui-form-label">
+                    虚拟已售
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_username155" name="VIRTUALSELLED" value="${pd.VIRTUALSELLED}"
+                           autocomplete="off" class="layui-input" disabled="disabled">
+                </div>
+            </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>提供人员
@@ -265,6 +274,7 @@
                   <select id="shipping" name="STATE" class="valid"  disabled="disabled">
                     <option value="1" <c:if test="${pd.STATE eq 1}">selected="selected"</c:if>>启用</option>
                     <option value="0" <c:if test="${pd.STATE eq 0}">selected="selected"</c:if>>暂停</option>
+                    <option value="2" <c:if test="${pd.STATE eq 2}">selected="selected"</c:if>>售空</option>
                   </select>
               </div>
           </div>

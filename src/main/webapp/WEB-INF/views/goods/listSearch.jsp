@@ -38,6 +38,7 @@
                   	<option value="">全部状态</option>
                     <option value="1" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '1'}">selected="selected"</c:if>>启用</option>
                     <option value="0" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '0'}">selected="selected"</c:if>>暂停</option>
+                    <option value="2" <c:if test="${page.pd.STATE ne  null && page.pd.STATE eq '2'}">selected="selected"</c:if>>售空</option>
                   </select>
           </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -63,7 +64,9 @@
             <td>
             <c:choose>
             	<c:when test="${var.STATE eq 1}">启用</c:when>
-            	<c:otherwise>暂停</c:otherwise>
+            	<c:when test="${var.STATE eq 0}">暂停</c:when>
+            	<c:when test="${var.STATE eq 2}">售空</c:when>
+            	<c:otherwise>未知</c:otherwise>
             </c:choose>
             </td>
             <td class="td-manage">
