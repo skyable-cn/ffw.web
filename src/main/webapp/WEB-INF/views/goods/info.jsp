@@ -218,7 +218,7 @@
                   autocomplete="off" class="layui-input" value="${pd.STORE}" disabled="disabled">
               </div>
           </div>
-          <div class="layui-form-item step4" style="display:none;">
+          <div class="layui-form-item">
                 <label for="L_username" class="layui-form-label">
                     虚拟已售
                 </label>
