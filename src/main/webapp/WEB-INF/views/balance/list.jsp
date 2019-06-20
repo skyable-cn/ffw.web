@@ -37,9 +37,9 @@
         
       </div>
       <div style="text-align:right;">
-        <a class="layui-btn layui-btn-normal" href="javascript:;">交易流水：${count.INCOMEMONEY}</a>
-        <a class="layui-btn layui-btn-normal" href="javascript:;">机构收益：${count.PROFITMONEY}</a>
-        <a class="layui-btn layui-btn-normal" href="javascript:;">服务费：${count.SERVICEMONEY}</a>
+        <a class="layui-btn layui-btn-normal" href="javascript:;">总共交易流水：${count.INCOMEMONEY}</a>
+        <a class="layui-btn layui-btn-normal" href="javascript:;">总共机构收益：${count.PROFITMONEY}</a>
+        <a class="layui-btn layui-btn-normal" href="javascript:;">总共上缴费用：${count.SERVICEMONEY}</a>
       </div>
       <table class="layui-table x-admin">
         <thead>
@@ -47,8 +47,8 @@
             <th>机构名称</th>
             <th>交易流水</th>
             <th>机构收益</th>
-            <th>抽成比列</th>
-            <th>服务费用</th>
+            <th>上缴比列</th>
+            <th>上缴费用</th>
             </tr>
         </thead>
         <tbody>
