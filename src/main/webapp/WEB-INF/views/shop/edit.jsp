@@ -81,15 +81,15 @@
                   <span class="x-red">*</span>商户描述
               </label>
               <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容" id="desc" name="SHOPDESC" class="layui-textarea">${pd.SHOPDESC}</textarea>
+                  <textarea placeholder="请输入内容" id="desc" name="SHOPDESC" class="layui-textarea" lay-verify="nikenamess">${pd.SHOPDESC}</textarea>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>商户详细地址
+                  商户详细地址
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username4" name="SHOPADDRESS" required="" lay-verify="nikename"
+                  <input type="text" id="L_username4" name="SHOPADDRESS" required="" lay-verify="nikenamedizhi"
                   autocomplete="off" class="layui-input" value="${pd.SHOPADDRESS}" >
               </div>
           </div>
@@ -98,16 +98,16 @@
                   <span class="x-red">*</span>联系人
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username5" name="CONTRACTPERSON" required="" lay-verify="nikename1"
+                  <input type="text" id="L_username5" name="CONTRACTPERSON" required="" lay-verify="nikenameren"
                   autocomplete="off" class="layui-input" value="${pd.CONTRACTPERSON}" >
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>联系电话
+                  联系电话
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username6" name="CONTRACTPHONE" required="" lay-verify="nikename2"
+                  <input type="text" id="L_username6" name="CONTRACTPHONE" required="" lay-verify="nikenamephone"
                   autocomplete="off" class="layui-input" value="${pd.CONTRACTPHONE}" >
               </div>
           </div>
@@ -117,7 +117,7 @@
                   <span class="x-red">*</span>人均消费
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username7" name="AVGMONEY" required="" lay-verify="nikename22"
+                  <input type="text" id="L_username7" name="AVGMONEY" required="" lay-verify="nikenamerenxiaofei"
                   autocomplete="off" class="layui-input" value="${pd.AVGMONEY}" >
               </div>
           </div>
@@ -188,14 +188,30 @@
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
-        
-          //自定义验证规则
-          form.verify({
-            nikename: function(value){
-              if(value.length < 2){
-                return '昵称至少得2个字符啊';
-              }
-            }
+
+            //自定义验证规则
+            form.verify({
+                nikename: function(value){
+                    if(value.length < 2){
+                        return '昵称至少得2个字符啊';
+                    }
+                },nikename1: function(value){
+                    if(value.length < 2){
+                        return '请提供商户图片';
+                    }
+                },nikenamess: function(value){
+                    if(value.length < 2){
+                        return '请输入商户描述';
+                    }
+                },nikenameren: function(value){
+                    if(value.length < 2){
+                        return '请输入联系人';
+                    }
+                },nikenamerenxiaofei: function(value){
+                    if(value.length < 2){
+                        return '请输入人均消费';
+                    }
+                }
           });
           
         });

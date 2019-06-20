@@ -124,7 +124,7 @@
                   <span class="x-red">*</span>产品售卖价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username9" name="SELLMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username9" name="SELLMONEY" lay-verify="sellingprice"
                   autocomplete="off" class="layui-input" value="${pd.SELLMONEY}">
               </div>
           </div>
@@ -133,7 +133,7 @@
                   <span class="x-red">*</span>产品原始价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username10" name="ORIGINALMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username10" name="ORIGINALMONEY" lay-verify="originalproduct"
                   autocomplete="off" class="layui-input" value="${pd.ORIGINALMONEY}">
               </div>
           </div>
@@ -142,52 +142,52 @@
                   <span class="x-red">*</span>产品结算价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username11" name="BALANCEMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username11" name="BALANCEMONEY" lay-verify="ettlementsprice"
                   autocomplete="off" class="layui-input" value="${pd.BALANCEMONEY}">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>普通用户返利价格
+                  普通用户返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username112" name="MEMBERBACKMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username112" name="MEMBERBACKMONEY"
                   autocomplete="off" class="layui-input" value="${pd.MEMBERBACKMONEY}">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>会员用户返利价格
+                  会员用户返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username113" name="VIPBACKMONEY" lay-verify="nikename"
+                  <input type="text" id="L_username113" name="VIPBACKMONEY"
                   autocomplete="off" class="layui-input" value="${pd.VIPBACKMONEY}">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>本级分销返利价格
+                 本级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username12" name="BACKMONEY0" lay-verify="nikename"
+                  <input type="text" id="L_username12" name="BACKMONEY0"
                   autocomplete="off" class="layui-input" value="${pd.BACKMONEY0}">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>一级分销返利价格
+                  一级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username13" name="BACKMONEY1" lay-verify="nikename"
+                  <input type="text" id="L_username13" name="BACKMONEY1"
                   autocomplete="off" class="layui-input" value="${pd.BACKMONEY1}">
               </div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>二级分销返利价格
+                 二级分销返利价格
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username14" name="BACKMONEY2" lay-verify="nikename"
+                  <input type="text" id="L_username14" name="BACKMONEY2"
                   autocomplete="off" class="layui-input" value="${pd.BACKMONEY2}">
               </div>
           </div>
@@ -196,23 +196,23 @@
                   	售卖开始时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1" value="${pd.STARTTIME}">
+                  <input class="layui-input" placeholder="开始日" name="STARTTIME" id="start" lay-key="1" lay-verify="beginningDate"> value="${pd.STARTTIME}">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  	售卖结束时间
+                  <span class="x-red">*</span>售卖结束时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2" value="${pd.ENDTIME}">
+                  <input class="layui-input" placeholder="结束日" name="ENDTIME" id="end" lay-key="2" lay-verify="endDate" value="${pd.ENDTIME}">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  	核销开始时间
+                  <span class="x-red">*</span>核销开始时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="开始日" name="USESTARTTIME" id="ustart" lay-key="3" value="${pd.USESTARTTIME}">
+                  <input class="layui-input" placeholder="开始日" name="USESTARTTIME" id="ustart" lay-key="3" lay-verify="xhstartDate" value="${pd.USESTARTTIME}">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
@@ -220,15 +220,15 @@
                   	核销结束时间
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="结束日" name="USEENDTIME" id="uend" lay-key="4" value="${pd.USEENDTIME}">
+                  <input class="layui-input" placeholder="结束日" name="USEENDTIME" id="uend" lay-key="4" lay-verify="xhendDate" value="${pd.USEENDTIME}">
               </div>
           </div>
           <div class="layui-form-item step4" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>库存
+                  库存
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username15" name="STORE" lay-verify="nikename"
+                  <input type="text" id="L_username15" name="STORE"
                   autocomplete="off" class="layui-input" value="${pd.STORE}">
               </div>
           </div>
@@ -246,7 +246,7 @@
                   <span class="x-red">*</span>提供人员
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username151" name="PROVIDE" lay-verify="nikename11"
+                  <input type="text" id="L_username151" name="PROVIDE" lay-verify="providers"
                   autocomplete="off" class="layui-input" value="${pd.PROVIDE}">
               </div>
           </div>
@@ -331,7 +331,57 @@
               if(value.length < 1){
                 return '昵称至少得1个字符啊';
               }
-            }
+            },sellingprice: function(value){
+                  if(value.length < 1){
+                      return '正确输入产品售卖价格';
+                  }
+                  var re = /^[0-9]+.?[0-9]*/;//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/
+                  if (!re.test(value)) {
+                      return '正确输入产品售卖价格';
+                  }
+              }
+              ,originalproduct: function(value){
+                  if(value.length < 1){
+                      return '正确输入产品原始价格';
+                  }
+                  var re = /^[0-9]+.?[0-9]*/;//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/
+                  if (!re.test(value)) {
+                      return '正确输入产品原始价格';
+                  }
+              }
+              ,ettlementsprice: function(value){
+                  if(value.length < 1){
+                      return '正确输入产品结算价格';
+                  }
+                  var re = /^[0-9]+.?[0-9]*/;//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/
+                  if (!re.test(value)) {
+                      return '正确输入产品结算价格';
+                  }
+              },providers: function(value){
+                  if(value.length < 1){
+                      return '正确输入提供人员啊';
+                  }
+              },beginningDate: function(value){
+                  if(value.length < 1){
+                      return '售卖开始时间忘记输入啦！';
+                  }
+              },endDate: function(value){
+                  if(value.length < 1){
+                      return '售卖结束时间忘记输入啦！';
+                  }
+              },xhstartDate: function(value){
+                  if(value.length < 1){
+                      return '核销开始时间忘记输入啦！';
+                  }
+              },xhendDate: function(value){
+                  if(value.length < 1){
+                      return '核销结束时间忘记输入啦！';
+                  }
+              },myrepostr: function(value){
+                  if(value.length < 1){
+                      return '商户选择忘记输入啦！';
+                  }
+              }
           });
           
         });
