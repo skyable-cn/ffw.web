@@ -106,6 +106,15 @@
               </div>
           </div>
           <div class="layui-form-item">
+          <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>产品详情
+              </label>
+              <div class="layui-input-inline" style="width:calc(100% - 200px);max-width:800px;">
+          		  <input type="hidden" id="GOODSDETIAL" name="GOODSDETIAL" value='${pd.GOODSDETIAL}'/>
+                  <script id="editor2" type="text/plain" style="width:100%;min-height:300px;">${pd.GOODSDETIAL}</script>
+          	</div>
+          </div>
+          <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>产品售卖价格
               </label>
@@ -291,6 +300,8 @@
     <script type="text/javascript">
     
     	var ue = UE.getEditor('editor');
+    	
+    	var ue2 = UE.getEditor('editor2');
     
     </script>
     <script>

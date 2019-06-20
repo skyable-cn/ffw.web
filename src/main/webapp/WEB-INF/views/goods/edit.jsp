@@ -116,8 +116,22 @@
           </div>
            -->
           <div class="layui-form-item step3" style="display:none;">
+          <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>购买须知
+              </label>
+              <div class="layui-input-inline" style="width:calc(100% - 200px);max-width:800px;">
           		  <input type="hidden" id="BUYNOTICE" name="BUYNOTICE" value='${pd.BUYNOTICE}'/>
                   <script id="editor" type="text/plain" style="width:100%;min-height:300px;">${pd.BUYNOTICE}</script>
+          	  </div>
+          </div>
+          <div class="layui-form-item step3" style="display:none;">
+          <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>产品详情
+              </label>
+              <div class="layui-input-inline" style="width:calc(100% - 200px);max-width:800px;">
+          		  <input type="hidden" id="GOODSDETIAL" name="GOODSDETIAL" value='${pd.GOODSDETIAL}'/>
+                  <script id="editor2" type="text/plain" style="width:100%;min-height:300px;">${pd.GOODSDETIAL}</script>
+          	</div>
           </div>
           <div class="layui-form-item step2" style="display:none;">
               <label for="L_username" class="layui-form-label">
@@ -317,6 +331,8 @@
     <script type="text/javascript">
     
     	var ue = UE.getEditor('editor');
+    	
+    	var ue2 = UE.getEditor('editor2');
     
     </script>
     <script>
@@ -466,6 +482,7 @@
         
         function checkContent(){
         	$("#BUYNOTICE").val(UE.getEditor('editor').getContent());
+        	$("#GOODSDETIAL").val(UE.getEditor('editor2').getContent());
         	return true;
         }
         
