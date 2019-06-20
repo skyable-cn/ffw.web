@@ -44,6 +44,9 @@ public class BalanceController extends BaseController {
 			pd.put("DM_TYPE", "shop");
 		}
 
+		PageData count = rest.post(IConstant.FFW_SERVICE_KEY, "deduct/findCount", pd, PageData.class);
+		mv.addObject("count", count);
+
 		Page page = rest.post(IConstant.FFW_SERVICE_KEY, "deduct/listPage", pd, Page.class);
 
 		mv.setViewName("/balance/list");

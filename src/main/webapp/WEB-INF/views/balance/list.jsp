@@ -32,46 +32,33 @@
     <div class="x-body">
     <form class="layui-form layui-col-md12 x-so" method="post" action="<%=request.getContextPath()%>/balance/listPage">
       <div class="layui-row">
-          <input type="text" name="keywords"  placeholder="请输入订单SN" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
-              <div class="layui-input-inline">
-                  <select id="shipping" name="CLASS" class="valid">
-                  	<option value="">全部来源</option>
-                    <option value="wx"  <c:if test="${'wx' eq page.pd.CLASS}">selected="selected"</c:if>>微信</option>
-                    <option value="dy"  <c:if test="${'dy' eq page.pd.CLASS}">selected="selected"</c:if>>抖音</option>
-                  </select>
-              </div>
+          <input type="text" name="keywords"  placeholder="请输入机构名称" autocomplete="off" class="layui-input" value="${page.pd.keywords}">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
-      
+      <div style="text-align:right;">
+        <a class="layui-btn layui-btn-normal" href="javascript:;">交易流水：${count.INCOMEMONEY}</a>
+        <a class="layui-btn layui-btn-normal" href="javascript:;">机构收益：${count.PROFITMONEY}</a>
+        <a class="layui-btn layui-btn-normal" href="javascript:;">服务费：${count.SERVICEMONEY}</a>
+      </div>
       <table class="layui-table x-admin">
         <thead>
           <tr>
-            <th>订单SN</th>
             <th>机构名称</th>
-            <th>本单流水</th>
+            <th>交易流水</th>
             <th>机构收益</th>
-            <th>服务费</th>
-            <th>时间</th>
-            <th>来源</th>
+            <th>抽成比列</th>
+            <th>服务费用</th>
             </tr>
         </thead>
         <tbody>
           <c:forEach var="var" items="${page.data}">
           	<tr>
-           	<td>${var.ORDERSN}</td>
             <td>${var.DM_NAME}</td>
             <td>${var.INCOMEMONEY}</td>
             <td>${var.PROFITMONEY}</td>
+            <td>${var.PERCENT}</td>
             <td>${var.SERVICEMONEY}</td>
-            <td>${var.CDT}</td>
-            <td>
-            	<c:choose>
-            		<c:when test="${var.CLASS eq 'wx'}">微信</c:when>
-            		<c:when test="${var.CLASS eq 'dy'}">抖音</c:when>
-            		<c:otherwise>未知</c:otherwise>
-            	</c:choose>
-            </td>
           </tr>
           </c:forEach>
           

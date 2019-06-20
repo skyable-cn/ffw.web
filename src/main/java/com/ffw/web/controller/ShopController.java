@@ -58,6 +58,8 @@ public class ShopController extends BaseController {
 		pd.put("WAITACCOUNT", IConstant.STRING_0);
 		pd.put("ALREADYACCOUNT", IConstant.STRING_0);
 
+		pd.put("PERCENT", IConstant.STRING_1);
+
 		PageData user = (PageData) getSession().getAttribute(IConstant.USER_SESSION);
 		pd.put("MARKET_ID", user.getString("DM_ID"));
 
