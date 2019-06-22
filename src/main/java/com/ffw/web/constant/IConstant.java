@@ -51,4 +51,6 @@ public interface IConstant {
 	String STRING_CLASS_WX = "wx";
 
 	String STRING_CLASS_DY = "dy";
+
+	String STRING_DEFAULT_STORE = "1000";
 }
