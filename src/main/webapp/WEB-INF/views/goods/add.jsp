@@ -301,7 +301,10 @@
                   <span class="x-red">*</span>商户
               </label>
               <div class="layui-input-inline">
-                  <input type="button" class="layui-btn layui-btn-normal" onclick="business()" id="shanghu"  value="商户选择"></input>
+              	  <input type="hidden" id="SHOP_ID_HIDDEN" name="SHOP_ID"/>
+              <input type="text" id="L_username777"
+                  autocomplete="off" class="layui-input" onclick="showShop();">
+                  <!-- <input type="button" class="layui-btn layui-btn-normal" onclick="business()" id="shanghu"  value="商户选择"></input> -->
                   <%--<select id="shipping1" name="SHOP_ID" class="valid">
                       <c:forEach var="shop" items="${shopData}">
                           <option value="${shop.SHOP_ID}">${shop.SHOPNAME}</option>
@@ -319,7 +322,7 @@
 
           </div>
 <%--            弹出框--%>
-            <div class="popupBox" id="carlist">
+           <!--  <div class="popupBox" id="carlist">
                 <div class="searchBox">
                     <input class="layui-input" placeholder="请输入关键字" name="keyWords">
                     <div class="searchBtnBox">
@@ -336,6 +339,7 @@
                     <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="passselected()">取消</button>
                 </div>
             </div>
+             -->
           <div class="layui-form-item step1" style="display:none;">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>分销海报
@@ -581,6 +585,79 @@
              });
 
          }*/
+         var shopIDS = "";
+         var shopNAMES = "";
+         
+         function showShop(){
+         	var shopids = shopIDS.split(",");
+         	var tbody = "<tbody id = 'shopTbody'>";
+         	<c:forEach var="m" items="${shopData}">
+         		var checkflag= "";
+         		if(shopids.indexOf("${m.SHOP_ID}") >= 0){
+         			checkflag = "checked='checked'";
+         		}
+             		tbody+="<tr id='${m.SHOP_ID}' ln='${m.SHOPNAME}'><td><img src='<%=request.getContextPath()%>/file/image?FILENAME=${m.FILEPATH}' width='50'/>'</td><td>${m.SHOPNAME}</td><td><input type='radio' name='shopsel' style='width:30px;' value='${m.SHOP_ID}' ln='${m.SHOPNAME}' "+checkflag+"/></td></tr>";
+             </c:forEach>
+            tbody+="</tbody>";
+         	var table = "<table class='layui-table'>";
+         	table+=tbody;
+         	table += "</table>";
+         	layer.open({
+         	  title:'选择产品商户',
+         	  area: ['600px', '400px'],
+         	  content: '<div><input type="text" id="searchShop" name="autocomplete="off" class="layui-input" onblur="searchShop()" placeholder="请输入商户名称"/></div><div>'+table+'</div>'
+         	  ,btn: ['确认', '取消']
+         	  ,yes: function(index, layero){
+         		 shopIDS = "";
+         		 shopNAMES = "";
+         	    $("#shopTbody").find("input[type='radio']").each(function(){
+         	    	if($(this).is(':checked')){
+         	    		shopIDS+=$(this).val()+',';
+         	    		shopNAMES+=$(this).attr("ln")+',';
+         	    	}
+         	    });
+         	    
+         	    if(shopIDS.length > 0){
+         	    	shopIDS = shopIDS.substr(0,shopIDS.length-1);
+         	    	shopNAMES = shopNAMES.substr(0,shopNAMES.length-1).replace(/,/g,"  ,  ");
+         	    }
+         	    
+         		$("#SHOP_ID_HIDDEN").val(shopIDS);
+         	    
+         	    $("#L_username777").val(shopNAMES);
+         	    layer.close(index);
+         	  }
+         	  ,btn2: function(index, layero){
+         	    //按钮【按钮二】的回调
+         	    
+         	    //return false 开启该代码可禁止点击该按钮关闭
+         	  }
+         	  ,cancel: function(){ 
+         	    //右上角关闭回调
+         	    
+         	    //return false 开启该代码可禁止点击该按钮关闭
+         	  }
+         	});
+         }
+         
+         function searchShop(){
+         	var searchShop = $("#searchShop").val();
+         	if(!searchShop){
+         		$("#shopTbody").find("tr").each(function(){
+     				$(this).css("display","");
+     		    });
+         		return;
+         	}
+         	if(searchShop){
+     	    	$("#shopTbody").find("tr").each(function(){
+     		    	if($(this).attr("ln").indexOf(searchShop) == -1 ){
+     		    		$(this).css("display","none");
+     		    	}else{
+     		    		$(this).css("display","");
+     		    	}
+     		    });
+         	}
+         }
 
     </script>
   </body>

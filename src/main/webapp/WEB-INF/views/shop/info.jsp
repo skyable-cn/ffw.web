@@ -114,6 +114,16 @@
               </div>
           </div>
           
+          <div class="layui-form-item wx-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户微信店员
+              </label>
+              <div class="layui-input-inline" style="width:500px;">
+                  <input type="text" id="L_username777"
+                  autocomplete="off" class="layui-input" onclick="showWXMember();" value="${wxNAMES}" disabled="disabled">
+              </div>
+          </div>
+          
           <div class="layui-form-item">
           <hr/>
           </div>
@@ -139,6 +149,17 @@
                   </select>
               </div>
           </div>
+          
+          <div class="layui-form-item dy-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户抖音店员
+              </label>
+              <div class="layui-input-inline" style="width:500px;">
+                  <input type="text" id="L_username888"
+                  autocomplete="off" class="layui-input" onclick="showDYMember();" value="${dyNAMES}" disabled="disabled">
+              </div>
+          </div>
+          
           <div class="layui-form-item">
           <hr/>
           </div>

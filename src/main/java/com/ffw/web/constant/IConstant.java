@@ -47,4 +47,8 @@ public interface IConstant {
 	String MODULE_APP_ID = "2";
 
 	String MARKET_SESSION = "MARKET_SESSION";
+
+	String STRING_CLASS_WX = "wx";
+
+	String STRING_CLASS_DY = "dy";
 }

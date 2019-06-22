@@ -91,7 +91,7 @@
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>产品介绍
+                  <span class="x-red">*</span>标题
               </label>
               <div class="layui-input-inline">
                   <textarea placeholder="请输入内容" id="desc3" name="GOODSDESC" class="layui-textarea" disabled="disabled">${pd.GOODSDESC}</textarea>
@@ -250,11 +250,16 @@
                   <span class="x-red">*</span>商户
               </label>
               <div class="layui-input-inline">
+               <input type="hidden" id="SHOP_ID_HIDDEN" name="SHOP_ID" value="${pd.SHOP_ID}"/>
+              <input type="text" id="L_username777"
+                  autocomplete="off" class="layui-input" onclick="showShop();" value="${pd.SHOPNAME}" disabled="disabled">
+              <!-- 
                   <select id="shipping" name="SHOP_ID" class="valid" disabled="disabled">
                     <c:forEach var="shop" items="${shopData}">
                     	<option value="${shop.SHOP_ID}" <c:if test="${shop.SHOP_ID eq pd.SHOP_ID}">selected="selected"</c:if>>${shop.SHOPNAME}</option>
                     </c:forEach>
                   </select>
+               -->    
               </div>
           </div>
           <div class="layui-form-item">

@@ -52,6 +52,9 @@ public class ShopController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
+		String WXIDS = pd.getString("WXMEMBERIDS");
+		String DYIDS = pd.getString("DYMEMBERIDS");
+
 		pd.put("CDT", DateUtil.getTime());
 		pd.put("SHOPSTATE_ID", IConstant.STRING_1);
 
@@ -64,6 +67,30 @@ public class ShopController extends BaseController {
 		pd.put("MARKET_ID", user.getString("DM_ID"));
 
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "shop/save", pd, PageData.class);
+
+		if (StringUtils.isNotEmpty(WXIDS)) {
+			String[] WXIDS_ARRAY = WXIDS.split(",");
+			for (String string : WXIDS_ARRAY) {
+				PageData pdwx = new PageData();
+				pdwx.put("SHOP_ID", pd.getString("SHOP_ID"));
+				pdwx.put("MEMBER_ID", string);
+				pdwx.put("CLASS", IConstant.STRING_CLASS_WX);
+				pdwx.put("CDT", DateUtil.getTime());
+				rest.post(IConstant.FFW_SERVICE_KEY, "shopmember/save", pdwx, PageData.class);
+			}
+		}
+
+		if (StringUtils.isNotEmpty(DYIDS)) {
+			String[] DYIDS_ARRAY = DYIDS.split(",");
+			for (String string : DYIDS_ARRAY) {
+				PageData pddy = new PageData();
+				pddy.put("SHOP_ID", pd.getString("SHOP_ID"));
+				pddy.put("MEMBER_ID", string);
+				pddy.put("CLASS", IConstant.STRING_CLASS_DY);
+				pddy.put("CDT", DateUtil.getTime());
+				rest.post(IConstant.FFW_SERVICE_KEY, "shopmember/save", pddy, PageData.class);
+			}
+		}
 
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver(getSession().getServletContext());
 		if (resolver.isMultipart(getRequest())) {
@@ -137,6 +164,9 @@ public class ShopController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
+		String WXIDS = pd.getString("WXMEMBERIDS");
+		String DYIDS = pd.getString("DYMEMBERIDS");
+
 		rest.post(IConstant.FFW_SERVICE_KEY, "shop/edit", pd, PageData.class);
 
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver(getSession().getServletContext());
@@ -170,6 +200,39 @@ public class ShopController extends BaseController {
 				rest.post(IConstant.FFW_SERVICE_KEY, "file/delete", pdft, PageData.class);
 
 				rest.post(IConstant.FFW_SERVICE_KEY, "file/save", pdf, PageData.class);
+			}
+		}
+
+		PageData pdmm = new PageData();
+		pdmm.put("SHOP_ID", pd.getString("SHOP_ID"));
+		List<PageData> mData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shopmember/listAll", pdmm,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		for (PageData pageData : mData) {
+			rest.post(IConstant.FFW_SERVICE_KEY, "shopmember/delete", pageData, PageData.class);
+		}
+
+		if (StringUtils.isNotEmpty(WXIDS)) {
+			String[] WXIDS_ARRAY = WXIDS.split(",");
+			for (String string : WXIDS_ARRAY) {
+				PageData pdwx = new PageData();
+				pdwx.put("SHOP_ID", pd.getString("SHOP_ID"));
+				pdwx.put("MEMBER_ID", string);
+				pdwx.put("CLASS", IConstant.STRING_CLASS_WX);
+				pdwx.put("CDT", DateUtil.getTime());
+				rest.post(IConstant.FFW_SERVICE_KEY, "shopmember/save", pdwx, PageData.class);
+			}
+		}
+
+		if (StringUtils.isNotEmpty(DYIDS)) {
+			String[] DYIDS_ARRAY = DYIDS.split(",");
+			for (String string : DYIDS_ARRAY) {
+				PageData pddy = new PageData();
+				pddy.put("SHOP_ID", pd.getString("SHOP_ID"));
+				pddy.put("MEMBER_ID", string);
+				pddy.put("CLASS", IConstant.STRING_CLASS_DY);
+				pddy.put("CDT", DateUtil.getTime());
+				rest.post(IConstant.FFW_SERVICE_KEY, "shopmember/save", pddy, PageData.class);
 			}
 		}
 
@@ -278,6 +341,44 @@ public class ShopController extends BaseController {
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "shop/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
 
+		PageData pdmwx = new PageData();
+		pdmwx.put("SHOP_ID", pd.getString("SHOP_ID"));
+		pdmwx.put("CLASS", IConstant.STRING_CLASS_WX);
+		List<PageData> wxData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shopmember/listAll", pdmwx,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		String wxIDS = "";
+		String wxNAMES = "";
+		for (PageData pageData : wxData) {
+			if (wxIDS.length() > 0) {
+				wxIDS += ",";
+				wxNAMES += "  ,  ";
+			}
+			wxIDS += pageData.getString("MEMBER_ID");
+			wxNAMES += pageData.getString("NICKNAME");
+		}
+		mv.addObject("wxIDS", wxIDS);
+		mv.addObject("wxNAMES", wxNAMES);
+
+		PageData pdmdy = new PageData();
+		pdmdy.put("SHOP_ID", pd.getString("SHOP_ID"));
+		pdmdy.put("CLASS", IConstant.STRING_CLASS_DY);
+		List<PageData> dyData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shopmember/listAll", pdmdy,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		String dyIDS = "";
+		String dyNAMES = "";
+		for (PageData pageData : dyData) {
+			if (dyIDS.length() > 0) {
+				dyIDS += ",";
+				dyNAMES += "  ,  ";
+			}
+			dyIDS += pageData.getString("MEMBER_ID");
+			dyNAMES += pageData.getString("NICKNAME");
+		}
+		mv.addObject("dyIDS", dyIDS);
+		mv.addObject("dyNAMES", dyNAMES);
+
 		mv.setViewName("shop/edit");
 		return mv;
 	}
@@ -315,6 +416,44 @@ public class ShopController extends BaseController {
 
 		pd = rest.post(IConstant.FFW_SERVICE_KEY, "shop/find", pd, PageData.class);
 		mv.addObject("pd", pd); // 放入视图容器
+
+		PageData pdmwx = new PageData();
+		pdmwx.put("SHOP_ID", pd.getString("SHOP_ID"));
+		pdmwx.put("CLASS", IConstant.STRING_CLASS_WX);
+		List<PageData> wxData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shopmember/listAll", pdmwx,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		String wxIDS = "";
+		String wxNAMES = "";
+		for (PageData pageData : wxData) {
+			if (wxIDS.length() > 0) {
+				wxIDS += ",";
+				wxNAMES += "  ,  ";
+			}
+			wxIDS += pageData.getString("MEMBER_ID");
+			wxNAMES += pageData.getString("NICKNAME");
+		}
+		mv.addObject("wxIDS", wxIDS);
+		mv.addObject("wxNAMES", wxNAMES);
+
+		PageData pdmdy = new PageData();
+		pdmdy.put("SHOP_ID", pd.getString("SHOP_ID"));
+		pdmdy.put("CLASS", IConstant.STRING_CLASS_DY);
+		List<PageData> dyData = rest.postForList(IConstant.FFW_SERVICE_KEY, "shopmember/listAll", pdmdy,
+				new ParameterizedTypeReference<List<PageData>>() {
+				});
+		String dyIDS = "";
+		String dyNAMES = "";
+		for (PageData pageData : dyData) {
+			if (dyIDS.length() > 0) {
+				dyIDS += ",";
+				dyNAMES += "  ,  ";
+			}
+			dyIDS += pageData.getString("MEMBER_ID");
+			dyNAMES += pageData.getString("NICKNAME");
+		}
+		mv.addObject("dyIDS", dyIDS);
+		mv.addObject("dyNAMES", dyNAMES);
 
 		mv.setViewName("shop/info");
 		return mv;

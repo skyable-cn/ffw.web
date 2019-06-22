@@ -45,7 +45,8 @@
         <form enctype="multipart/form-data" class="layui-form" method="post" action="<%=request.getContextPath()%>/shop/save">
           <input id="LATITUDE" name="LATITUDE" type="hidden"/>
 		  <input id="LONGITUDE" name="LONGITUDE" type="hidden"/>
-          
+          <input id="WXMEMBERIDS" name="WXMEMBERIDS" type="hidden"/>
+          <input id="DYMEMBERIDS" name="DYMEMBERIDS" type="hidden"/>
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>商户所属分类
@@ -149,6 +150,16 @@
               </div>
           </div>
           
+          <div class="layui-form-item wx-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户微信店员
+              </label>
+              <div class="layui-input-inline" style="width:500px;">
+                  <input type="text" id="L_username777"
+                  autocomplete="off" class="layui-input" onclick="showWXMember();">
+              </div>
+          </div>
+          
           <div class="layui-form-item">
           <hr/>
           </div>
@@ -172,6 +183,16 @@
                     	</c:if>
                     </c:forEach>
                   </select>
+              </div>
+          </div>
+          
+          <div class="layui-form-item dy-div">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>商户抖音店员
+              </label>
+              <div class="layui-input-inline" style="width:500px;">
+                  <input type="text" id="L_username888"
+                  autocomplete="off" class="layui-input" onclick="showDYMember();">
               </div>
           </div>
 
@@ -268,7 +289,160 @@
           layer.close(layerIndex)
         }
     }, false);
+   
+    var wxIDS = "";
+    var wxNAMES = "";
+    
+    function showWXMember(){
+    	var wxids = wxIDS.split(",");
+    	var wxtbody = "<tbody id = 'wxMember'>";
+    	<c:forEach var="m" items="${memberData}">
+    		var checkflag= "";
+    		if(wxids.indexOf("${m.MEMBER_ID}") >= 0){
+    			checkflag = "checked='checked'";
+    		}
+        	<c:if test="${m.CLASS eq 'wx'}">
+        		wxtbody+="<tr id='WX_${m.MEMBER_ID}' ln='${m.NICKNAME}'><td><img src='${m.PHOTO}' width='50'/>'</td><td>${m.NICKNAME}</td><td><input type='checkbox' style='width:30px;' value='${m.MEMBER_ID}' ln='${m.NICKNAME}' "+checkflag+"/></td></tr>";
+        	</c:if>
+        </c:forEach>
+        wxtbody+="</tbody>";
+    	var table = "<table class='layui-table'>";
+    	table+=wxtbody;
+    	table += "</table>";
+    	layer.open({
+    	  title:'商户微信店员',
+    	  area: ['600px', '400px'],
+    	  content: '<div><input type="text" id="searchWXMember" name="autocomplete="off" class="layui-input" onblur="searchWXMember()" placeholder="请输入昵称"/></div><div>'+table+'</div>'
+    	  ,btn: ['确认', '取消']
+    	  ,yes: function(index, layero){
+    		  wxIDS = "";
+    		  wxNAMES = "";
+    	    $("#wxMember").find("input[type='checkbox']").each(function(){
+    	    	if($(this).is(':checked')){
+    	    		wxIDS+=$(this).val()+',';
+    	    		wxNAMES+=$(this).attr("ln")+',';
+    	    	}
+    	    });
+    	    
+    	    if(wxIDS.length > 0){
+    	    	wxIDS = wxIDS.substr(0,wxIDS.length-1);
+    	    	wxNAMES = wxNAMES.substr(0,wxNAMES.length-1).replace(/,/g,"  ,  ");
+    	    }
+    	    
+    		$("#WXMEMBERIDS").val(wxIDS);
+    	    
+    	    $("#L_username777").val(wxNAMES);
+    	    layer.close(index);
+    	  }
+    	  ,btn2: function(index, layero){
+    	    //按钮【按钮二】的回调
+    	    
+    	    //return false 开启该代码可禁止点击该按钮关闭
+    	  }
+    	  ,cancel: function(){ 
+    	    //右上角关闭回调
+    	    
+    	    //return false 开启该代码可禁止点击该按钮关闭
+    	  }
+    	});
+    }
+    
+    function searchWXMember(){
+    	var searchWXMember = $("#searchWXMember").val();
+    	if(!searchWXMember){
+    		$("#wxMember").find("tr").each(function(){
+				$(this).css("display","");
+		    });
+    		return;
+    	}
+    	if(searchWXMember){
+	    	$("#wxMember").find("tr").each(function(){
+		    	if($(this).attr("ln").indexOf(searchWXMember) == -1 ){
+		    		$(this).css("display","none");
+		    	}else{
+		    		$(this).css("display","");
+		    	}
+		    });
+    	}
+    }
+    
+    var dyIDS = "";
+    var dyNAMES = "";
+    
+    function showDYMember(){
+    	var dyids = dyIDS.split(",");
+    	var dytbody = "<tbody id = 'dyMember'>";
+    	<c:forEach var="m" items="${memberData}">
+    		var checkflag= "";
+    		if(dyids.indexOf("${m.MEMBER_ID}") >= 0){
+    			checkflag = "checked='checked'";
+    		}
+        	<c:if test="${m.CLASS eq 'dy'}">
+        		dytbody+="<tr id='WX_${m.MEMBER_ID}' ln='${m.NICKNAME}'><td><img src='${m.PHOTO}' width='50'/>'</td><td>${m.NICKNAME}</td><td><input type='checkbox' style='width:30px;' value='${m.MEMBER_ID}' ln='${m.NICKNAME}' "+checkflag+"/></td></tr>";
+        	</c:if>
+        </c:forEach>
+        dytbody+="</tbody>";
+    	var table = "<table class='layui-table'>";
+    	table+=dytbody;
+    	table += "</table>";
+    	layer.open({
+    	  title:'商户抖音店员',
+    	  area: ['600px', '400px'],
+    	  content: '<div><input type="text" id="searchDYMember" name="autocomplete="off" class="layui-input" onblur="searchDYMember()" placeholder="请输入昵称"/></div><div>'+table+'</div>'
+    	  ,btn: ['确认', '取消']
+    	  ,yes: function(index, layero){
+    		  dyIDS = "";
+    		  dyNAMES = "";
+    	    $("#dyMember").find("input[type='checkbox']").each(function(){
+    	    	if($(this).is(':checked')){
+    	    		dyIDS+=$(this).val()+',';
+    	    		dyNAMES+=$(this).attr("ln")+',';
+    	    	}
+    	    });
+    	    
+    	    if(dyIDS.length > 0){
+    	    	dyIDS = dyIDS.substr(0,dyIDS.length-1);
+    	    	dyNAMES = dyNAMES.substr(0,dyNAMES.length-1).replace(/,/g,"  ,  ");
+    	    }
+    	    
+    		$("#DYMEMBERIDS").val(dyIDS);
+    	    
+    	    $("#L_username888").val(dyNAMES);
+    	    layer.close(index);
+    	  }
+    	  ,btn2: function(index, layero){
+    	    //按钮【按钮二】的回调
+    	    
+    	    //return false 开启该代码可禁止点击该按钮关闭
+    	  }
+    	  ,cancel: function(){ 
+    	    //右上角关闭回调
+    	    
+    	    //return false 开启该代码可禁止点击该按钮关闭
+    	  }
+    	});
+    }
+    
+    function searchDYMember(){
+    	var searchDYMember = $("#searchDYMember").val();
+    	if(!searchDYMember){
+    		$("#dyMember").find("tr").each(function(){
+				$(this).css("display","");
+		    });
+    		return;
+    	}
+    	if(searchDYMember){
+	    	$("#dyMember").find("tr").each(function(){
+		    	if($(this).attr("ln").indexOf(searchDYMember) == -1 ){
+		    		$(this).css("display","none");
+		    	}else{
+		    		$(this).css("display","");
+		    	}
+		    });
+    	}
+    }
 </script>
+
   </body>
 
 </html>
