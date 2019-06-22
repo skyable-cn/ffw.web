@@ -39,6 +39,44 @@
      #fileTable2 tr{
      	  border:1px #dddddd solid;
      }
+        .popupBox{
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 40%;
+            display: none;
+            border: solid 1px #CCCCCC;
+            background: #FFFFFF;
+            z-index: 999;
+            border-radius: 10px;
+            overflow: auto;
+            padding: 3%;
+            /*display: flex;*/
+            justify-content: space-between;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+        .searchBox{
+            height: 20%;
+            display: flex;
+            /*justify-content: space-around;*/
+        }
+         .searchBox>input{
+             width: 40%;
+         }
+         .searchBtnBox{
+             width: 40%;
+             padding-left: 5%;
+         }
+        .btnBox{
+            height: 20%;
+        }
+        .popupBoxContent{
+            height: 60%;
+            /*border: solid 1px #CCCCCC;*/
+            overflow: auto;
+        }
     </style>
     <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.all.min.js"> </script>
@@ -277,16 +315,27 @@
                           </c:forEach>
                       </select>
                   </div>--%>
-                  <div style="display:none;position: absolute;background: #FFFFFF;z-index: 999;border: solid 1px #CCCCCC;" id="carlist">
-                      <c:forEach var="shop" items="${shopData}">
-                          <input type="radio" name="SHOP_ID" value="${shop.SHOP_ID}" title="${shop.SHOPNAME}" lay-verify="myrepostr"></input>
-                      </c:forEach>
-                      <button type="button" class="layui-btn layui-btn-sm" onclick="selected()">确定</button>
-                      <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="passselected()">取消</button>
-                  </div>
               </div>
 
           </div>
+<%--            弹出框--%>
+            <div class="popupBox" id="carlist">
+                <div class="searchBox">
+                    <input class="layui-input" placeholder="请输入关键字" name="keyWords">
+                    <div class="searchBtnBox">
+                        <button type="button" class="layui-btn layui-btn-sm ">搜索</button>
+                    </div>
+                </div>
+                <div class="popupBoxContent">
+                    <c:forEach var="shop" items="${shopData}">
+                        <input type="radio" name="SHOP_ID" value="${shop.SHOP_ID}" title="${shop.SHOPNAME}" lay-verify="myrepostr"></input>
+                    </c:forEach>
+                </div>
+                <div class="btnBox">
+                    <button type="button" class="layui-btn layui-btn-sm" onclick="selected()">确定</button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="passselected()">取消</button>
+                </div>
+            </div>
           <div class="layui-form-item step1" style="display:none;">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>分销海报
