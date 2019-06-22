@@ -263,7 +263,7 @@
                   <span class="x-red">*</span>商户
               </label>
               <div class="layui-input-inline">
-                  <input type="button" class="layui-btn layui-btn-normal" onclick="business()" value="商户选择"></input>
+                  <input type="button" class="layui-btn layui-btn-normal" onclick="business()" id="shanghu"  value="商户选择"></input>
                   <%--<select id="shipping1" name="SHOP_ID" class="valid">
                       <c:forEach var="shop" items="${shopData}">
                           <option value="${shop.SHOP_ID}">${shop.SHOPNAME}</option>
@@ -277,10 +277,12 @@
                           </c:forEach>
                       </select>
                   </div>--%>
-                  <div style="display:none" id="carlist">
+                  <div style="display:none;position: absolute;background: #FFFFFF;z-index: 999;border: solid 1px #CCCCCC;" id="carlist">
                       <c:forEach var="shop" items="${shopData}">
                           <input type="radio" name="SHOP_ID" value="${shop.SHOP_ID}" title="${shop.SHOPNAME}" lay-verify="myrepostr"></input>
                       </c:forEach>
+                      <button type="button" class="layui-btn layui-btn-sm" onclick="selected()">确定</button>
+                      <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="passselected()">取消</button>
                   </div>
               </div>
 
@@ -347,6 +349,23 @@
     </script>
     
     <script>
+
+        var obj = document.getElementsByName("SHOP_ID");
+        function selected(){
+            for(var i=0; i<obj.length; i ++){
+                if(obj[i].checked){
+                    var ss= document.getElementById("#shanghu");
+                    $("#shanghu").val(obj[i].title)
+                }
+            }
+            $("#carlist").hide();
+        }
+
+        function passselected(){
+            $("#carlist").hide();
+        }
+
+
         layui.use(['form','layer'], function(){
             $ = layui.jquery;
           var form = layui.form
@@ -481,34 +500,38 @@
         }
 
         function business(){
-            $("#carlist").show();
-        }
-
-       /* function business(){
-            var obj = document.getElementById("shipping1").options;
-            var rs=[];
-            for ( var i = 0; i <obj.length; i++){
-                rs[i]=obj[i].text;
+            var o = $("#carlist");
+            if(o.css("display")=="none"){
+                o.show();
+            }else{
+                o.hide();
             }
-            layer.confirm('纳尼？', {
-              //  btn: ['按钮一', '按钮二', '按钮三'] //可以无限个按钮
-                btn: rs //可以无限个按钮
-                ,btn3: function(index, layero){
-                    //按钮【按钮三】的回调
-                    alert(index);
-                    layer.close(index)
-                }
-            }, function(index, layero){
-                //按钮【按钮一】的回调
-                alert(index);
-                layer.close(index)
-            }, function(index){
-                //按钮【按钮二】的回调
-                alert(index);
-                layer.close(index)
-            });
+        }
+        /* function business(){
+             var obj = document.getElementById("shipping1").options;
+             var rs=[];
+             for ( var i = 0; i <obj.length; i++){
+                 rs[i]=obj[i].text;
+             }
+             layer.confirm('纳尼？', {
+               //  btn: ['按钮一', '按钮二', '按钮三'] //可以无限个按钮
+                 btn: rs //可以无限个按钮
+                 ,btn3: function(index, layero){
+                     //按钮【按钮三】的回调
+                     alert(index);
+                     layer.close(index)
+                 }
+             }, function(index, layero){
+                 //按钮【按钮一】的回调
+                 alert(index);
+                 layer.close(index)
+             }, function(index){
+                 //按钮【按钮二】的回调
+                 alert(index);
+                 layer.close(index)
+             });
 
-        }*/
+         }*/
 
     </script>
   </body>
