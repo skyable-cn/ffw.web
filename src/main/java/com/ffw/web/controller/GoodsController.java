@@ -295,7 +295,6 @@ public class GoodsController extends BaseController {
 				new ParameterizedTypeReference<List<PageData>>() {
 				});
 		mv.addObject("shopData", shopData);
-
 		mv.addObject("pd", pd);
 		mv.setViewName("goods/add");
 		return mv;

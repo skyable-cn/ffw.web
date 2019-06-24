@@ -77,6 +77,82 @@
             /*border: solid 1px #CCCCCC;*/
             overflow: auto;
         }
+
+
+     .tishi {
+         display: none;
+         position: fixed;
+         top: 30%;
+         left: 30%;
+         width: 50%;
+         padding: 10px 20px;
+         border-radius: 10px;
+         text-align: center;
+         background: rgba(0, 0, 0, 0.5);
+         color: white;
+         z-index: 100000;
+     }
+
+     @media screen and (min-width: 768px) {
+         .tishi {
+             width: 180px !important;
+             margin: 0px auto;
+             left: calc(50% - 100px) !important;
+         }
+     }
+     .pageBtn {
+         padding: 5px 10px !important;
+         /*background: rgba(12, 12, 12, 0.2) !important;*/
+         background:rgb(3, 51, 50) !important;
+         /*background: #1e2d40 !important;*/
+         color: #fff !important;
+         border-radius: 4px;
+     }
+
+     .pageNum {
+         height: 31px;
+         padding: 0;
+         padding-left: 6px;
+         margin-right: 5px;
+         width: 19%;
+         background: rgba(255, 255, 255, 0.1);
+         background:#033131\9;
+         border: 1px solid #006666;
+         color: #fff;
+         float: left;
+     }
+     .Newpagination {
+         position: absolute;
+         bottom: 10px;
+         display: inline-block;
+         padding-left: 0;
+         margin: 20px 0 10px 35%;
+         border-radius: 4px;
+     }
+
+     .Newpagination > li {
+         display: inline;
+     }
+
+     .Newpagination > li > a {
+         position: relative;
+         float: left;
+         line-height: 1.52857143;
+         text-decoration: none;
+         color: #515253;
+         margin-left: -1px;
+     }
+
+     @media only screen and (max-width: 768px) {
+         .Newpagination {
+             margin: 20px 0 10px;
+         }
+     }
+
+     .page_number {
+         padding: 5px 15px;
+         color: #fff !important;
+     }
     </style>
     <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/static/ueditor/ueditor.all.min.js"> </script>
@@ -302,8 +378,8 @@
               </label>
               <div class="layui-input-inline">
               	  <input type="hidden" id="SHOP_ID_HIDDEN" name="SHOP_ID"/>
-              <input type="text" id="L_username777"
-                  autocomplete="off" class="layui-input" onclick="showShop();">
+              <input type="button" id="L_username777"
+                  autocomplete="off" class="layui-btn layui-btn-normal" onclick="showShop();" value="商户选择">
                   <!-- <input type="button" class="layui-btn layui-btn-normal" onclick="business()" id="shanghu"  value="商户选择"></input> -->
                   <%--<select id="shipping1" name="SHOP_ID" class="valid">
                       <c:forEach var="shop" items="${shopData}">
@@ -587,25 +663,58 @@
          }*/
          var shopIDS = "";
          var shopNAMES = "";
-         
+         var pageNumber=0;
          function showShop(){
          	var shopids = shopIDS.split(",");
-         	var tbody = "<tbody id = 'shopTbody'>";
+         	var tbody = "<tbody id = 'shopTbody' class='color allData'>";
          	<c:forEach var="m" items="${shopData}">
-         		var checkflag= "";
-         		if(shopids.indexOf("${m.SHOP_ID}") >= 0){
-         			checkflag = "checked='checked'";
-         		}
-             		tbody+="<tr id='${m.SHOP_ID}' ln='${m.SHOPNAME}'><td><img src='<%=request.getContextPath()%>/file/image?FILENAME=${m.FILEPATH}' width='50'/>'</td><td>${m.SHOPNAME}</td><td><input type='radio' name='shopsel' style='width:30px;' value='${m.SHOP_ID}' ln='${m.SHOPNAME}' "+checkflag+"/></td></tr>";
+             pageNumber=pageNumber+1;
+                 var checkflag= "";
+                 if(shopids.indexOf("${m.SHOP_ID}") >= 0){
+                     checkflag = "checked='checked'";
+                 }
+                 tbody+="<tr id='${m.SHOP_ID}' ln='${m.SHOPNAME}'><td><img src='<%=request.getContextPath()%>/file/image?FILENAME=${m.FILEPATH}' width='50'/>'</td><td>${m.SHOPNAME}</td><td><input type='radio' name='shopsel' style='width:30px;' value='${m.SHOP_ID}' ln='${m.SHOPNAME}' "+checkflag+"/></td></tr>";
              </c:forEach>
+             pageNumber=pageNumber%5 == 0 ? (pageNumber/5) : (pageNumber/5)+1;
+
             tbody+="</tbody>";
          	var table = "<table class='layui-table'>";
          	table+=tbody;
          	table += "</table>";
-         	layer.open({
+
+
+
+
+
+           /* var sss=`${page.pageStr}`;*/
+         var sss=`<ul class="Newpagination  clearfix">
+                     <li>
+                     <a href="#2" class="pageBtn page_up" id="shangyiye">&laquo;上一页</a>
+             </li>
+             <li>
+                <a href="#"  id="yema"> 1 </a>
+              </li>
+                     <li class="">
+                     <a href="#2" class="pageBtn page_next" id="xiayiye">下一页&raquo;</a>
+             </li>
+             <li>
+             <p style="float:left;margin:5px;">共<span class="getPage">`+pageNumber+`</span>页</p>
+             </li>
+             <li>
+             <input type="text" id="tiaozhuaninput" />
+                     </li>
+                     <li class="">
+                     <a href="#2" class="pageBtn goPage"  id="tiaozhuan">跳转</a>
+                     </li>
+                     </ul>`;
+
+
+
+
+             layer.open({
          	  title:'选择产品商户',
-         	  area: ['600px', '400px'],
-         	  content: '<div><input type="text" id="searchShop" name="autocomplete="off" class="layui-input" onblur="searchShop()" placeholder="请输入商户名称"/></div><div>'+table+'</div>'
+         	  area: ['1000px', '700px'],
+         	  content: '<div id="tishi"><input type="text" id="searchShop" name="autocomplete="off" class="layui-input" onblur="searchShop()" placeholder="请输入商户名称"/></div><div>'+table+'</div><div>'+sss+'</div>'
          	  ,btn: ['确认', '取消']
          	  ,yes: function(index, layero){
          		 shopIDS = "";
@@ -638,7 +747,78 @@
          	    //return false 开启该代码可禁止点击该按钮关闭
          	  }
          	});
+
+
+             //翻页------------------------------------------
+             var pageNum = 1;
+             var ii = 0;
+             var jj = 5;//每页显示五条数据
+             goPage(ii, jj);
+             function goPage(i, j) {
+                 $('.allData tr').css('display', 'none');
+                 for (i; i < j ; i++) {
+                     $('.allData tr').eq(i).css('display', 'table-row');
+                 }
+             }
+             //下一页
+             $('.page_next').click(function () {
+                 if (pageNum < pageNumber) {
+                     pageNum++;
+                     ii = ii + 5;
+                     jj = jj + 5;
+                     goPage(ii, jj);
+                   document.getElementById("yema").innerHTML = pageNum;
+                     document.getElementById("yema").val(pageNum);
+                 }
+                 else {
+                     $("#tishi").text("当前是最后一页！");
+                     $("#tishi").fadeIn(500).delay(600).fadeOut(500);
+                 }
+             })
+             //上一页
+             $("#shangyiye").click(function () {
+                 if (pageNum > 1) {
+                     pageNum--;
+                     ii = ii - 5;
+                     jj = jj - 5;
+                     goPage(ii, jj);
+                     document.getElementById("yema").innerHTML = pageNum;
+                     document.getElementById("yema").val(pageNum);
+                 }
+                 else {
+                     $("#tishi").text("当前是第一页！");
+                     $("#tishi").fadeIn(500).delay(600).fadeOut(500);
+                 }
+             })
+             //跳页
+             $('#tiaozhuan').click(function () {
+                 //cbHeight();
+                 pageNum = ($('#tiaozhuaninput').val()) * 1;
+                 if (pageNum <= pageNumber && pageNum > 0) {
+                     ii = (pageNum - 1) * 5;
+                     jj = pageNum * 5;
+                     goPage(ii, jj);
+                     document.getElementById("yema").innerHTML = pageNum;
+                     document.getElementById("yema").val(pageNum);
+                 }
+                 else {
+                     $("#tishi").text("请输入正确的页码！");
+                     $("#tishi").fadeIn(500).delay(600).fadeOut(500);
+                 }
+             })
+
+             $("#tiaozhuaninput").keydown(function (e) {//当按下按键时
+                 if (e.which == 13) {//.which属性判断按下的是哪个键，回车键的键位序号为13
+                     $('.goPage').trigger("click");//触发搜索按钮的点击事件
+
+                 }
+             });
+
          }
+
+
+
+
          
          function searchShop(){
          	var searchShop = $("#searchShop").val();
