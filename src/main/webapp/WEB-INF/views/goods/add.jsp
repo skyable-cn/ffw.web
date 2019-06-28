@@ -676,9 +676,17 @@
                  tbody+="<tr id='${m.SHOP_ID}' ln='${m.SHOPNAME}'><td><img src='<%=request.getContextPath()%>/file/image?FILENAME=${m.FILEPATH}' width='50'/>'</td><td>${m.SHOPNAME}</td><td><input type='radio' name='shopsel' style='width:30px;' value='${m.SHOP_ID}' ln='${m.SHOPNAME}' "+checkflag+"/></td></tr>";
              </c:forEach>
              pageNumber=pageNumber%5 == 0 ? (pageNumber/5) : (pageNumber/5)+1;
+             parseInt(pageNumber)
 
             tbody+="</tbody>";
          	var table = "<table class='layui-table'>";
+             table+=`<thead>
+             <tr>
+             <th>商户图片</th>
+             <th>商户名称</th>
+             <th>选择</th>
+             </tr>
+             </thead>`
          	table+=tbody;
          	table += "</table>";
 
@@ -714,9 +722,10 @@
              layer.open({
          	  title:'选择产品商户',
          	  area: ['1000px', '700px'],
-         	  content: '<div id="tishi"><input type="text" id="searchShop" name="autocomplete="off" class="layui-input" onblur="searchShop()" placeholder="请输入商户名称"/></div><div>'+table+'</div><div>'+sss+'</div>'
+         	  content: '<div id="tishi"><input type="text" id="searchShop" name="autocomplete="off" class="layui-input"  placeholder="请输入商户名称"/><input type=“button”  class="layui-btn layui-btn-normal"  onclick="searchShop()" value="搜索" /></button></div><div>'+table+'</div><div>'+sss+'</div>'
          	  ,btn: ['确认', '取消']
          	  ,yes: function(index, layero){
+                     pageNumber=0;
          		 shopIDS = "";
          		 shopNAMES = "";
          	    $("#shopTbody").find("input[type='radio']").each(function(){
@@ -737,10 +746,12 @@
          	    layer.close(index);
          	  }
          	  ,btn2: function(index, layero){
+                     pageNumber=0;
          	    //按钮【按钮二】的回调
          	    //return false 开启该代码可禁止点击该按钮关闭
          	  }
-         	  ,cancel: function(){ 
+         	  ,cancel: function(){
+                     pageNumber=0;
          	    //右上角关闭回调
          	    
          	    //return false 开启该代码可禁止点击该按钮关闭

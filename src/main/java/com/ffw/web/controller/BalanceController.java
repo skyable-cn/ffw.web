@@ -70,6 +70,7 @@ public class BalanceController extends BaseController {
 	@RequestMapping("listPage2")
 	@ResponseBody
 	public JSONObject listPage2() throws Exception {
+		JSONObject jsObject=new JSONObject();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String dm_id2 = pd.getString("dm_id2");
@@ -78,15 +79,17 @@ public class BalanceController extends BaseController {
 			if (DM_TYPE2.equals("domain")){
 				pd.put("DM_ID", dm_id2);
 				pd.put("DM_TYPE", "market");
+				jsObject.put("ac","商城结算明细");
 			}else if (DM_TYPE2.equals("market")){
 				pd.put("DM_ID", dm_id2);
 				pd.put("DM_TYPE", "shop");
+				jsObject.put("ac","商户结算明细");
 			}
 			Page page = rest.post(IConstant.FFW_SERVICE_KEY, "deduct/listPage", pd, Page.class);
 
-			JSONObject jsObject=new JSONObject();
 			jsObject.put("success","true");
 			jsObject.put("data",page.getData());
+
 			jsObject.put("message","成功");
 			System.out.println(jsObject);
 			return jsObject;

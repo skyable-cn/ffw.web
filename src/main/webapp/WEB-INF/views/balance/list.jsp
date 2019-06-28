@@ -116,7 +116,7 @@
 
           layer.open({
             type:1,
-            title:'选择产品商户',
+            title:data.ac,
             content: '<div>'+table+'</div>',
             area: ["880px", "580px"]
             ,btn: ['取消']
