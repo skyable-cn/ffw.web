@@ -49,6 +49,9 @@
             <th>机构收益</th>
             <th>上缴比列</th>
             <th>上缴费用</th>
+            <th>
+             查看详情
+            </th>
             </tr>
         </thead>
         <tbody>
@@ -59,6 +62,7 @@
             <td>${var.PROFITMONEY}</td>
             <td>${var.PERCENT}</td>
             <td>${var.SERVICEMONEY}</td>
+            <td><input type=“button”  class="layui-btn layui-btn-normal" onclick="showShop('${var.DM_ID}','${var.DM_TYPE}')" value="查看"></input></td>
           </tr>
           </c:forEach>
           
@@ -70,5 +74,69 @@
 	</form>
     </div>
     <%@ include file="../common/foot.jsp"%>
+
+  <script>
+    function showShop(dm_id,DM_TYPE){
+      $.ajax({
+        type: "POST",
+        url: '<%=request.getContextPath()%>/balance/listPage2',
+        dataType:"json",
+        data:{"dm_id2":dm_id,"DM_TYPE2":DM_TYPE},
+        success: function(data){
+          var tbody = "<tbody id = 'shopTbody' class='color allData'>";
+          for(var m=0;m<data.data.length;m++){
+            tbody+="<tr><td>"
+                    +data.data[m].DM_NAME+
+                            "</td><td>"
+                    +data.data[m].INCOMEMONEY+
+                            "</td><td>"
+                    +data.data[m].PROFITMONEY+
+                            "</td><td>"
+                    +data.data[m].PERCENT+
+                            "</td><td>"
+                    +data.data[m].SERVICEMONEY+
+                            "</td></tr>"
+          }
+          tbody+="</tbody>";
+
+          var table = "<table class='layui-table'>";
+          table+=`<thead>
+          <tr>
+          <th>机构名称</th>
+          <th>交易流水</th>
+          <th>机构收益</th>
+          <th>上缴比列</th>
+          <th>上缴费用</th>
+          </tr>
+          </thead>`
+          table+=tbody;
+          table += "</table>";
+
+          console.log(table);
+
+          layer.open({
+            type:1,
+            title:'选择产品商户',
+            content: '<div>'+table+'</div>',
+            area: ["880px", "580px"]
+            ,btn: ['取消']
+            ,yes: function(index, layero){
+             layer.close(index);
+            }/*
+            ,btn2: function(index, layero){
+              layer.close(index);
+              //按钮【按钮二】的回调
+              //return false 开启该代码可禁止点击该按钮关闭
+            }*/
+          });
+
+        },
+
+        error:function(){
+          alert("无数据");
+        }
+      });
+    }
+  </script>
   </body>
 </html>

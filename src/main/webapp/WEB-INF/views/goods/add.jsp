@@ -208,7 +208,7 @@
           </div>
           <div class="layui-form-item step1" style="display:none;">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>产品介绍
+                  <span class="x-red">*</span>标题
               </label>
               <div class="layui-input-inline">
                   <textarea placeholder="请输入内容" id="desc3" name="GOODSDESC" class="layui-textarea"></textarea>
@@ -224,13 +224,13 @@
           </div>
            -->
           <div class="layui-form-item step3" style="display:none;">
-          <label for="L_username" class="layui-form-label">
+              <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>购买须知
               </label>
               <div class="layui-input-inline" style="width:calc(100% - 200px);max-width:800px;">
           		  <input type="hidden" id="BUYNOTICE" name="BUYNOTICE"/>
                   <script id="editor" type="text/plain" style="width:100%;min-height:300px;">购买须知</script>
-          	</div>
+              </div>
           </div>
           <div class="layui-form-item step3" style="display:none;">
           <label for="L_username" class="layui-form-label">
@@ -738,7 +738,6 @@
          	  }
          	  ,btn2: function(index, layero){
          	    //按钮【按钮二】的回调
-         	    
          	    //return false 开启该代码可禁止点击该按钮关闭
          	  }
          	  ,cancel: function(){ 
