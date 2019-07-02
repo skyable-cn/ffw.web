@@ -211,6 +211,31 @@
                   autocomplete="off" class="layui-input" value="${pd.DYMAPPSECRET}" disabled="disabled">
               </div>
           </div>
+          <div class="layui-form-item dy-div">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>支付宝APPID
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_username17" name="ALIAPPID" lay-verify="nikename"
+                  autocomplete="off" class="layui-input" value="${pd.ALIAPPID}" disabled="disabled">
+              </div>
+          </div>
+          <div class="layui-form-item dy-div">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>支付宝APP私钥
+              </label>
+              <div class="layui-input-inline">
+                  <textarea placeholder="请输入内容" id="desc33" name="ALIPRIVATEKEY" class="layui-textarea" disabled="disabled">${pd.ALIPRIVATEKEY}</textarea>
+              </div>
+          </div>
+          <div class="layui-form-item dy-div">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>支付宝公钥
+              </label>
+              <div class="layui-input-inline">
+                  <textarea placeholder="请输入内容" id="desc333" name="ALIPUBLICKEY" class="layui-textarea" disabled="disabled">${pd.ALIPUBLICKEY}</textarea>
+              </div>
+          </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
