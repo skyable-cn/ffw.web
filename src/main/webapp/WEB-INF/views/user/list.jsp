@@ -53,9 +53,11 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         
       </div>
+      <c:if test="${USER_SESSION.ROLE_ID ne 4}">
       <xblock>
         <a class="layui-btn" onclick="commonSave('<%=request.getContextPath()%>/user/goAdd')" href="javascript:;"><i class="layui-icon"></i>添加</a>
       </xblock>
+      </c:if>
       <table class="layui-table x-admin">
         <thead>
           <tr>
