@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +37,9 @@ public class WithdrawController extends BaseController {
 
 	@Autowired
 	RestTemplateUtil rest;
+
+	@Value("${server.hostname}")
+	private String HOSTNAME;
 
 	@RequestMapping("listPage")
 	public ModelAndView listPage() throws Exception {
@@ -109,7 +113,7 @@ public class WithdrawController extends BaseController {
 
 			WXPayConfigImpl config = new WXPayConfigImpl(market.getString("WXAPPID"), market.getString("WXAPPSECRET"),
 					market.getString("WXMCHID"), market.getString("WXMCHKEY"),
-					fileConfig.getDirCert() + File.separator + market.getString("FILEPATH2"));
+					fileConfig.getDirCert() + File.separator + market.getString("FILEPATH2"), HOSTNAME);
 
 			logger.info("进入企业付款到个人");
 			WXPay wxpay = new WXPay(config, SignType.MD5);
